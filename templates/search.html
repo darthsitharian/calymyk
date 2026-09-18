@@ -1,0 +1,66 @@
+<!-- wp:template-part {"slug":"header"} /-->
+
+<!-- wp:main {"tagName":"main","className":"cm-search","layout":{"type":"default"}} -->
+<main class="wp-block-group cm-search">
+
+	<!-- wp:group {"className":"cm-search__header cm-container-wide","layout":{"type":"default"}} -->
+	<div class="wp-block-group cm-search__header cm-container-wide">
+		<!-- wp:paragraph {"className":"cm-eyebrow"} -->
+		<p class="cm-eyebrow">WYNIKI WYSZUKIWANIA</p>
+		<!-- /wp:paragraph -->
+		<!-- wp:query-title {"type":"search","className":"cm-search__title"} /-->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:group {"className":"cm-search__results","layout":{"type":"default"}} -->
+	<div class="wp-block-group cm-search__results">
+
+		<!-- wp:query {"query":{"perPage":12,"postType":"post","inherit":true},"className":"cm-search-query"} -->
+		<div class="wp-block-query cm-search-query">
+
+			<!-- wp:post-template {"className":"cm-search-grid"} -->
+				<!-- wp:group {"className":"cm-search-card","layout":{"type":"default"}} -->
+				<article class="wp-block-group cm-search-card">
+					<!-- wp:post-featured-image {"isLink":true,"className":"cm-search-card__image"} /-->
+
+					<!-- wp:post-terms {"term":"category","className":"cm-search-card__category"} /-->
+
+					<!-- wp:post-title {"isLink":true,"className":"cm-search-card__title"} /-->
+
+					<!-- wp:post-excerpt {"className":"cm-search-card__excerpt"} /-->
+
+					<!-- wp:post-date {"isLink":false,"className":"cm-search-card__date"} /-->
+				</article>
+				<!-- /wp:group -->
+			<!-- /wp:post-template -->
+
+			<!-- wp:query-no-results -->
+				<!-- wp:group {"className":"cm-search__empty","layout":{"type":"default"}} -->
+				<div class="wp-block-group cm-search__empty">
+					<!-- wp:heading {"level":2} -->
+					<h2>Nie znaleźliśmy tego, czego szukasz.</h2>
+					<!-- /wp:heading -->
+					<!-- wp:paragraph -->
+					<p>Spróbuj innej frazy albo wróć na stronę główną.</p>
+					<!-- /wp:paragraph -->
+					<!-- wp:search {"label":"Szukaj","showLabel":false,"placeholder":"Szukaj…","buttonText":"Szukaj","buttonPosition":"button-inside","buttonUseIcon":true} /-->
+				</div>
+				<!-- /wp:group -->
+			<!-- /wp:query-no-results -->
+
+			<!-- wp:query-pagination {"className":"cm-search-pagination","layout":{"type":"flex","justifyContent":"space-between"}} -->
+				<!-- wp:query-pagination-previous /-->
+				<!-- wp:query-pagination-numbers /-->
+				<!-- wp:query-pagination-next /-->
+			<!-- /wp:query-pagination -->
+
+		</div>
+		<!-- /wp:query -->
+
+	</div>
+	<!-- /wp:group -->
+
+</main>
+<!-- /wp:main -->
+
+<!-- wp:template-part {"slug":"footer"} /-->
