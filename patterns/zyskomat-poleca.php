@@ -45,8 +45,8 @@
 
 		<!-- wp:post-template {"className":"cm-recommendations__grid cm-grid","layout":{"type":"default"}} -->
 
-			<!-- wp:group {"className":"cm-span-6 cm-recommendation-card cm-recommendation-card--featured","layout":{"type":"default"}} -->
-			<div class="wp-block-group cm-span-6 cm-recommendation-card cm-recommendation-card--featured">
+			<!-- wp:group {"className":"cm-span-4 cm-recommendation-card","layout":{"type":"default"}} -->
+			<div class="wp-block-group cm-span-4 cm-recommendation-card">
 
 				<!-- wp:post-featured-image {"isLink":true,"className":"cm-recommendation-card__media"} /-->
 
@@ -61,49 +61,7 @@
 
 					<!-- wp:post-excerpt {"className":"cm-recommendation-card__description","moreText":""} /-->
 
-					<!-- wp:read-more {"content":"Sprawdź rekomendację →","className":"cm-recommendation-card__link"} /-->
-
-				</div>
-				<!-- /wp:group -->
-
-			</div>
-			<!-- /wp:group -->
-
-			<!-- wp:group {"className":"cm-span-6 cm-recommendations__secondary","layout":{"type":"default"}} -->
-			<div class="wp-block-group cm-span-6 cm-recommendations__secondary">
-
-				<!-- wp:group {"className":"cm-recommendation-card cm-recommendation-card--compact","layout":{"type":"default"}} -->
-				<div class="wp-block-group cm-recommendation-card cm-recommendation-card--compact">
-
-					<!-- wp:post-featured-image {"isLink":true,"className":"cm-recommendation-card__media"} /-->
-
-					<!-- wp:group {"className":"cm-recommendation-card__body","layout":{"type":"default"}} -->
-					<div class="wp-block-group cm-recommendation-card__body">
-						<!-- wp:paragraph {"className":"cm-recommendation-card__label"} -->
-						<p class="cm-recommendation-card__label">POLECAMY</p>
-						<!-- /wp:paragraph -->
-						<!-- wp:post-title {"isLink":true,"level":3} /-->
-						<!-- wp:post-excerpt {"className":"cm-recommendation-card__description","moreText":""} /-->
-					</div>
-					<!-- /wp:group -->
-
-				</div>
-				<!-- /wp:group -->
-
-				<!-- wp:group {"className":"cm-recommendation-card cm-recommendation-card--compact","layout":{"type":"default"}} -->
-				<div class="wp-block-group cm-recommendation-card cm-recommendation-card--compact">
-
-					<!-- wp:post-featured-image {"isLink":true,"className":"cm-recommendation-card__media"} /-->
-
-					<!-- wp:group {"className":"cm-recommendation-card__body","layout":{"type":"default"}} -->
-					<div class="wp-block-group cm-recommendation-card__body">
-						<!-- wp:paragraph {"className":"cm-recommendation-card__label"} -->
-						<p class="cm-recommendation-card__label">POLECAMY</p>
-						<!-- /wp:paragraph -->
-						<!-- wp:post-title {"isLink":true,"level":3} /-->
-						<!-- wp:post-excerpt {"className":"cm-recommendation-card__description","moreText":""} /-->
-					</div>
-					<!-- /wp:group -->
+					<!-- wp:read-more {"content":"Sprawdź szczegóły →","className":"cm-recommendation-card__link"} /-->
 
 				</div>
 				<!-- /wp:group -->
