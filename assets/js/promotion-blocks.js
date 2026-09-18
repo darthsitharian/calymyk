@@ -2,8 +2,8 @@
 	'use strict';
 
 	const { registerBlockType } = wp.blocks;
-	const { RichText, InspectorControls, useBlockProps } = wp.blockEditor;
-	const { Button, PanelBody, TextControl, TextareaControl } = wp.components;
+	const { useBlockProps } = wp.blockEditor;
+	const { Button, TextControl, TextareaControl } = wp.components;
 	const { createElement, Fragment } = wp.element;
 
 	function StepsEdit({ attributes, setAttributes }) {
