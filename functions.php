@@ -752,4 +752,21 @@ function calymyk_new_tool_archive_cta_shortcode() {
 }
 add_shortcode( 'calymyk_tool_archive_cta', 'calymyk_new_tool_archive_cta_shortcode' );
 add_shortcode( 'calymyk_tool_url', 'calymyk_new_tool_url_shortcode' );
+/**
+ * Hide the legacy "W SKRÓCIE" sidebar box on all single posts.
+ * This also protects against a previously saved Site Editor template overriding the theme file.
+ */
+function calymyk_new_hide_legacy_summary_box( $block_content, $block ) {
+	if ( is_admin() || ! is_singular( 'post' ) ) {
+		return $block_content;
+	}
 
+	$class_name = isset( $block['attrs']['className'] ) ? (string) $block['attrs']['className'] : '';
+
+	if ( false !== strpos( $class_name, 'cm-single__sidebar-card' ) ) {
+		return '';
+	}
+
+	return $block_content;
+}
+add_filter( 'render_block', 'calymyk_new_hide_legacy_summary_box', 10, 2 );
