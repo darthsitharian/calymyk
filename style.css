@@ -3220,3 +3220,52 @@ html[data-theme="dark"] {
 		margin-top: 48px;
 	}
 }
+
+
+/* Promotion sidebar editor/content */
+.cm-promotion-sidebar-section {
+	margin-top: 24px;
+	padding: 24px;
+	border: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent);
+	border-radius: 12px;
+	background: var(--wp--preset--color--base-2);
+}
+
+.cm-promotion-sidebar-section .cm-eyebrow {
+	margin: 0 0 16px;
+}
+
+.cm-promotion-sidebar-list {
+	margin: 0;
+	padding-left: 1.1em;
+}
+
+.cm-promotion-sidebar-list li + li {
+	margin-top: 10px;
+}
+
+.cm-promotion-sidebar-faq details {
+	padding: 14px 0;
+	border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent);
+}
+
+.cm-promotion-sidebar-faq details:first-child {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.cm-promotion-sidebar-faq details:last-child {
+	padding-bottom: 0;
+}
+
+.cm-promotion-sidebar-faq summary {
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.cm-promotion-sidebar-faq p {
+	margin: 10px 0 0;
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.55;
+}
