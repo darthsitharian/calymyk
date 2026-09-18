@@ -448,7 +448,7 @@ function calymyk_new_enqueue_editor_assets() {
 	wp_enqueue_script(
 		'calymyk-new-promotion-meta',
 		get_template_directory_uri() . '/assets/js/promotion-meta.js',
-		array( 'wp-blocks', 'wp-components', 'wp-data', 'wp-edit-post', 'wp-element', 'wp-plugins' ),
+		array( 'wp-blocks', 'wp-components', 'wp-core-data', 'wp-data', 'wp-edit-post', 'wp-element', 'wp-plugins' ),
 		file_exists( $asset ) ? filemtime( $asset ) : wp_get_theme()->get( 'Version' ),
 		true
 	);
