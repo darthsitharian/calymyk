@@ -1,9 +1,12 @@
 <?php
 /**
- * Title: Promocja — standardowy szkielet
+ * Title: Promocja — standardowe bloki
  * Slug: calymyk-new/promotion-template
  * Categories: calymyk
- * Description: Stały układ treści dla każdej promocji.
+ * Description: Standardowy zestaw bloków wymaganych dla każdej promocji.
  */
 ?>
-<?php echo calymyk_new_promotion_content_template(); ?>
+<!-- wp:calymyk/promotion-steps /-->
+<!-- wp:calymyk/promotion-prep /-->
+<!-- wp:calymyk/promotion-faq /-->
+<!-- wp:calymyk/promotion-terms /-->
