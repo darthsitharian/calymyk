@@ -579,134 +579,144 @@ html[data-theme="dark"] {
    ========================================================= */
 
 .cm-footer {
-    margin-top: 96px;
-    background: var(--wp--preset--color--base-2);
-    border-top: 1px solid color-mix(
-        in srgb,
-        var(--wp--preset--color--contrast) 8%,
-        transparent
-    );
+	width: 100%;
+	margin-top: 96px;
+	background: var(--wp--preset--color--base-2);
+	border-top: 1px solid color-mix(
+		in srgb,
+		var(--wp--preset--color--contrast) 8%,
+		transparent
+	);
 }
 
 .cm-footer__inner {
-    padding-top: 64px;
-    padding-bottom: 32px;
+	width: 90dvw;
+	max-width: none;
+	margin-inline: auto;
+	padding: 64px 0 32px;
+	box-sizing: border-box;
 }
 
-.cm-footer__top {
-    gap: 48px;
+.cm-footer__grid {
+	align-items: start;
 }
 
-.cm-footer__brand {
-    max-width: 360px;
-    margin: 0;
+.cm-footer__brand,
+.cm-footer__links {
+	min-width: 0;
 }
 
 .cm-footer__logo {
-    margin: 0 0 16px;
+	margin: 0;
 }
 
 .cm-footer__logo a {
-    color: var(--wp--preset--color--contrast);
-    font-family: var(--wp--preset--font-family--body);
-    font-size: 1.125rem;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    text-decoration: none;
+	color: var(--wp--preset--color--contrast);
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 1.125rem;
+	font-weight: 700;
+	letter-spacing: -0.025em;
+	text-decoration: none;
 }
 
 .cm-footer__logo a:hover {
-    color: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--accent);
 }
 
 .cm-footer__description {
-    margin: 0;
-    color: var(--wp--preset--color--contrast-2);
-    font-size: var(--wp--preset--font-size--small);
-    line-height: 1.6;
+	max-width: 360px;
+	margin: 16px 0 0;
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.6;
 }
 
-.cm-footer__links {
-    margin: 0;
+.cm-footer__label {
+	margin: 0 0 12px;
+	color: var(--wp--preset--color--contrast-3);
+	font-family: var(--wp--preset--font-family--mono);
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	line-height: 1.4;
 }
 
-.cm-footer__nav {
-    margin: 0;
+.cm-footer__links .wp-block-navigation {
+	margin: 0;
 }
 
-.cm-footer__nav
-.wp-block-navigation-item__content {
-    color: var(--wp--preset--color--contrast-2);
-    font-size: var(--wp--preset--font-size--small);
-    font-weight: 500;
-    text-decoration: none;
+.cm-footer__nav .wp-block-navigation__container {
+	gap: 12px 24px;
 }
 
-.cm-footer__nav
-.wp-block-navigation-item__content:hover {
-    color: var(--wp--preset--color--accent);
+.cm-footer__nav .wp-block-navigation-item__content {
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 500;
+	text-decoration: none;
+	transition: color 160ms ease;
+}
+
+.cm-footer__nav .wp-block-navigation-item__content:hover {
+	color: var(--wp--preset--color--accent);
 }
 
 .cm-footer__separator {
-    margin: 48px 0 24px;
-    border-color: color-mix(
-        in srgb,
-        var(--wp--preset--color--contrast) 8%,
-        transparent
-    );
+	margin: 48px 0 24px;
+	border-color: color-mix(
+		in srgb,
+		var(--wp--preset--color--contrast) 8%,
+		transparent
+	);
 }
 
 .cm-footer__bottom {
-    gap: 16px;
-    margin: 0;
+	gap: 16px;
+	margin: 0;
 }
 
 .cm-footer__copyright,
 .cm-footer__meta {
-    margin: 0;
-    color: var(--wp--preset--color--contrast-3);
-    font-family: var(--wp--preset--font-family--body);
-    font-size: var(--wp--preset--font-size--xs);
+	margin: 0;
+	color: var(--wp--preset--color--contrast-3);
+	font-family: var(--wp--preset--font-family--body);
+	font-size: var(--wp--preset--font-size--xs);
 }
 
 @media (max-width: 768px) {
+	.cm-footer {
+		margin-top: 64px;
+	}
 
-    .cm-footer {
-        margin-top: 64px;
-    }
+	.cm-footer__inner {
+		width: calc(100% - 32px);
+		padding: 48px 0 24px;
+	}
 
-    .cm-footer__inner {
-        padding-top: 48px;
-        padding-bottom: 24px;
-    }
+	.cm-footer__brand,
+	.cm-footer__links {
+		grid-column: 1 / -1;
+	}
 
-    .cm-footer__top {
-        gap: 32px;
-    }
+	.cm-footer__links {
+		margin-top: 8px;
+	}
 
-    .cm-footer__brand {
-        max-width: none;
-    }
+	.cm-footer__nav .wp-block-navigation__container {
+		gap: 12px 16px;
+	}
 
-    .cm-footer__links {
-        width: 100%;
-    }
+	.cm-footer__separator {
+		margin-top: 40px;
+	}
 
-    .cm-footer__nav
-    .wp-block-navigation__container {
-        gap: 16px;
-    }
-
-    .cm-footer__separator {
-        margin-top: 40px;
-    }
-
-    .cm-footer__bottom {
-        align-items: flex-start;
-    }
+	.cm-footer__bottom {
+		align-items: flex-start;
+	}
 }
 
 /* =========================================================
+   CALYMYK — HERO/* =========================================================
    CALYMYK — HERO
    ========================================================= */
 
