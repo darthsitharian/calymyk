@@ -97,3 +97,12 @@ function calymyk_new_register_tools() {
 }
 
 add_action( 'init', 'calymyk_new_register_tools' );
+/**
+ * Refresh rewrite rules when the theme is activated so custom post type URLs work.
+ */
+function calymyk_new_refresh_rewrite_rules() {
+	calymyk_new_register_tools();
+	flush_rewrite_rules();
+}
+
+add_action( 'after_switch_theme', 'calymyk_new_refresh_rewrite_rules' );
