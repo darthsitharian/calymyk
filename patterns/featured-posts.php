@@ -43,7 +43,7 @@
 	<div style="height:40px" aria-hidden="true" class="wp-block-spacer"></div>
 	<!-- /wp:spacer -->
 
-	<!-- wp:query {"queryId":1,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"displayLayout":{"type":"flex","flexWrap":"wrap"},"className":"cm-featured-query"} -->
+	<!-- wp:query {"queryId":1,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"cm-featured-query"} -->
 	<div class="wp-block-query cm-featured-query">
 
 		<!-- wp:post-template {"className":"cm-grid cm-featured-posts-grid","layout":{"type":"default"}} -->
