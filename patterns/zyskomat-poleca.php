@@ -45,8 +45,8 @@
 
 		<!-- wp:post-template {"className":"cm-recommendations__grid cm-grid","layout":{"type":"default"}} -->
 
-			<!-- wp:group {"className":"cm-span-4 cm-recommendation-card","layout":{"type":"default"}} -->
-			<div class="wp-block-group cm-span-4 cm-recommendation-card">
+			<!-- wp:group {"className":"cm-recommendation-card","layout":{"type":"default"}} -->
+			<div class="wp-block-group cm-recommendation-card">
 
 				<!-- wp:post-featured-image {"isLink":true,"className":"cm-recommendation-card__media"} /-->
 
