@@ -1,0 +1,68 @@
+{
+	"$schema": "https://schemas.wp.org/wp/7.1/theme.json",
+	"version": 3,
+	"title": "Calymyk Light",
+	"settings": {
+		"color": {
+			"defaultPalette": false,
+			"palette": [
+				{
+					"color": "#FFFFFF",
+					"name": "Background",
+					"slug": "base"
+				},
+				{
+					"color": "#F3F6F4",
+					"name": "Surface",
+					"slug": "base-2"
+				},
+				{
+					"color": "#121316",
+					"name": "Text",
+					"slug": "contrast"
+				},
+				{
+					"color": "#59635E",
+					"name": "Muted Text",
+					"slug": "contrast-2"
+				},
+				{
+					"color": "#7A847F",
+					"name": "Subtle Text",
+					"slug": "contrast-3"
+				},
+				{
+					"color": "#00B85C",
+					"name": "Primary",
+					"slug": "accent"
+				},
+				{
+					"color": "#E64A19",
+					"name": "Secondary",
+					"slug": "accent-2"
+				},
+				{
+					"color": "#059669",
+					"name": "Tertiary",
+					"slug": "accent-3"
+				},
+				{
+					"color": "#008A45",
+					"name": "Primary Dark",
+					"slug": "accent-4"
+				},
+				{
+					"color": "#E8FFF1",
+					"name": "Primary Soft",
+					"slug": "accent-5"
+				}
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--base)",
+			"text": "var(--wp--preset--color--contrast)"
+		}
+	}
+}

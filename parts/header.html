@@ -1,0 +1,49 @@
+<!-- wp:group {"tagName":"header","className":"cm-header","layout":{"type":"default"}} -->
+<header class="wp-block-group cm-header">
+
+    <!-- wp:group {"className":"cm-container-wide cm-header__inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+    <div class="wp-block-group cm-container-wide cm-header__inner">
+
+        <!-- LEWA STRONA: LOGO + SEARCH -->
+        <!-- wp:group {"className":"cm-header__left","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+        <div class="wp-block-group cm-header__left">
+
+            <!-- wp:site-title {"level":0,"isLink":true,"className":"cm-header__brand"} /-->
+
+            <!-- wp:search {"label":"Szukaj","showLabel":false,"placeholder":"Szukaj…","buttonText":"Szukaj","buttonPosition":"button-inside","buttonUseIcon":true,"className":"cm-header__search"} /-->
+
+        </div>
+        <!-- /wp:group -->
+
+
+        <!-- PRAWA STRONA: SEARCH MOBILE + MENU + THEME TOGGLE -->
+        <!-- wp:group {"className":"cm-header__right","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+        <div class="wp-block-group cm-header__right">
+
+            <!-- MOBILE SEARCH ICON -->
+            <!-- wp:search {"label":"Szukaj","showLabel":false,"buttonText":"Szukaj","buttonPosition":"button-only","buttonUseIcon":true,"className":"cm-header__search-mobile"} /-->
+
+            <!-- NAVIGATION -->
+            <!-- wp:navigation {"overlayMenu":"mobile","icon":"menu","className":"cm-header__nav","layout":{"type":"flex","justifyContent":"right"}} /-->
+
+            <!-- THEME TOGGLE -->
+            <!-- wp:html -->
+            <button
+                type="button"
+                class="cm-theme-toggle"
+                aria-label="Przełącz motyw"
+                aria-pressed="false"
+            >
+                <span class="cm-theme-toggle__icon cm-theme-toggle__icon--sun" aria-hidden="true">☀</span>
+                <span class="cm-theme-toggle__icon cm-theme-toggle__icon--moon" aria-hidden="true">☾</span>
+            </button>
+            <!-- /wp:html -->
+
+        </div>
+        <!-- /wp:group -->
+
+    </div>
+    <!-- /wp:group -->
+
+</header>
+<!-- /wp:group -->
