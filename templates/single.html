@@ -27,6 +27,8 @@
 
 			<!-- wp:post-content {"className":"cm-single__content","layout":{"type":"constrained"}} /-->
 
+			<!-- wp:shortcode -->[calymyk_related_posts]<!-- /wp:shortcode -->
+
 		</div>
 		<!-- /wp:group -->
 
@@ -55,26 +57,7 @@
 
 			<!-- wp:shortcode -->[calymyk_promotion_duration]<!-- /wp:shortcode -->
 
-			<!-- wp:group {"className":"cm-single__sidebar-related","layout":{"type":"default"}} -->
-			<div class="wp-block-group cm-single__sidebar-related">
-				<!-- wp:paragraph {"className":"cm-eyebrow"} -->
-				<p class="cm-eyebrow">JESZCZE TO</p>
-				<!-- /wp:paragraph -->
 
-				<!-- wp:query {"query":{"perPage":3,"postType":"post","inherit":true},"displayLayout":{"type":"list"}} -->
-				<div class="wp-block-query">
-					<!-- wp:post-template -->
-						<!-- wp:group {"className":"cm-single__related-item","layout":{"type":"default"}} -->
-						<div class="wp-block-group cm-single__related-item">
-							<!-- wp:post-title {"isLink":true,"fontSize":"small"} /-->
-							<!-- wp:post-date {"isLink":false,"fontSize":"small"} /-->
-						</div>
-						<!-- /wp:group -->
-					<!-- /wp:post-template -->
-				</div>
-				<!-- /wp:query -->
-			</div>
-			<!-- /wp:group -->
 
 		</aside>
 		<!-- /wp:group -->
