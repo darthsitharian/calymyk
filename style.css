@@ -3105,3 +3105,20 @@ html[data-theme="dark"] {
 		grid-column: 1 / -1;
 	}
 }
+
+
+/* =========================================================
+   CALYMYK — RELATED TOOLS
+   ========================================================= */
+
+.cm-related-tools .cm-related-post-card__footer {
+	padding-top: 24px;
+}
+
+.cm-related-tools .cm-related-post-card__link {
+	color: var(--wp--preset--color--contrast);
+}
+
+.cm-related-tool-card .cm-related-post-card__image {
+	background: var(--wp--preset--color--base-2);
+}
