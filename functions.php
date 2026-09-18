@@ -236,6 +236,27 @@ function calymyk_new_register_promotion_blocks() {
 }
 add_action( 'init', 'calymyk_new_register_promotion_blocks', 30 );
 
+/**
+ * Give every new standard post the same promotion block structure.
+ */
+function calymyk_new_post_template( $args, $post_type ) {
+	if ( 'post' !== $post_type ) {
+		return $args;
+	}
+
+	$args['template'] = array(
+		array( 'calymyk/promotion-steps' ),
+		array( 'calymyk/promotion-prep' ),
+		array( 'calymyk/promotion-faq' ),
+		array( 'calymyk/promotion-terms' ),
+	);
+
+	return $args;
+}
+add_filter( 'register_post_type_args', 'calymyk_new_post_template', 10, 2 );
+
+
+
 function calymyk_new_render_promotion_steps( $attributes ) {
 	$steps = isset( $attributes['steps'] ) && is_array( $attributes['steps'] ) ? $attributes['steps'] : array();
 	$output = '<section class="cm-promotion-section cm-promotion-steps"><p class="cm-eyebrow">NAWIGATOR KROKÓW</p><div class="cm-promotion-steps__list">';
