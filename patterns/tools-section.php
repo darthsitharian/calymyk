@@ -21,9 +21,7 @@
 			<!-- /wp:paragraph -->
 
 			<!-- wp:heading {"level":2} -->
-			<h2 class="wp-block-heading">
-				Narzędzia, które warto mieć pod ręką.
-			</h2>
+			<h2 class="wp-block-heading">Narzędzia, które warto mieć pod ręką.</h2>
 			<!-- /wp:heading -->
 
 		</div>
@@ -33,10 +31,7 @@
 		<div class="wp-block-group cm-span-4 cm-section-header__aside">
 
 			<!-- wp:paragraph -->
-			<p>
-				Wybrane narzędzia do pracy, organizacji,
-				tworzenia i codziennego działania.
-			</p>
+			<p>Wybrane narzędzia do pracy, organizacji, tworzenia i codziennego działania.</p>
 			<!-- /wp:paragraph -->
 
 		</div>
@@ -49,95 +44,35 @@
 	<div style="height:40px" aria-hidden="true" class="wp-block-spacer"></div>
 	<!-- /wp:spacer -->
 
-	<!-- wp:group {"className":"cm-grid cm-tools-grid","layout":{"type":"default"}} -->
-	<div class="wp-block-group cm-grid cm-tools-grid">
+	<!-- wp:query {"query":{"perPage":3,"postType":"tool","inherit":false},"className":"cm-tools-query"} -->
+	<div class="wp-block-query cm-tools-query">
 
-		<!-- TOOL CARD 1 -->
-		<!-- wp:group {"className":"cm-span-4 cm-tool-card","layout":{"type":"default"}} -->
-		<div class="wp-block-group cm-span-4 cm-tool-card">
+		<!-- wp:post-template {"className":"cm-grid cm-tools-grid"} -->
+			<!-- wp:group {"className":"cm-span-4 cm-tool-card","layout":{"type":"default"}} -->
+			<article class="wp-block-group cm-span-4 cm-tool-card">
 
-			<!-- wp:paragraph {"className":"cm-tool-card__category"} -->
-			<p class="cm-tool-card__category">PRODUCTIVITY</p>
+				<!-- wp:post-featured-image {"isLink":true,"className":"cm-tool-card__image"} /-->
+
+				<!-- wp:post-terms {"term":"tool_category","className":"cm-tool-card__category"} /-->
+
+				<!-- wp:post-title {"isLink":true} /-->
+
+				<!-- wp:post-excerpt {"className":"cm-tool-card__description"} /-->
+
+				<!-- wp:read-more {"content":"Zobacz narzędzie →","className":"cm-tool-card__link"} /-->
+
+			</article>
+			<!-- /wp:group -->
+		<!-- /wp:post-template -->
+
+		<!-- wp:query-no-results -->
+			<!-- wp:paragraph -->
+			<p>Nie ma jeszcze żadnych narzędzi.</p>
 			<!-- /wp:paragraph -->
-
-			<!-- wp:heading {"level":3} -->
-			<h3 class="wp-block-heading">Notion</h3>
-			<!-- /wp:heading -->
-
-			<!-- wp:paragraph {"className":"cm-tool-card__description"} -->
-			<p class="cm-tool-card__description">
-				Workspace do organizacji informacji,
-				projektów i codziennej pracy.
-			</p>
-			<!-- /wp:paragraph -->
-
-			<!-- wp:paragraph {"className":"cm-tool-card__link"} -->
-			<p class="cm-tool-card__link">
-				Zobacz narzędzie →
-			</p>
-			<!-- /wp:paragraph -->
-
-		</div>
-		<!-- /wp:group -->
-
-		<!-- TOOL CARD 2 -->
-		<!-- wp:group {"className":"cm-span-4 cm-tool-card","layout":{"type":"default"}} -->
-		<div class="wp-block-group cm-span-4 cm-tool-card">
-
-			<!-- wp:paragraph {"className":"cm-tool-card__category"} -->
-			<p class="cm-tool-card__category">DESIGN</p>
-			<!-- /wp:paragraph -->
-
-			<!-- wp:heading {"level":3} -->
-			<h3 class="wp-block-heading">Figma</h3>
-			<!-- /wp:heading -->
-
-			<!-- wp:paragraph {"className":"cm-tool-card__description"} -->
-			<p class="cm-tool-card__description">
-				Narzędzie do projektowania interfejsów
-				i współpracy nad produktami cyfrowymi.
-			</p>
-			<!-- /wp:paragraph -->
-
-			<!-- wp:paragraph {"className":"cm-tool-card__link"} -->
-			<p class="cm-tool-card__link">
-				Zobacz narzędzie →
-			</p>
-			<!-- /wp:paragraph -->
-
-		</div>
-		<!-- /wp:group -->
-
-		<!-- TOOL CARD 3 -->
-		<!-- wp:group {"className":"cm-span-4 cm-tool-card","layout":{"type":"default"}} -->
-		<div class="wp-block-group cm-span-4 cm-tool-card">
-
-			<!-- wp:paragraph {"className":"cm-tool-card__category"} -->
-			<p class="cm-tool-card__category">AI</p>
-			<!-- /wp:paragraph -->
-
-			<!-- wp:heading {"level":3} -->
-			<h3 class="wp-block-heading">ChatGPT</h3>
-			<!-- /wp:heading -->
-
-			<!-- wp:paragraph {"className":"cm-tool-card__description"} -->
-			<p class="cm-tool-card__description">
-				Asystent AI do pracy z tekstem,
-				analizą, pomysłami i automatyzacją.
-			</p>
-			<!-- /wp:paragraph -->
-
-			<!-- wp:paragraph {"className":"cm-tool-card__link"} -->
-			<p class="cm-tool-card__link">
-				Zobacz narzędzie →
-			</p>
-			<!-- /wp:paragraph -->
-
-		</div>
-		<!-- /wp:group -->
+		<!-- /wp:query-no-results -->
 
 	</div>
-	<!-- /wp:group -->
+	<!-- /wp:query -->
 
 </div>
 <!-- /wp:group -->
