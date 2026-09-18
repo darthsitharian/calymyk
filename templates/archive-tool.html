@@ -18,6 +18,16 @@
 	</div>
 	<!-- /wp:group -->
 
+	<!-- wp:group {"className":"cm-tools-archive__controls","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+	<div class="wp-block-group cm-tools-archive__controls">
+		<!-- wp:search {"label":"Szukaj narzędzia","showLabel":false,"placeholder":"Szukaj narzędzia…","buttonText":"Szukaj","buttonPosition":"button-inside","buttonUseIcon":true} /-->
+		<!-- wp:paragraph {"className":"cm-tools-archive__categories-label"} -->
+		<p class="cm-tools-archive__categories-label">Kategorie</p>
+		<!-- /wp:paragraph -->
+		<!-- wp:tag-cloud {"taxonomy":"tool_category","showCounts":true,"smallestFontSize":0.8,"largestFontSize":0.8} /-->
+	</div>
+	<!-- /wp:group -->
+
 	<!-- wp:query {"query":{"perPage":12,"postType":"tool","inherit":true},"className":"cm-tools-archive-query"} -->
 	<div class="wp-block-query cm-tools-archive-query">
 		<!-- wp:post-template {"className":"cm-tools-archive-grid"} -->
@@ -27,6 +37,7 @@
 				<!-- wp:post-terms {"term":"tool_category","className":"cm-tool-archive-card__category"} /-->
 				<!-- wp:post-title {"isLink":true,"className":"cm-tool-archive-card__title"} /-->
 				<!-- wp:post-excerpt {"className":"cm-tool-archive-card__excerpt"} /-->
+				<!-- wp:shortcode -->[calymyk_tool_archive_cta]<!-- /wp:shortcode -->
 			</article>
 			<!-- /wp:group -->
 		<!-- /wp:post-template -->
