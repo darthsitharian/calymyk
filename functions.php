@@ -357,6 +357,49 @@ function calymyk_new_register_promotion_meta() {
 
 	register_post_meta(
 		'post',
+		'_calymyk_promotion_prep',
+		array(
+			'type'              => 'array',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => function ( $value ) {
+				return is_array( $value ) ? array_map( 'sanitize_text_field', $value ) : array();
+			},
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+
+	register_post_meta(
+		'post',
+		'_calymyk_promotion_faq',
+		array(
+			'type'              => 'array',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => function ( $value ) {
+				if ( ! is_array( $value ) ) {
+					return array();
+				}
+				return array_map(
+					function ( $item ) {
+					return array(
+						'question' => isset( $item['question'] ) ? sanitize_text_field( $item['question'] ) : '',
+						'answer'   => isset( $item['answer'] ) ? sanitize_textarea_field( $item['answer'] ) : '',
+					);
+					},
+					$value
+				);
+			},
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+
+	register_post_meta(
+		'post',
 		'_calymyk_promotion_end',
 		array(
 			'type'              => 'string',
