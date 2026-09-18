@@ -3122,3 +3122,101 @@ html[data-theme="dark"] {
 .cm-related-tool-card .cm-related-post-card__image {
 	background: var(--wp--preset--color--base-2);
 }
+
+
+/* =========================================================
+   CALYMYK — PROMOTION CONTENT STRUCTURE
+   ========================================================= */
+
+.cm-promotion-section {
+	margin-top: 64px;
+}
+
+.cm-promotion-section:first-child {
+	margin-top: 0;
+}
+
+.cm-promotion-section > h2 {
+	margin: 0 0 24px;
+	font-size: clamp(1.75rem, 3vw, 2.5rem);
+	line-height: 1.1;
+	letter-spacing: -0.025em;
+}
+
+.cm-promotion-steps {
+	padding-top: 8px;
+}
+
+.cm-promotion-step {
+	padding: 24px 0;
+	border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent);
+}
+
+.cm-promotion-step:last-of-type {
+	border-bottom: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent);
+}
+
+.cm-promotion-step h3 {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--large);
+	line-height: 1.25;
+}
+
+.cm-promotion-step p {
+	margin: 8px 0 0;
+	color: var(--wp--preset--color--contrast-2);
+}
+
+.cm-promotion-editor-note {
+	margin-top: 12px;
+	color: var(--wp--preset--color--contrast-3);
+	font-size: var(--wp--preset--font-size--xs);
+}
+
+.cm-promotion-prep ul {
+	margin: 0;
+	padding-left: 1.25em;
+}
+
+.cm-promotion-prep li + li {
+	margin-top: 10px;
+}
+
+.cm-promotion-faq details {
+	padding: 18px 0;
+	border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent);
+}
+
+.cm-promotion-faq details:last-of-type {
+	border-bottom: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 12%, transparent);
+}
+
+.cm-promotion-faq summary {
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.cm-promotion-faq details p {
+	max-width: 680px;
+	margin: 12px 0 0;
+	color: var(--wp--preset--color--contrast-2);
+}
+
+.cm-promotion-terms {
+	padding-top: 8px;
+	padding-bottom: 16px;
+}
+
+.cm-promotion-terms p {
+	margin: 0;
+}
+
+.cm-promotion-terms a {
+	font-weight: 600;
+}
+
+@media (max-width: 600px) {
+	.cm-promotion-section {
+		margin-top: 48px;
+	}
+}
