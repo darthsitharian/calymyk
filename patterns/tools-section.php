@@ -7,8 +7,8 @@
  */
 ?>
 
-<!-- wp:group {"className":"cm-container-wide","layout":{"type":"default"}} -->
-<div class="wp-block-group cm-container-wide">
+<!-- wp:group {"className":"cm-tools-section","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-tools-section">
 
 	<!-- wp:group {"className":"cm-section-header cm-grid","layout":{"type":"default"}} -->
 	<div class="wp-block-group cm-section-header cm-grid">
@@ -138,10 +138,6 @@
 
 	</div>
 	<!-- /wp:group -->
-
-	<!-- wp:spacer {"height":"96px"} -->
-	<div style="height:96px" aria-hidden="true" class="wp-block-spacer"></div>
-	<!-- /wp:spacer -->
 
 </div>
 <!-- /wp:group -->
