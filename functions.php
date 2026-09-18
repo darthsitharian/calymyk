@@ -108,7 +108,7 @@ function calymyk_new_refresh_rewrite_rules() {
 add_action( 'after_switch_theme', 'calymyk_new_refresh_rewrite_rules' );
 
 /**
- * Tool metadata: external URL and related promotion posts.
+ * Tool metadata: external URL.
  */
 function calymyk_new_add_tool_meta_boxes() {
 	add_meta_box(
@@ -125,36 +125,11 @@ add_action( 'add_meta_boxes_tool', 'calymyk_new_add_tool_meta_boxes' );
 function calymyk_new_render_tool_details_meta_box( $post ) {
 	wp_nonce_field( 'calymyk_tool_details', 'calymyk_tool_details_nonce' );
 	$url = get_post_meta( $post->ID, '_calymyk_tool_url', true );
-	$related = get_post_meta( $post->ID, '_calymyk_tool_promotions', true );
-	$related = is_array( $related ) ? array_map( 'absint', $related ) : array();
-
-	$posts = get_posts(
-		array(
-			'post_type'      => 'post',
-			'post_status'    => 'publish',
-			'posts_per_page' => 50,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-		)
-	);
 	?>
 	<p>
 		<label for="calymyk_tool_url"><strong>URL narzędzia</strong></label><br>
 		<input type="url" id="calymyk_tool_url" name="calymyk_tool_url" value="<?php echo esc_attr( $url ); ?>" class="widefat" placeholder="https://example.com/">
 	</p>
-	<p><strong>Aktualne promocje / powiązane wpisy</strong></p>
-	<?php if ( $posts ) : ?>
-		<div style="max-height:220px;overflow:auto;border:1px solid #dcdcde;padding:8px;">
-			<?php foreach ( $posts as $related_post ) : ?>
-				<label style="display:block;margin:0 0 7px;">
-					<input type="checkbox" name="calymyk_tool_promotions[]" value="<?php echo esc_attr( $related_post->ID ); ?>" <?php checked( in_array( $related_post->ID, $related, true ) ); ?>>
-					<?php echo esc_html( get_the_title( $related_post ) ); ?>
-				</label>
-			<?php endforeach; ?>
-		</div>
-	<?php else : ?>
-		<p>Brak opublikowanych wpisów do powiązania.</p>
-	<?php endif; ?>
 	<?php
 }
 
@@ -178,21 +153,151 @@ function calymyk_new_save_tool_details( $post_id ) {
 	} else {
 		delete_post_meta( $post_id, '_calymyk_tool_url' );
 	}
-
-	$promotions = isset( $_POST['calymyk_tool_promotions'] ) && is_array( $_POST['calymyk_tool_promotions'] )
-		? array_values( array_filter( array_map( 'absint', wp_unslash( $_POST['calymyk_tool_promotions'] ) ) ) )
-		: array();
-	$promotions = array_values(
-		array_filter(
-			$promotions,
-			function ( $id ) {
-				return 'post' === get_post_type( $id ) && 'publish' === get_post_status( $id );
-			}
-		)
-	);
-	update_post_meta( $post_id, '_calymyk_tool_promotions', $promotions );
 }
 add_action( 'save_post_tool', 'calymyk_new_save_tool_details' );
+
+/**
+ * Promotion metadata: assigned tool and promotion duration.
+ */
+function calymyk_new_add_post_promotion_meta_box() {
+	add_meta_box(
+		'calymyk_post_promotion',
+		'Szczegóły promocji',
+		'calymyk_new_render_post_promotion_meta_box',
+		'post',
+		'side',
+		'high'
+	);
+}
+add_action( 'add_meta_boxes_post', 'calymyk_new_add_post_promotion_meta_box' );
+
+function calymyk_new_render_post_promotion_meta_box( $post ) {
+	wp_nonce_field( 'calymyk_post_promotion', 'calymyk_post_promotion_nonce' );
+
+	$tool_id  = absint( get_post_meta( $post->ID, '_calymyk_post_tool', true ) );
+	$start    = get_post_meta( $post->ID, '_calymyk_promotion_start', true );
+	$end      = get_post_meta( $post->ID, '_calymyk_promotion_end', true );
+	$tools    = get_posts(
+		array(
+			'post_type'      => 'tool',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'orderby'        => 'title',
+			'order'          => 'ASC',
+		)
+	);
+	?>
+	<p>
+		<label for="calymyk_post_tool"><strong>Narzędzie</strong></label><br>
+		<select id="calymyk_post_tool" name="calymyk_post_tool" class="widefat">
+			<option value="0">— bez przypisania —</option>
+			<?php foreach ( $tools as $tool ) : ?>
+				<option value="<?php echo esc_attr( $tool->ID ); ?>" <?php selected( $tool_id, $tool->ID ); ?>>
+					<?php echo esc_html( get_the_title( $tool ) ); ?>
+				</option>
+			<?php endforeach; ?>
+		</select>
+	</p>
+	<p>
+		<label for="calymyk_promotion_start"><strong>Promocja od</strong></label><br>
+		<input type="date" id="calymyk_promotion_start" name="calymyk_promotion_start" value="<?php echo esc_attr( $start ); ?>" class="widefat">
+	</p>
+	<p>
+		<label for="calymyk_promotion_end"><strong>Promocja do</strong></label><br>
+		<input type="date" id="calymyk_promotion_end" name="calymyk_promotion_end" value="<?php echo esc_attr( $end ); ?>" class="widefat">
+	</p>
+	<p class="description">Daty są opcjonalne. Uzupełnij je, jeśli promocja ma określony czas trwania.</p>
+	<?php
+}
+
+function calymyk_new_save_post_promotion( $post_id ) {
+	if ( ! isset( $_POST['calymyk_post_promotion_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['calymyk_post_promotion_nonce'] ) ), 'calymyk_post_promotion' ) ) {
+		return;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	if ( ! current_user_can( 'edit_post', $post_id ) || 'post' !== get_post_type( $post_id ) ) {
+		return;
+	}
+
+	$tool_id = isset( $_POST['calymyk_post_tool'] ) ? absint( $_POST['calymyk_post_tool'] ) : 0;
+	if ( $tool_id && 'tool' === get_post_type( $tool_id ) ) {
+		update_post_meta( $post_id, '_calymyk_post_tool', $tool_id );
+	} else {
+		delete_post_meta( $post_id, '_calymyk_post_tool' );
+	}
+
+	$start = isset( $_POST['calymyk_promotion_start'] ) ? sanitize_text_field( wp_unslash( $_POST['calymyk_promotion_start'] ) ) : '';
+	$end   = isset( $_POST['calymyk_promotion_end'] ) ? sanitize_text_field( wp_unslash( $_POST['calymyk_promotion_end'] ) ) : '';
+
+	if ( preg_match( '/^\\d{4}-\\d{2}-\\d{2}$/', $start ) ) {
+		update_post_meta( $post_id, '_calymyk_promotion_start', $start );
+	} else {
+		delete_post_meta( $post_id, '_calymyk_promotion_start' );
+	}
+
+	if ( preg_match( '/^\\d{4}-\\d{2}-\\d{2}$/', $end ) ) {
+		update_post_meta( $post_id, '_calymyk_promotion_end', $end );
+	} else {
+		delete_post_meta( $post_id, '_calymyk_promotion_end' );
+	}
+}
+add_action( 'save_post_post', 'calymyk_new_save_post_promotion' );
+
+/**
+ * Render the tool assigned to the current promotion.
+ */
+function calymyk_new_post_tool_shortcode() {
+	$tool_id = absint( get_post_meta( get_the_ID(), '_calymyk_post_tool', true ) );
+	if ( ! $tool_id || 'tool' !== get_post_type( $tool_id ) ) {
+		return '';
+	}
+
+	$url = get_post_meta( $tool_id, '_calymyk_tool_url', true );
+	$output = '<section class="cm-post-tool"><p class="cm-eyebrow">NARZĘDZIE</p>';
+	$output .= '<h2 class="cm-post-tool__title"><a href="' . esc_url( get_permalink( $tool_id ) ) . '">' . esc_html( get_the_title( $tool_id ) ) . '</a></h2>';
+
+	if ( $url ) {
+		$output .= '<p class="cm-post-tool__cta"><a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">Odwiedź narzędzie →</a></p>';
+	}
+
+	$output .= '</section>';
+
+	return $output;
+}
+add_shortcode( 'calymyk_post_tool', 'calymyk_new_post_tool_shortcode' );
+
+/**
+ * Render the promotion duration.
+ */
+function calymyk_new_promotion_duration_shortcode() {
+	$start = get_post_meta( get_the_ID(), '_calymyk_promotion_start', true );
+	$end   = get_post_meta( get_the_ID(), '_calymyk_promotion_end', true );
+
+	if ( ! $start && ! $end ) {
+		return '';
+	}
+
+	$format_date = static function ( $date ) {
+		$timestamp = strtotime( $date );
+		return $timestamp ? wp_date( 'j.m.Y', $timestamp ) : '';
+	};
+
+	$start_label = $format_date( $start );
+	$end_label   = $format_date( $end );
+
+	if ( $start_label && $end_label ) {
+		$label = $start_label . ' – ' . $end_label;
+	} elseif ( $start_label ) {
+		$label = 'od ' . $start_label;
+	} else {
+		$label = 'do ' . $end_label;
+	}
+
+	return '<section class="cm-promotion-duration"><p class="cm-eyebrow">CZAS TRWANIA PROMOCJI</p><p class="cm-promotion-duration__value">' . esc_html( $label ) . '</p></section>';
+}
+add_shortcode( 'calymyk_promotion_duration', 'calymyk_new_promotion_duration_shortcode' );
 
 /**
  * Render the external tool CTA.
@@ -216,43 +321,3 @@ function calymyk_new_tool_archive_cta_shortcode() {
 add_shortcode( 'calymyk_tool_archive_cta', 'calymyk_new_tool_archive_cta_shortcode' );
 add_shortcode( 'calymyk_tool_url', 'calymyk_new_tool_url_shortcode' );
 
-/**
- * Render related promotion posts.
- */
-function calymyk_new_tool_promotions_shortcode() {
-	$ids = get_post_meta( get_the_ID(), '_calymyk_tool_promotions', true );
-	$ids = is_array( $ids ) ? array_values( array_filter( array_map( 'absint', $ids ) ) ) : array();
-	if ( ! $ids ) {
-		return '';
-	}
-
-	$query = new WP_Query(
-		array(
-			'post_type'      => 'post',
-			'post_status'    => 'publish',
-			'post__in'       => $ids,
-			'orderby'        => 'post__in',
-			'posts_per_page' => 6,
-		)
-	);
-
-	if ( ! $query->have_posts() ) {
-		return '';
-	}
-
-	$output = '<section class="cm-tool-promotions"><p class="cm-eyebrow">AKTUALNE PROMOCJE</p><div class="cm-tool-promotions__grid">';
-	while ( $query->have_posts() ) {
-		$query->the_post();
-		$output .= '<article class="cm-tool-promotion">';
-		if ( has_post_thumbnail() ) {
-			$output .= '<a class="cm-tool-promotion__image" href="' . esc_url( get_permalink() ) . '">' . get_the_post_thumbnail( get_the_ID(), 'medium_large' ) . '</a>';
-		}
-		$output .= '<h3 class="cm-tool-promotion__title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h3>';
-		$output .= '<p class="cm-tool-promotion__date">' . esc_html( get_the_date() ) . '</p>';
-		$output .= '</article>';
-	}
-	wp_reset_postdata();
-
-	return $output . '</div></section>';
-}
-add_shortcode( 'calymyk_tool_promotions', 'calymyk_new_tool_promotions_shortcode' );
