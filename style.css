@@ -825,6 +825,7 @@ html[data-theme="dark"] {
 }
 
 .cm-featured-query {
+	display: block !important;
 	width: 100%;
 	max-width: none;
 }
@@ -1324,4 +1325,12 @@ html[data-theme="dark"] {
 	.cm-archive-query > .cm-archive-grid {
 		grid-template-columns: 1fr;
 	}
+}
+
+
+/* Ensure WordPress Query Loop does not create a competing parent grid. */
+.cm-featured-query > .wp-block-post-template {
+	grid-column: auto !important;
+	grid-row: auto !important;
+	list-style: none;
 }
