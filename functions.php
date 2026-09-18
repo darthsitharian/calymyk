@@ -30,7 +30,7 @@ function calymyk_new_enqueue_assets() {
 
 add_action( 'wp_enqueue_scripts', 'calymyk_new_enqueue_assets' );
 
-//**
+/**
  * Limit the Zyskomat recommendation Query Loop to posts
  * assigned to the standard "Polecamy" category.
  *
