@@ -157,124 +157,135 @@ function calymyk_new_save_tool_details( $post_id ) {
 add_action( 'save_post_tool', 'calymyk_new_save_tool_details' );
 
 /**
- * Provide the standard promotion content structure for new posts.
+ * Register Calymyk promotion blocks.
  */
-function calymyk_new_promotion_content_template() {
-	return <<<'HTML'
-<!-- wp:group {"className":"cm-promotion-section cm-promotion-intro","layout":{"type":"default"}} -->
-<div class="wp-block-group cm-promotion-section cm-promotion-intro">
-	<!-- wp:heading {"level":2} -->
-	<h2 class="wp-block-heading">Jak skorzystać z promocji</h2>
-	<!-- /wp:heading -->
+function calymyk_new_register_promotion_blocks() {
+	wp_register_script(
+		'calymyk-new-promotion-blocks',
+		get_template_directory_uri() . '/assets/js/promotion-blocks.js',
+		array( 'wp-blocks', 'wp-block-editor', 'wp-components', 'wp-element', 'wp-i18n' ),
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
 
-	<!-- wp:paragraph -->
-	<p>Opisz tutaj najważniejsze informacje i zasady skorzystania z promocji.</p>
-	<!-- /wp:paragraph -->
-</div>
-<!-- /wp:group -->
+	register_block_type(
+		'calymyk/promotion-steps',
+		array(
+			'api_version'   => 3,
+			'attributes'    => array(
+				'steps' => array(
+					'type'    => 'array',
+					'default' => array(
+						array( 'title' => 'Krok 1', 'description' => '' ),
+						array( 'title' => 'Krok 2', 'description' => '' ),
+					),
+				),
+			),
+			'editor_script' => 'calymyk-new-promotion-blocks',
+			'render_callback' => 'calymyk_new_render_promotion_steps',
+		)
+	);
 
-<!-- wp:group {"className":"cm-promotion-section cm-promotion-steps","layout":{"type":"default"}} -->
-<div class="wp-block-group cm-promotion-section cm-promotion-steps">
-	<!-- wp:heading {"level":2} -->
-	<h2 class="wp-block-heading">Nawigator kroków</h2>
-	<!-- /wp:heading -->
+	register_block_type(
+		'calymyk/promotion-prep',
+		array(
+			'api_version'   => 3,
+			'attributes'    => array(
+				'items' => array(
+					'type'    => 'array',
+					'default' => array( '', '', '' ),
+				),
+			),
+			'editor_script' => 'calymyk-new-promotion-blocks',
+			'render_callback' => 'calymyk_new_render_promotion_prep',
+		)
+	);
 
-	<!-- wp:group {"className":"cm-promotion-step","layout":{"type":"default"}} -->
-	<div class="wp-block-group cm-promotion-step">
-		<!-- wp:heading {"level":3} -->
-		<h3 class="wp-block-heading">Krok 1</h3>
-		<!-- /wp:heading -->
-		<!-- wp:paragraph -->
-		<p>Opisz pierwszy krok.</p>
-		<!-- /wp:paragraph -->
-	</div>
-	<!-- /wp:group -->
+	register_block_type(
+		'calymyk/promotion-faq',
+		array(
+			'api_version'   => 3,
+			'attributes'    => array(
+				'items' => array(
+					'type'    => 'array',
+					'default' => array(
+						array( 'question' => '', 'answer' => '' ),
+						array( 'question' => '', 'answer' => '' ),
+					),
+				),
+			),
+			'editor_script' => 'calymyk-new-promotion-blocks',
+			'render_callback' => 'calymyk_new_render_promotion_faq',
+		)
+	);
 
-	<!-- wp:group {"className":"cm-promotion-step","layout":{"type":"default"}} -->
-	<div class="wp-block-group cm-promotion-step">
-		<!-- wp:heading {"level":3} -->
-		<h3 class="wp-block-heading">Krok 2</h3>
-		<!-- /wp:heading -->
-		<!-- wp:paragraph -->
-		<p>Opisz drugi krok.</p>
-		<!-- /wp:paragraph -->
-	</div>
-	<!-- /wp:group -->
-
-	<!-- wp:group {"className":"cm-promotion-step","layout":{"type":"default"}} -->
-	<div class="wp-block-group cm-promotion-step">
-		<!-- wp:heading {"level":3} -->
-		<h3 class="wp-block-heading">Krok 3</h3>
-		<!-- /wp:heading -->
-		<!-- wp:paragraph -->
-		<p>Opisz trzeci krok.</p>
-		<!-- /wp:paragraph -->
-	</div>
-	<!-- /wp:group -->
-
-	<!-- wp:paragraph {"className":"cm-promotion-editor-note"} -->
-	<p class="cm-promotion-editor-note">Potrzebujesz więcej kroków? Zduplikuj blok „Krok”.</p>
-	<!-- /wp:paragraph -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"cm-promotion-section cm-promotion-prep","layout":{"type":"default"}} -->
-<div class="wp-block-group cm-promotion-section cm-promotion-prep">
-	<!-- wp:heading {"level":2} -->
-	<h2 class="wp-block-heading">Przygotuj przed startem</h2>
-	<!-- /wp:heading -->
-
-	<!-- wp:list -->
-	<ul class="wp-block-list">
-		<li>Wpisz tutaj pierwszy element.</li>
-		<li>Wpisz tutaj drugi element.</li>
-		<li>Wpisz tutaj trzeci element.</li>
-	</ul>
-	<!-- /wp:list -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"cm-promotion-section cm-promotion-faq","layout":{"type":"default"}} -->
-<div class="wp-block-group cm-promotion-section cm-promotion-faq">
-	<!-- wp:heading {"level":2} -->
-	<h2 class="wp-block-heading">FAQ</h2>
-	<!-- /wp:heading -->
-
-	<!-- wp:details -->
-<details class="wp-block-details"><summary>Wpisz pytanie</summary><!-- wp:paragraph --><p>Wpisz odpowiedź.</p><!-- /wp:paragraph --></details>
-	<!-- /wp:details -->
-
-	<!-- wp:details -->
-<details class="wp-block-details"><summary>Wpisz pytanie</summary><!-- wp:paragraph --><p>Wpisz odpowiedź.</p><!-- /wp:paragraph --></details>
-	<!-- /wp:details -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"cm-promotion-section cm-promotion-terms","layout":{"type":"default"}} -->
-<div class="wp-block-group cm-promotion-section cm-promotion-terms">
-	<!-- wp:heading {"level":2} -->
-	<h2 class="wp-block-heading">Regulamin promocji</h2>
-	<!-- /wp:heading -->
-
-	<!-- wp:paragraph -->
-	<p><a href="#">Dodaj link do regulaminu promocji →</a></p>
-	<!-- /wp:paragraph -->
-</div>
-<!-- /wp:group -->
-HTML;
+	register_block_type(
+		'calymyk/promotion-terms',
+		array(
+			'api_version'   => 3,
+			'attributes'    => array(
+				'url' => array(
+					'type'    => 'string',
+					'default' => '',
+				),
+			),
+			'editor_script' => 'calymyk-new-promotion-blocks',
+			'render_callback' => 'calymyk_new_render_promotion_terms',
+		)
+	);
 }
+add_action( 'init', 'calymyk_new_register_promotion_blocks', 30 );
 
-/**
- * Pre-fill the standard promotion structure when creating a new post.
- */
-function calymyk_new_default_promotion_content( $content, $post ) {
-	if ( $post instanceof WP_Post && 'post' === $post->post_type && 'auto-draft' === $post->post_status && '' === trim( $content ) ) {
-		return calymyk_new_promotion_content_template();
+function calymyk_new_render_promotion_steps( $attributes ) {
+	$steps = isset( $attributes['steps'] ) && is_array( $attributes['steps'] ) ? $attributes['steps'] : array();
+	$output = '<section class="cm-promotion-section cm-promotion-steps"><p class="cm-eyebrow">NAWIGATOR KROKÓW</p><div class="cm-promotion-steps__list">';
+	foreach ( $steps as $index => $step ) {
+		$title = ! empty( $step['title'] ) ? $step['title'] : 'Krok ' . ( $index + 1 );
+		$description = isset( $step['description'] ) ? $step['description'] : '';
+		$output .= '<article class="cm-promotion-step"><div class="cm-promotion-step__number">' . esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ) . '</div><div><h3>' . esc_html( $title ) . '</h3>';
+		if ( $description ) {
+			$output .= '<p>' . wp_kses_post( $description ) . '</p>';
+		}
+		$output .= '</div></article>';
 	}
-
-	return $content;
+	return $output . '</div></section>';
 }
-add_filter( 'default_content', 'calymyk_new_default_promotion_content', 10, 2 );
+
+function calymyk_new_render_promotion_prep( $attributes ) {
+	$items = isset( $attributes['items'] ) && is_array( $attributes['items'] ) ? $attributes['items'] : array();
+	$output = '<section class="cm-promotion-section cm-promotion-prep"><p class="cm-eyebrow">PRZYGOTUJ PRZED STARTEM</p><ul>';
+	foreach ( $items as $item ) {
+		if ( '' !== trim( $item ) ) {
+			$output .= '<li>' . esc_html( $item ) . '</li>';
+		}
+	}
+	return $output . '</ul></section>';
+}
+
+function calymyk_new_render_promotion_faq( $attributes ) {
+	$items = isset( $attributes['items'] ) && is_array( $attributes['items'] ) ? $attributes['items'] : array();
+	$output = '<section class="cm-promotion-section cm-promotion-faq"><p class="cm-eyebrow">FAQ</p><div class="cm-promotion-faq__list">';
+	foreach ( $items as $item ) {
+		$question = isset( $item['question'] ) ? trim( $item['question'] ) : '';
+		$answer = isset( $item['answer'] ) ? trim( $item['answer'] ) : '';
+		if ( ! $question && ! $answer ) {
+			continue;
+		}
+		$output .= '<details><summary>' . esc_html( $question ?: 'Pytanie' ) . '</summary><p>' . esc_html( $answer ) . '</p></details>';
+	}
+	return $output . '</div></section>';
+}
+
+function calymyk_new_render_promotion_terms( $attributes ) {
+	$url = isset( $attributes['url'] ) ? esc_url( $attributes['url'] ) : '';
+	$output = '<section class="cm-promotion-section cm-promotion-terms"><p class="cm-eyebrow">REGULAMIN PROMOCJI</p>';
+	if ( $url ) {
+		$output .= '<p><a href="' . $url . '" target="_blank" rel="noopener noreferrer">Zobacz regulamin promocji →</a></p>';
+	} else {
+		$output .= '<p class="cm-promotion-editor-note">Dodaj link do regulaminu promocji.</p>';
+	}
+	return $output . '</section>';
+}
 
 /**
  * Register promotion metadata for the block editor.
