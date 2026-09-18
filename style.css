@@ -1819,3 +1819,85 @@ html[data-theme="dark"] {
 		min-height: 160px;
 	}
 }
+
+
+/* Zyskomat Poleca: three equal recommendation cards, matching Tools. */
+.cm-recommendations__grid {
+	display: grid !important;
+	grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+	gap: var(--cm-grid-gap) !important;
+	width: 100% !important;
+}
+
+.cm-recommendations__grid > .cm-recommendation-card {
+	grid-column: span 4;
+	height: 100%;
+}
+
+.cm-recommendation-card__media {
+	min-height: 220px;
+	aspect-ratio: 16 / 9;
+}
+
+.cm-recommendation-card__media.wp-block-post-featured-image {
+	height: auto;
+}
+
+.cm-recommendation-card__media.wp-block-post-featured-image img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+}
+
+.cm-recommendation-card__body {
+	min-height: 230px;
+}
+
+.cm-recommendation-card .wp-block-post-title {
+	margin: 8px 0 0;
+	font-size: var(--wp--preset--font-size--large);
+	line-height: 1.15;
+}
+
+.cm-recommendation-card .wp-block-post-title a {
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
+}
+
+.cm-recommendation-card .wp-block-post-title a:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+.cm-recommendation-card .wp-block-post-excerpt {
+	margin: 12px 0 0;
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.6;
+}
+
+.cm-recommendation-card .wp-block-read-more {
+	display: inline-block;
+	margin-top: auto;
+	padding-top: 24px;
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.cm-recommendation-card .wp-block-read-more:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+@media (max-width: 1024px) {
+	.cm-recommendations__grid > .cm-recommendation-card {
+		grid-column: span 6;
+	}
+}
+
+@media (max-width: 768px) {
+	.cm-recommendations__grid > .cm-recommendation-card {
+		grid-column: 1 / -1;
+	}
+}
