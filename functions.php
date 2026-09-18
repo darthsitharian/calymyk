@@ -241,8 +241,8 @@ add_action( 'init', 'calymyk_new_register_promotion_blocks', 30 );
  */
 function calymyk_new_block_category( $categories ) {
 	$categories[] = array(
-		slug  => 'calymyk',
-		title => 'Calymyk',
+		'slug'  => 'calymyk',
+		'title' => 'Calymyk',
 	);
 
 	return $categories;
