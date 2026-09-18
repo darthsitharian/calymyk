@@ -1251,3 +1251,29 @@ html[data-theme="dark"] {
 	}
 
 }
+
+
+/* =========================================================
+   CALYMYK — QUERY LOOP GRID OVERRIDES
+   ========================================================= */
+
+.cm-featured-query > .cm-featured-posts-grid,
+.cm-archive-query > .cm-archive-grid {
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: var(--cm-grid-gap);
+	width: 100%;
+}
+
+.cm-featured-query > .cm-featured-posts-grid > *,
+.cm-archive-query > .cm-archive-grid > * {
+	min-width: 0;
+	width: auto;
+	max-width: none;
+}
+
+@media (max-width: 768px) {
+	.cm-featured-query > .cm-featured-posts-grid,
+	.cm-archive-query > .cm-archive-grid {
+		grid-template-columns: 1fr;
+	}
+}
