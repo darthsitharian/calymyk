@@ -3024,13 +3024,17 @@ html[data-theme="dark"] {
 
 .cm-related-post-card__image {
 	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
 	margin: 0;
+	overflow: hidden;
 }
 
 .cm-related-post-card__image img {
 	display: block;
 	width: 100%;
-	aspect-ratio: 16 / 9;
+	height: 100%;
+	max-width: none;
 	object-fit: cover;
 }
 
