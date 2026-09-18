@@ -1,0 +1,52 @@
+<!-- wp:template-part {"slug":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"cm-tool-single","layout":{"type":"default"}} -->
+<main class="wp-block-group cm-tool-single">
+
+	<!-- wp:group {"className":"cm-tool-single__grid cm-grid","layout":{"type":"default"}} -->
+	<div class="wp-block-group cm-tool-single__grid cm-grid">
+
+		<!-- wp:group {"className":"cm-span-8 cm-tool-single__primary","layout":{"type":"default"}} -->
+		<div class="wp-block-group cm-span-8 cm-tool-single__primary">
+
+			<!-- wp:post-terms {"term":"tool_category","className":"cm-eyebrow"} /-->
+			<!-- wp:post-title {"level":1,"className":"cm-tool-single__title"} /-->
+			<!-- wp:post-excerpt {"className":"cm-tool-single__excerpt"} /-->
+			<!-- wp:post-featured-image {"className":"cm-tool-single__image"} /-->
+
+			<!-- wp:post-content {"className":"cm-tool-single__content","layout":{"type":"constrained"}} /-->
+
+		</div>
+		<!-- /wp:group -->
+
+		<!-- wp:group {"className":"cm-span-4 cm-tool-single__sidebar","layout":{"type":"default"}} -->
+		<aside class="wp-block-group cm-span-4 cm-tool-single__sidebar" aria-label="Informacje o narzędziu">
+
+			<!-- wp:group {"className":"cm-tool-single__card","layout":{"type":"default"}} -->
+			<div class="wp-block-group cm-tool-single__card">
+				<!-- wp:paragraph {"className":"cm-eyebrow"} -->
+				<p class="cm-eyebrow">NARZĘDZIE</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:post-terms {"term":"tool_category","separator":", ","className":"cm-tool-single__categories"} /-->
+
+				<!-- wp:separator {"className":"is-style-wide"} /-->
+
+				<!-- wp:paragraph {"className":"cm-tool-single__label"} -->
+				<p class="cm-tool-single__label">DODANO</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:post-date {"isLink":false} /-->
+			</div>
+			<!-- /wp:group -->
+
+		</aside>
+		<!-- /wp:group -->
+
+	</div>
+	<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer"} /-->
