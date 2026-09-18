@@ -157,6 +157,126 @@ function calymyk_new_save_tool_details( $post_id ) {
 add_action( 'save_post_tool', 'calymyk_new_save_tool_details' );
 
 /**
+ * Provide the standard promotion content structure for new posts.
+ */
+function calymyk_new_promotion_content_template() {
+	return <<<'HTML'
+<!-- wp:group {"className":"cm-promotion-section cm-promotion-intro","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-promotion-section cm-promotion-intro">
+	<!-- wp:heading {"level":2} -->
+	<h2 class="wp-block-heading">Jak skorzystać z promocji</h2>
+	<!-- /wp:heading -->
+
+	<!-- wp:paragraph -->
+	<p>Opisz tutaj najważniejsze informacje i zasady skorzystania z promocji.</p>
+	<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"cm-promotion-section cm-promotion-steps","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-promotion-section cm-promotion-steps">
+	<!-- wp:heading {"level":2} -->
+	<h2 class="wp-block-heading">Nawigator kroków</h2>
+	<!-- /wp:heading -->
+
+	<!-- wp:group {"className":"cm-promotion-step","layout":{"type":"default"}} -->
+	<div class="wp-block-group cm-promotion-step">
+		<!-- wp:heading {"level":3} -->
+		<h3 class="wp-block-heading">Krok 1</h3>
+		<!-- /wp:heading -->
+		<!-- wp:paragraph -->
+		<p>Opisz pierwszy krok.</p>
+		<!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:group {"className":"cm-promotion-step","layout":{"type":"default"}} -->
+	<div class="wp-block-group cm-promotion-step">
+		<!-- wp:heading {"level":3} -->
+		<h3 class="wp-block-heading">Krok 2</h3>
+		<!-- /wp:heading -->
+		<!-- wp:paragraph -->
+		<p>Opisz drugi krok.</p>
+		<!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:group {"className":"cm-promotion-step","layout":{"type":"default"}} -->
+	<div class="wp-block-group cm-promotion-step">
+		<!-- wp:heading {"level":3} -->
+		<h3 class="wp-block-heading">Krok 3</h3>
+		<!-- /wp:heading -->
+		<!-- wp:paragraph -->
+		<p>Opisz trzeci krok.</p>
+		<!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:paragraph {"className":"cm-promotion-editor-note"} -->
+	<p class="cm-promotion-editor-note">Potrzebujesz więcej kroków? Zduplikuj blok „Krok”.</p>
+	<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"cm-promotion-section cm-promotion-prep","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-promotion-section cm-promotion-prep">
+	<!-- wp:heading {"level":2} -->
+	<h2 class="wp-block-heading">Przygotuj przed startem</h2>
+	<!-- /wp:heading -->
+
+	<!-- wp:list -->
+	<ul class="wp-block-list">
+		<li>Wpisz tutaj pierwszy element.</li>
+		<li>Wpisz tutaj drugi element.</li>
+		<li>Wpisz tutaj trzeci element.</li>
+	</ul>
+	<!-- /wp:list -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"cm-promotion-section cm-promotion-faq","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-promotion-section cm-promotion-faq">
+	<!-- wp:heading {"level":2} -->
+	<h2 class="wp-block-heading">FAQ</h2>
+	<!-- /wp:heading -->
+
+	<!-- wp:details -->
+<details class="wp-block-details"><summary>Wpisz pytanie</summary><!-- wp:paragraph --><p>Wpisz odpowiedź.</p><!-- /wp:paragraph --></details>
+	<!-- /wp:details -->
+
+	<!-- wp:details -->
+<details class="wp-block-details"><summary>Wpisz pytanie</summary><!-- wp:paragraph --><p>Wpisz odpowiedź.</p><!-- /wp:paragraph --></details>
+	<!-- /wp:details -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"cm-promotion-section cm-promotion-terms","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-promotion-section cm-promotion-terms">
+	<!-- wp:heading {"level":2} -->
+	<h2 class="wp-block-heading">Regulamin promocji</h2>
+	<!-- /wp:heading -->
+
+	<!-- wp:paragraph -->
+	<p><a href="#">Dodaj link do regulaminu promocji →</a></p>
+	<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+HTML;
+}
+
+/**
+ * Pre-fill the standard promotion structure when creating a new post.
+ */
+function calymyk_new_default_promotion_content( $content, $post ) {
+	if ( $post instanceof WP_Post && 'post' === $post->post_type && 'auto-draft' === $post->post_status && '' === trim( $content ) ) {
+		return calymyk_new_promotion_content_template();
+	}
+
+	return $content;
+}
+add_filter( 'default_content', 'calymyk_new_default_promotion_content', 10, 2 );
+
+/**
  * Register promotion metadata for the block editor.
  */
 function calymyk_new_register_promotion_meta() {
