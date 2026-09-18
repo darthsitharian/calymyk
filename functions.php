@@ -237,6 +237,21 @@ function calymyk_new_register_promotion_blocks() {
 add_action( 'init', 'calymyk_new_register_promotion_blocks', 30 );
 
 /**
+ * Add a dedicated inserter category for Calymyk blocks.
+ */
+function calymyk_new_block_category( $categories ) {
+	$categories[] = array(
+		slug  => 'calymyk',
+		title => 'Calymyk',
+	);
+
+	return $categories;
+}
+add_filter( 'block_categories_all', 'calymyk_new_block_category' );
+
+
+
+/**
  * Give every new standard post the same promotion block structure.
  */
 function calymyk_new_post_template( $args, $post_type ) {
