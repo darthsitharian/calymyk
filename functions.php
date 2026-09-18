@@ -52,3 +52,48 @@ function calymyk_new_recommendations_query( $query, $block, $page ) {
 }
 
 add_filter( 'query_loop_block_query_vars', 'calymyk_new_recommendations_query', 10, 3 );
+
+/**
+ * Register the Calymyk Tool content type.
+ */
+function calymyk_new_register_tools() {
+
+	register_post_type(
+		'tool',
+		array(
+			'labels' => array(
+				'name'          => 'Narzędzia',
+				'singular_name' => 'Narzędzie',
+				'add_new_item'  => 'Dodaj narzędzie',
+				'edit_item'     => 'Edytuj narzędzie',
+				'new_item'      => 'Nowe narzędzie',
+				'view_item'     => 'Zobacz narzędzie',
+			),
+			'public'       => true,
+			'has_archive'  => true,
+			'menu_icon'    => 'dashicons-admin-tools',
+			'show_in_rest' => true,
+			'rewrite'      => array( 'slug' => 'narzedzia' ),
+			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions' ),
+			'taxonomies'   => array( 'tool_category' ),
+			'show_in_nav_menus' => true,
+		)
+	);
+
+	register_taxonomy(
+		'tool_category',
+		array( 'tool' ),
+		array(
+			'labels' => array(
+				'name'          => 'Kategorie narzędzi',
+				'singular_name' => 'Kategoria narzędzia',
+			),
+			'public'       => true,
+			'show_in_rest' => true,
+			'hierarchical' => true,
+			'rewrite'      => array( 'slug' => 'kategoria-narzedzia' ),
+		)
+	);
+}
+
+add_action( 'init', 'calymyk_new_register_tools' );
