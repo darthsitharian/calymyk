@@ -6,11 +6,11 @@
 	const { SelectControl, TextControl, TextareaControl, Button } = wp.components;
 	const { createElement } = wp.element;
 	const { useSelect } = wp.data;
+	const { useEntityProp } = wp.coreData;
 
 	function PromotionMetaPanel() {
-		const meta = useSelect(function (select) {
-			return select('core/editor').getEditedPostAttribute('meta') || {};
-		}, []);
+		const [meta, setMeta] = useEntityProp('postType', 'post', 'meta');
+		const safeMeta = meta || {};
 
 		const postType = useSelect(function (select) {
 			return select('core/editor').getCurrentPostType();
@@ -26,9 +26,7 @@
 		}, []);
 
 		function updateMeta(key, value) {
-			wp.data.dispatch('core/editor').editPost({
-				meta: Object.assign({}, meta, { [key]: value })
-			});
+			setMeta(Object.assign({}, safeMeta, { [key]: value }));
 		}
 
 		if (postType !== 'post') {
@@ -45,8 +43,8 @@
 			});
 		}
 
-		const prepItems = Array.isArray(meta._calymyk_promotion_prep) ? meta._calymyk_promotion_prep : ['', ''];
-		const faqItems = Array.isArray(meta._calymyk_promotion_faq) ? meta._calymyk_promotion_faq : [
+		const prepItems = Array.isArray(safeMeta._calymyk_promotion_prep) ? safeMeta._calymyk_promotion_prep : ['', ''];
+		const faqItems = Array.isArray(safeMeta._calymyk_promotion_faq) ? safeMeta._calymyk_promotion_faq : [
 			{ question: '', answer: '' },
 			{ question: '', answer: '' }
 		];
@@ -73,7 +71,7 @@
 			},
 			createElement(SelectControl, {
 				label: 'Narzędzie',
-				value: String(meta._calymyk_post_tool || 0),
+				value: String(safeMeta._calymyk_post_tool || 0),
 				options: toolOptions,
 				onChange: function (value) {
 					updateMeta('_calymyk_post_tool', parseInt(value, 10) || 0);
@@ -82,7 +80,7 @@
 			createElement(TextControl, {
 				label: 'Promocja od',
 				type: 'date',
-				value: meta._calymyk_promotion_start || '',
+				value: safeMeta._calymyk_promotion_start || '',
 				onChange: function (value) {
 					updateMeta('_calymyk_promotion_start', value);
 				}
@@ -90,7 +88,7 @@
 			createElement(TextControl, {
 				label: 'Promocja do',
 				type: 'date',
-				value: meta._calymyk_promotion_end || '',
+				value: safeMeta._calymyk_promotion_end || '',
 				onChange: function (value) {
 					updateMeta('_calymyk_promotion_end', value);
 				}
@@ -98,7 +96,7 @@
 			createElement(TextControl, {
 				label: 'Link do regulaminu promocji',
 				type: 'url',
-				value: meta._calymyk_promotion_terms_url || '',
+				value: safeMeta._calymyk_promotion_terms_url || '',
 				onChange: function (value) {
 					updateMeta('_calymyk_promotion_terms_url', value);
 				}
