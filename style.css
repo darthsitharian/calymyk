@@ -960,7 +960,6 @@ html[data-theme="dark"] {
 .cm-featured-post-card__excerpt {
 	margin: 12px 0 0;
 	color: var(--wp--preset--color--contrast-2);
-	font-size: var(--wp--preset--color--contrast-2);
 	font-size: var(--wp--preset--font-size--small);
 	line-height: 1.55;
 }
