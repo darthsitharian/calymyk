@@ -469,6 +469,53 @@ function calymyk_new_save_post_promotion( $post_id ) {
 add_action( 'save_post_post', 'calymyk_new_save_post_promotion' );
 
 /**
+ * Render promotion preparation checklist in the post sidebar.
+ */
+function calymyk_new_promotion_prep_shortcode() {
+	$items = get_post_meta( get_the_ID(), '_calymyk_promotion_prep', true );
+	if ( ! is_array( $items ) ) {
+		return '';
+	}
+	$items = array_filter( array_map( 'trim', $items ) );
+	if ( ! $items ) {
+		return '';
+	}
+
+	$output = '<section class="cm-promotion-sidebar-section"><p class="cm-eyebrow">PRZYGOTUJ PRZED STARTEM</p><ul class="cm-promotion-sidebar-list">';
+	foreach ( $items as $item ) {
+		$output .= '<li>' . esc_html( $item ) . '</li>';
+	}
+	return $output . '</ul></section>';
+}
+add_shortcode( 'calymyk_promotion_prep', 'calymyk_new_promotion_prep_shortcode' );
+
+/**
+ * Render promotion FAQ in the post sidebar.
+ */
+function calymyk_new_promotion_faq_shortcode() {
+	$items = get_post_meta( get_the_ID(), '_calymyk_promotion_faq', true );
+	if ( ! is_array( $items ) ) {
+		return '';
+	}
+
+	$output = '<section class="cm-promotion-sidebar-section"><p class="cm-eyebrow">FAQ</p><div class="cm-promotion-sidebar-faq">';
+	foreach ( $items as $item ) {
+		$question = isset( $item['question'] ) ? trim( $item['question'] ) : '';
+		$answer   = isset( $item['answer'] ) ? trim( $item['answer'] ) : '';
+		if ( ! $question && ! $answer ) {
+			continue;
+		}
+		$output .= '<details><summary>' . esc_html( $question ?: 'Pytanie' ) . '</summary>';
+		if ( $answer ) {
+			$output .= '<p>' . esc_html( $answer ) . '</p>';
+		}
+		$output .= '</details>';
+	}
+	return $output . '</div></section>';
+}
+add_shortcode( 'calymyk_promotion_faq', 'calymyk_new_promotion_faq_shortcode' );
+
+/**
  * Render the tool assigned to the current promotion.
  */
 function calymyk_new_post_tool_shortcode() {
