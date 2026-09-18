@@ -404,6 +404,20 @@ function calymyk_new_register_promotion_meta() {
 
 	register_post_meta(
 		'post',
+		'_calymyk_promotion_terms_url',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'esc_url_raw',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+
+	register_post_meta(
+		'post',
 		'_calymyk_promotion_end',
 		array(
 			'type'              => 'string',
@@ -471,6 +485,19 @@ function calymyk_new_save_post_promotion( $post_id ) {
 	}
 }
 add_action( 'save_post_post', 'calymyk_new_save_post_promotion' );
+
+/**
+ * Render promotion terms in the post sidebar.
+ */
+function calymyk_new_promotion_terms_shortcode() {
+	$url = get_post_meta( get_the_ID(), '_calymyk_promotion_terms_url', true );
+	if ( ! $url ) {
+		return '';
+	}
+
+	return '<section class="cm-promotion-sidebar-section"><p class="cm-eyebrow">REGULAMIN PROMOCJI</p><p><a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">Zobacz regulamin promocji →</a></p></section>';
+}
+add_shortcode( 'calymyk_promotion_terms', 'calymyk_new_promotion_terms_shortcode' );
 
 /**
  * Render promotion preparation checklist in the post sidebar.
