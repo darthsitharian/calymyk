@@ -1732,3 +1732,90 @@ html[data-theme="dark"] {
 		padding: 20px;
 	}
 }
+
+
+/* Dynamic post content inside Zyskomat recommendation cards. */
+.cm-recommendation-card .wp-block-post-featured-image {
+	margin: 0;
+}
+
+.cm-recommendation-card .wp-block-post-featured-image img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.cm-recommendation-card--featured .wp-block-post-featured-image {
+	min-height: 360px;
+}
+
+.cm-recommendation-card--featured .wp-block-post-featured-image img {
+	min-height: 360px;
+}
+
+.cm-recommendation-card--compact .wp-block-post-featured-image {
+	min-height: 100%;
+	height: 100%;
+}
+
+.cm-recommendation-card--compact .wp-block-post-featured-image img {
+	min-height: 100%;
+}
+
+.cm-recommendation-card .wp-block-post-title {
+	margin: 8px 0 0;
+	font-size: var(--wp--preset--font-size--large);
+	line-height: 1.15;
+}
+
+.cm-recommendation-card--featured .wp-block-post-title {
+	font-size: var(--wp--preset--font-size--xx-large);
+}
+
+.cm-recommendation-card .wp-block-post-title a {
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
+}
+
+.cm-recommendation-card .wp-block-post-title a:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+.cm-recommendation-card .wp-block-post-excerpt {
+	margin: 12px 0 0;
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.6;
+}
+
+.cm-recommendation-card .wp-block-read-more {
+	display: inline-block;
+	margin-top: 24px;
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.cm-recommendation-card .wp-block-read-more:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+@media (max-width: 768px) {
+	.cm-recommendation-card--featured .wp-block-post-featured-image,
+	.cm-recommendation-card--featured .wp-block-post-featured-image img {
+		min-height: 240px;
+	}
+
+	.cm-recommendation-card--featured .wp-block-post-title {
+		font-size: var(--wp--preset--font-size--x-large);
+	}
+}
+
+@media (max-width: 480px) {
+	.cm-recommendation-card .wp-block-post-featured-image,
+	.cm-recommendation-card .wp-block-post-featured-image img {
+		min-height: 160px;
+	}
+}
