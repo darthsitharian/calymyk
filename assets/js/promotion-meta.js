@@ -95,6 +95,14 @@
 					updateMeta('_calymyk_promotion_end', value);
 				}
 			}),
+			createElement(TextControl, {
+				label: 'Link do regulaminu promocji',
+				type: 'url',
+				value: meta._calymyk_promotion_terms_url || '',
+				onChange: function (value) {
+					updateMeta('_calymyk_promotion_terms_url', value);
+				}
+			}),
 			createElement('hr', {}),
 			createElement('h3', {}, 'Przygotuj przed startem'),
 			prepItems.map(function (item, index) {
