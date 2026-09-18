@@ -1963,7 +1963,9 @@ html[data-theme="dark"] {
    ========================================================= */
 
 .cm-single {
-	width: 100%;
+	width: 90dvw;
+	max-width: none;
+	margin-inline: auto;
 	padding: 64px 0 96px;
 	box-sizing: border-box;
 }
@@ -2185,6 +2187,8 @@ html[data-theme="dark"] {
 
 @media (max-width: 600px) {
 	.cm-single {
+		width: calc(100% - 32px);
+
 		padding-top: 40px;
 		padding-bottom: 64px;
 	}
