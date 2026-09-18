@@ -30,18 +30,18 @@ function calymyk_new_enqueue_assets() {
 
 add_action( 'wp_enqueue_scripts', 'calymyk_new_enqueue_assets' );
 
-/**
+//**
  * Limit the Zyskomat recommendation Query Loop to posts
  * assigned to the standard "Polecamy" category.
  *
- * The category stays in WordPress core, so editors can simply
- * tick "Polecamy" while creating or editing a post.
+ * Query Loop passes its queryId to the post-template context,
+ * so we scope this filter to the dedicated Zyskomat loop.
  */
 function calymyk_new_recommendations_query( $query, $block, $page ) {
 
 	if (
-		! isset( $block->parsed_block['attrs']['namespace'] )
-		|| 'calymyk-new/recommendations' !== $block->parsed_block['attrs']['namespace']
+		! isset( $block->context['queryId'] )
+		|| 20 !== (int) $block->context['queryId']
 	) {
 		return $query;
 	}
