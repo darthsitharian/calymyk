@@ -432,6 +432,14 @@ function calymyk_new_register_promotion_meta() {
 add_action( 'init', 'calymyk_new_register_promotion_meta', 20 );
 
 /**
+ * Ensure promotion metadata is available to the block editor for standard posts.
+ */
+function calymyk_new_enable_post_custom_fields() {
+	add_post_type_support( 'post', 'custom-fields' );
+}
+add_action( 'init', 'calymyk_new_enable_post_custom_fields', 20 );
+
+/**
  * Load promotion controls directly in the block editor sidebar.
  */
 function calymyk_new_enqueue_editor_assets() {
