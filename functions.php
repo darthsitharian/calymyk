@@ -364,7 +364,12 @@ function calymyk_new_register_promotion_meta() {
 		array(
 			'type'              => 'array',
 			'single'            => true,
-			'show_in_rest'      => true,
+			'show_in_rest'      => array(
+				'schema' => array(
+					'type'  => 'array',
+					'items' => array( 'type' => 'string' ),
+				),
+			),
 			'sanitize_callback' => function ( $value ) {
 				return is_array( $value ) ? array_map( 'sanitize_text_field', $value ) : array();
 			},
@@ -380,7 +385,18 @@ function calymyk_new_register_promotion_meta() {
 		array(
 			'type'              => 'array',
 			'single'            => true,
-			'show_in_rest'      => true,
+			'show_in_rest'      => array(
+				'schema' => array(
+					'type'  => 'array',
+					'items' => array(
+						'type'       => 'object',
+						'properties' => array(
+							'question' => array( 'type' => 'string' ),
+							'answer'   => array( 'type' => 'string' ),
+						),
+					),
+				),
+			),
 			'sanitize_callback' => function ( $value ) {
 				if ( ! is_array( $value ) ) {
 					return array();
