@@ -367,6 +367,60 @@ function calymyk_new_related_posts_shortcode() {
 add_shortcode( 'calymyk_related_posts', 'calymyk_new_related_posts_shortcode' );
 
 /**
+ * Render three random tools below each tool page.
+ */
+function calymyk_new_related_tools_shortcode() {
+	$current_id = get_the_ID();
+
+	$query = new WP_Query(
+		array(
+			'post_type'      => 'tool',
+			'post_status'    => 'publish',
+			'posts_per_page' => 3,
+			'post__not_in'   => array( $current_id ),
+			'orderby'        => 'rand',
+			'no_found_rows'  => true,
+		)
+	);
+
+	if ( ! $query->have_posts() ) {
+		return '';
+	}
+
+	$output = '<section class="cm-related-posts cm-related-tools"><div class="cm-related-posts__header"><div><p class="cm-eyebrow">WIĘCEJ DO ODKRYCIA</p><h2 class="cm-related-posts__title">Zobacz również</h2></div></div><div class="cm-related-posts__grid">';
+
+	while ( $query->have_posts() ) {
+		$query->the_post();
+
+		$output .= '<article class="cm-related-post-card cm-related-tool-card">';
+
+		if ( has_post_thumbnail() ) {
+			$output .= '<a class="cm-related-post-card__image" href="' . esc_url( get_permalink() ) . '">' . get_the_post_thumbnail( get_the_ID(), 'medium_large' ) . '</a>';
+		}
+
+		$categories = get_the_terms( get_the_ID(), 'tool_category' );
+		if ( $categories && ! is_wp_error( $categories ) ) {
+			$output .= '<p class="cm-related-post-card__category">' . esc_html( $categories[0]->name ) . '</p>';
+		}
+
+		$output .= '<h3 class="cm-related-post-card__title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h3>';
+
+		$excerpt = get_the_excerpt();
+		if ( $excerpt ) {
+			$output .= '<p class="cm-related-post-card__excerpt">' . esc_html( wp_trim_words( $excerpt, 24 ) ) . '</p>';
+		}
+
+		$output .= '<div class="cm-related-post-card__footer"><a class="cm-related-post-card__link" href="' . esc_url( get_permalink() ) . '">Zobacz narzędzie →</a></div>';
+		$output .= '</article>';
+	}
+
+	wp_reset_postdata();
+
+	return $output . '</div></section>';
+}
+add_shortcode( 'calymyk_related_tools', 'calymyk_new_related_tools_shortcode' );
+
+/**
  * Render the external tool CTA.
  */
 function calymyk_new_tool_url_shortcode() {
