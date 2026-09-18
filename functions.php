@@ -206,6 +206,16 @@ function calymyk_new_tool_url_shortcode() {
 }
 add_shortcode( 'calymyk_tool_url', 'calymyk_new_tool_url_shortcode' );
 
+function calymyk_new_tool_archive_cta_shortcode() {
+	$url = get_post_meta( get_the_ID(), '_calymyk_tool_url', true );
+	if ( ! $url ) {
+		return '';
+	}
+	return '<p class="cm-tool-archive-card__cta"><a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">Odwiedź narzędzie →</a></p>';
+}
+add_shortcode( 'calymyk_tool_archive_cta', 'calymyk_new_tool_archive_cta_shortcode' );
+add_shortcode( 'calymyk_tool_url', 'calymyk_new_tool_url_shortcode' );
+
 /**
  * Render related promotion posts.
  */
