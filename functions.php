@@ -300,6 +300,60 @@ function calymyk_new_promotion_duration_shortcode() {
 add_shortcode( 'calymyk_promotion_duration', 'calymyk_new_promotion_duration_shortcode' );
 
 /**
+ * Render three random posts below each promotion.
+ */
+function calymyk_new_related_posts_shortcode() {
+	$current_id = get_the_ID();
+
+	$query = new WP_Query(
+		array(
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			'posts_per_page' => 3,
+			'post__not_in'   => array( $current_id ),
+			'orderby'        => 'rand',
+			'no_found_rows'  => true,
+		)
+	);
+
+	if ( ! $query->have_posts() ) {
+		return '';
+	}
+
+	$output = '<section class="cm-related-posts"><div class="cm-related-posts__header"><div><p class="cm-eyebrow">WIĘCEJ DO ODKRYCIA</p><h2 class="cm-related-posts__title">Zobacz również</h2></div></div><div class="cm-related-posts__grid">';
+
+	while ( $query->have_posts() ) {
+		$query->the_post();
+
+		$output .= '<article class="cm-related-post-card">';
+
+		if ( has_post_thumbnail() ) {
+			$output .= '<a class="cm-related-post-card__image" href="' . esc_url( get_permalink() ) . '">' . get_the_post_thumbnail( get_the_ID(), 'medium_large' ) . '</a>';
+		}
+
+		$categories = get_the_category();
+		if ( $categories ) {
+			$output .= '<p class="cm-related-post-card__category">' . esc_html( $categories[0]->name ) . '</p>';
+		}
+
+		$output .= '<h3 class="cm-related-post-card__title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h3>';
+
+		$excerpt = get_the_excerpt();
+		if ( $excerpt ) {
+			$output .= '<p class="cm-related-post-card__excerpt">' . esc_html( wp_trim_words( $excerpt, 24 ) ) . '</p>';
+		}
+
+		$output .= '<div class="cm-related-post-card__footer"><a class="cm-related-post-card__link" href="' . esc_url( get_permalink() ) . '">Czytaj więcej →</a><time datetime="' . esc_attr( get_the_date( 'c' ) ) . '">' . esc_html( get_the_date() ) . '</time></div>';
+		$output .= '</article>';
+	}
+
+	wp_reset_postdata();
+
+	return $output . '</div></section>';
+}
+add_shortcode( 'calymyk_related_posts', 'calymyk_new_related_posts_shortcode' );
+
+/**
  * Render the external tool CTA.
  */
 function calymyk_new_tool_url_shortcode() {
