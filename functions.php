@@ -260,9 +260,13 @@ function calymyk_new_post_template( $args, $post_type ) {
 	}
 
 	$args['template'] = array(
+		array(
+			'core/paragraph',
+			array(
+				'placeholder' => 'Napisz tutaj treść promocji…',
+			),
+		),
 		array( 'calymyk/promotion-steps' ),
-		array( 'calymyk/promotion-prep' ),
-		array( 'calymyk/promotion-faq' ),
 		array( 'calymyk/promotion-terms' ),
 	);
 
