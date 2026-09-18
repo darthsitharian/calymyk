@@ -1562,3 +1562,27 @@ html[data-theme="dark"] {
 	grid-row: auto !important;
 	list-style: none;
 }
+
+
+/* =========================================================
+   CALYMYK — TOOLS SECTION
+   ========================================================= */
+
+.cm-tools-section {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+	padding: 96px 0 0;
+	box-sizing: border-box;
+}
+
+.cm-tools-section .cm-section-header,
+.cm-tools-section .cm-tools-grid {
+	width: 100%;
+}
+
+@media (max-width: 768px) {
+	.cm-tools-section {
+		padding-top: 64px;
+	}
+}
