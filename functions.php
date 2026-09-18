@@ -267,7 +267,6 @@ function calymyk_new_post_template( $args, $post_type ) {
 			),
 		),
 		array( 'calymyk/promotion-steps' ),
-		array( 'calymyk/promotion-terms' ),
 	);
 
 	return $args;
