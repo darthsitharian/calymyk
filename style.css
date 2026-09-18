@@ -1871,7 +1871,6 @@ html[data-theme="dark"] {
 .cm-newsletter__legal {
 	margin: 12px 0 0;
 	color: var(--wp--preset--color--contrast-3);
-	font-size: var(--wp--preset--color--contrast-3);
 	font-size: var(--wp--preset--font-size--xs);
 	line-height: 1.5;
 }
