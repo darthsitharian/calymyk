@@ -157,59 +157,72 @@ function calymyk_new_save_tool_details( $post_id ) {
 add_action( 'save_post_tool', 'calymyk_new_save_tool_details' );
 
 /**
- * Promotion metadata: assigned tool and promotion duration.
+ * Register promotion metadata for the block editor.
  */
-function calymyk_new_add_post_promotion_meta_box() {
-	add_meta_box(
-		'calymyk_post_promotion',
-		'Szczegóły promocji',
-		'calymyk_new_render_post_promotion_meta_box',
+function calymyk_new_register_promotion_meta() {
+	register_post_meta(
 		'post',
-		'side',
-		'high'
-	);
-}
-add_action( 'add_meta_boxes_post', 'calymyk_new_add_post_promotion_meta_box' );
-
-function calymyk_new_render_post_promotion_meta_box( $post ) {
-	wp_nonce_field( 'calymyk_post_promotion', 'calymyk_post_promotion_nonce' );
-
-	$tool_id  = absint( get_post_meta( $post->ID, '_calymyk_post_tool', true ) );
-	$start    = get_post_meta( $post->ID, '_calymyk_promotion_start', true );
-	$end      = get_post_meta( $post->ID, '_calymyk_promotion_end', true );
-	$tools    = get_posts(
+		'_calymyk_post_tool',
 		array(
-			'post_type'      => 'tool',
-			'post_status'    => 'publish',
-			'posts_per_page' => -1,
-			'orderby'        => 'title',
-			'order'          => 'ASC',
+			'type'              => 'integer',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'absint',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
 		)
 	);
-	?>
-	<p>
-		<label for="calymyk_post_tool"><strong>Narzędzie</strong></label><br>
-		<select id="calymyk_post_tool" name="calymyk_post_tool" class="widefat">
-			<option value="0">— bez przypisania —</option>
-			<?php foreach ( $tools as $tool ) : ?>
-				<option value="<?php echo esc_attr( $tool->ID ); ?>" <?php selected( $tool_id, $tool->ID ); ?>>
-					<?php echo esc_html( get_the_title( $tool ) ); ?>
-				</option>
-			<?php endforeach; ?>
-		</select>
-	</p>
-	<p>
-		<label for="calymyk_promotion_start"><strong>Promocja od</strong></label><br>
-		<input type="date" id="calymyk_promotion_start" name="calymyk_promotion_start" value="<?php echo esc_attr( $start ); ?>" class="widefat">
-	</p>
-	<p>
-		<label for="calymyk_promotion_end"><strong>Promocja do</strong></label><br>
-		<input type="date" id="calymyk_promotion_end" name="calymyk_promotion_end" value="<?php echo esc_attr( $end ); ?>" class="widefat">
-	</p>
-	<p class="description">Daty są opcjonalne. Uzupełnij je, jeśli promocja ma określony czas trwania.</p>
-	<?php
-}
 
+	register_post_meta(
+		'post',
+		'_calymyk_promotion_start',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_text_field',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+
+	register_post_meta(
+		'post',
+		'_calymyk_promotion_end',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_text_field',
+			'auth_callback'     => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+}
+add_action( 'init', 'calymyk_new_register_promotion_meta', 20 );
+
+/**
+ * Load promotion controls directly in the block editor sidebar.
+ */
+function calymyk_new_enqueue_editor_assets() {
+	$asset = get_template_directory() . '/assets/js/promotion-meta.js';
+
+	wp_enqueue_script(
+		'calymyk-new-promotion-meta',
+		get_template_directory_uri() . '/assets/js/promotion-meta.js',
+		array( 'wp-components', 'wp-data', 'wp-edit-post', 'wp-element', 'wp-plugins' ),
+		file_exists( $asset ) ? filemtime( $asset ) : wp_get_theme()->get( 'Version' ),
+		true
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'calymyk_new_enqueue_editor_assets' );
+
+/**
+ * Save promotion metadata from classic editor/meta-box contexts as a fallback.
+ */
 function calymyk_new_save_post_promotion( $post_id ) {
 	if ( ! isset( $_POST['calymyk_post_promotion_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['calymyk_post_promotion_nonce'] ) ), 'calymyk_post_promotion' ) ) {
 		return;
