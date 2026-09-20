@@ -1,0 +1,79 @@
+<!-- wp:template-part {"slug":"header"} /-->
+
+<!-- wp:main {"layout":{"type":"default"}} -->
+<main class="wp-block-group cm-page-shell">
+	<div class="wp-block-group cm-container-wide cm-archive">
+		<!-- wp:spacer {"height":"64px"} -->
+		<div style="height:64px" aria-hidden="true" class="wp-block-spacer"></div>
+		<!-- /wp:spacer -->
+
+		<!-- wp:group {"className":"cm-archive__header cm-grid","layout":{"type":"default"}} -->
+		<div class="wp-block-group cm-archive__header cm-grid">
+			<!-- wp:group {"className":"cm-span-8","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group cm-span-8">
+				<!-- wp:paragraph {"className":"cm-eyebrow"} -->
+				<p class="cm-eyebrow">PROMOCJE</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:heading {"level":1,"className":"cm-archive__title"} -->
+				<h1 class="wp-block-heading cm-archive__title">Promocje</h1>
+				<!-- /wp:heading -->
+			</div>
+			<!-- /wp:group -->
+
+			<!-- wp:paragraph {"className":"cm-span-4"} -->
+			<p class="cm-span-4">Aktualne promocje, oferty i okazje zebrane w jednym miejscu.</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:group -->
+
+		<!-- wp:spacer {"height":"48px"} -->
+		<div style="height:48px" aria-hidden="true" class="wp-block-spacer"></div>
+		<!-- /wp:spacer -->
+
+		<!-- wp:query {"queryId":3,"query":{"perPage":12,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"displayLayout":{"type":"grid","columns":12},"className":"cm-archive-query"} -->
+		<div class="wp-block-query cm-archive-query">
+			<!-- wp:post-template {"className":"cm-grid cm-archive-grid"} -->
+				<!-- wp:group {"className":"cm-post-card","layout":{"type":"constrained"}} -->
+				<div class="wp-block-group cm-post-card">
+					<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","className":"cm-post-card__image"} /-->
+
+					<!-- wp:group {"className":"cm-post-card__meta","layout":{"type":"flex","flexWrap":"nowrap"}} -->
+					<div class="wp-block-group cm-post-card__meta">
+						<!-- wp:post-terms {"term":"category","className":"cm-post-card__category"} /-->
+						<!-- wp:post-date {"format":"d.m.Y","className":"cm-post-card__date"} /-->
+					</div>
+					<!-- /wp:group -->
+
+					<!-- wp:post-title {"isLink":true,"className":"cm-post-card__title"} /-->
+
+					<!-- wp:post-excerpt {"moreText":"","showMoreOnNewLine":false,"excerptLength":24,"className":"cm-post-card__excerpt"} /-->
+
+					<!-- wp:shortcode -->
+					[calymyk_promotion_duration]
+					<!-- /wp:shortcode -->
+
+					<!-- wp:shortcode -->
+					[calymyk_post_tool]
+					<!-- /wp:shortcode -->
+
+					<!-- wp:read-more {"content":"Zobacz promocję →","className":"cm-post-card__link"} /-->
+				</div>
+				<!-- /wp:group -->
+			<!-- /wp:post-template -->
+
+			<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"},"className":"cm-archive-pagination"} -->
+				<!-- wp:query-pagination-previous {"label":"← Nowsze"} /-->
+				<!-- wp:query-pagination-next {"label":"Starsze →"} /-->
+			<!-- /wp:query-pagination -->
+		</div>
+		<!-- /wp:query -->
+
+		<!-- wp:spacer {"height":"96px"} -->
+		<div style="height:96px" aria-hidden="true" class="wp-block-spacer"></div>
+		<!-- /wp:spacer -->
+	</div>
+</main>
+<!-- /wp:main -->
+
+<!-- wp:template-part {"slug":"footer"} /-->
