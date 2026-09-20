@@ -119,6 +119,30 @@ function calymyk_new_category_icon_options() {
 	);
 }
 
+function calymyk_new_category_icon_svg( $icon ) {
+	$icon_files = array(
+		'database'      => 'database.svg',
+		'document'      => 'document.svg',
+		'chart'         => 'chart.svg',
+		'education'     => 'education.svg',
+		'shopping-cart' => 'shopping-cart.svg',
+		'wallet'        => 'wallet.svg',
+		'gift'          => 'gift.svg',
+		'trophy'        => 'trophy.svg',
+	);
+
+	$file_name = isset( $icon_files[ $icon ] ) ? $icon_files[ $icon ] : 'document.svg';
+	$file_path = get_template_directory() . '/assets/icons/categories/' . $file_name;
+
+	if ( ! file_exists( $file_path ) ) {
+		return '';
+	}
+
+	$svg = file_get_contents( $file_path );
+
+	return is_string( $svg ) ? $svg : '';
+}
+
 function calymyk_new_register_category_meta() {
 	register_term_meta(
 		'category',
@@ -153,20 +177,46 @@ function calymyk_new_register_category_meta() {
 }
 add_action( 'init', 'calymyk_new_register_category_meta', 20 );
 
+function calymyk_new_category_icon_picker( $selected ) {
+	$options = calymyk_new_category_icon_options();
+	?>
+	<div class="cm-category-icon-picker" role="radiogroup" aria-label="Wybór ikony kategorii">
+		<input type="hidden" id="calymyk_category_icon" name="calymyk_category_icon" value="<?php echo esc_attr( $selected ); ?>">
+		<?php foreach ( $options as $value => $label ) : ?>
+			<button
+				type="button"
+				class="cm-category-icon-option<?php echo $value === $selected ? ' is-selected' : ''; ?>"
+				data-icon="<?php echo esc_attr( $value ); ?>"
+				aria-pressed="<?php echo $value === $selected ? 'true' : 'false'; ?>"
+				title="<?php echo esc_attr( $label ); ?>"
+			>
+				<span class="cm-category-icon-option__preview"><?php echo calymyk_new_category_icon_svg( $value ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<span class="cm-category-icon-option__label"><?php echo esc_html( $label ); ?></span>
+			</button>
+		<?php endforeach; ?>
+	</div>
+	<?php
+}
+
+function calymyk_new_category_color_field( $color ) {
+	?>
+	<div class="cm-category-color-control">
+		<input type="color" id="calymyk_category_color" name="calymyk_category_color" value="<?php echo esc_attr( $color ); ?>">
+		<code class="cm-category-color-value"><?php echo esc_html( $color ); ?></code>
+	</div>
+	<p class="description">Kolor zakładki kategorii wyświetlanej przy wpisach.</p>
+	<?php
+}
+
 function calymyk_new_category_add_fields() {
 	?>
 	<div class="form-field">
 		<label for="calymyk_category_color">Kolor kategorii</label>
-		<input type="color" id="calymyk_category_color" name="calymyk_category_color" value="#00B85C">
-		<p>Kolor ikony kategorii używany na froncie.</p>
+		<?php calymyk_new_category_color_field( '#00B85C' ); ?>
 	</div>
 	<div class="form-field">
-		<label for="calymyk_category_icon">Ikona kategorii</label>
-		<select id="calymyk_category_icon" name="calymyk_category_icon">
-			<?php foreach ( calymyk_new_category_icon_options() as $value => $label ) : ?>
-				<option value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $label ); ?></option>
-			<?php endforeach; ?>
-		</select>
+		<label>Ikona kategorii</label>
+		<?php calymyk_new_category_icon_picker( 'document' ); ?>
 	</div>
 	<?php
 }
@@ -178,24 +228,122 @@ function calymyk_new_category_edit_fields( $term ) {
 	?>
 	<tr class="form-field">
 		<th scope="row"><label for="calymyk_category_color">Kolor kategorii</label></th>
-		<td>
-			<input type="color" id="calymyk_category_color" name="calymyk_category_color" value="<?php echo esc_attr( $color ); ?>">
-			<p class="description">Kolor ikony kategorii używany na froncie.</p>
-		</td>
+		<td><?php calymyk_new_category_color_field( $color ); ?></td>
 	</tr>
 	<tr class="form-field">
-		<th scope="row"><label for="calymyk_category_icon">Ikona kategorii</label></th>
-		<td>
-			<select id="calymyk_category_icon" name="calymyk_category_icon">
-				<?php foreach ( calymyk_new_category_icon_options() as $value => $label ) : ?>
-					<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $icon, $value ); ?>><?php echo esc_html( $label ); ?></option>
-				<?php endforeach; ?>
-			</select>
-		</td>
+		<th scope="row"><label>Ikona kategorii</label></th>
+		<td><?php calymyk_new_category_icon_picker( $icon ); ?></td>
 	</tr>
 	<?php
 }
 add_action( 'category_edit_form_fields', 'calymyk_new_category_edit_fields' );
+
+function calymyk_new_category_admin_assets() {
+	$screen = get_current_screen();
+	if ( ! $screen || 'edit-tags' !== $screen->base && 'term' !== $screen->base ) {
+		return;
+	}
+	if ( 'category' !== $screen->taxonomy ) {
+		return;
+	}
+	?>
+	<style>
+		.cm-category-color-control {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+		.cm-category-color-control input[type="color"] {
+			width: 52px;
+			height: 36px;
+			padding: 2px;
+			border: 1px solid #c3c4c7;
+			border-radius: 6px;
+			background: #fff;
+			cursor: pointer;
+		}
+		.cm-category-color-value {
+			font-size: 12px;
+			font-weight: 600;
+		}
+		.cm-category-icon-picker {
+			display: grid;
+			grid-template-columns: repeat(4, minmax(100px, 130px));
+			gap: 10px;
+			max-width: 570px;
+		}
+		.cm-category-icon-option {
+			min-height: 94px;
+			padding: 12px 8px;
+			border: 1px solid #c3c4c7;
+			border-radius: 8px;
+			background: #fff;
+			color: #1d2327;
+			box-shadow: none;
+			cursor: pointer;
+			text-align: center;
+		}
+		.cm-category-icon-option:hover {
+			border-color: #2271b1;
+			color: #2271b1;
+		}
+		.cm-category-icon-option.is-selected {
+			border-color: #2271b1;
+			box-shadow: 0 0 0 1px #2271b1;
+			color: #2271b1;
+		}
+		.cm-category-icon-option__preview {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 42px;
+		}
+		.cm-category-icon-option__preview svg {
+			width: 30px;
+			height: 30px;
+		}
+		.cm-category-icon-option__label {
+			display: block;
+			margin-top: 6px;
+			font-size: 12px;
+			line-height: 1.2;
+		}
+		@media (max-width: 782px) {
+			.cm-category-icon-picker {
+				grid-template-columns: repeat(2, minmax(120px, 1fr));
+				max-width: 400px;
+			}
+		}
+	</style>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const iconInput = document.getElementById('calymyk_category_icon');
+			const colorInput = document.getElementById('calymyk_category_color');
+			const colorValue = document.querySelector('.cm-category-color-value');
+
+			document.querySelectorAll('.cm-category-icon-option').forEach(function (button) {
+			button.addEventListener('click', function () {
+				if (!iconInput) return;
+				iconInput.value = button.dataset.icon;
+				document.querySelectorAll('.cm-category-icon-option').forEach(function (item) {
+					item.classList.remove('is-selected');
+					item.setAttribute('aria-pressed', 'false');
+				});
+				button.classList.add('is-selected');
+				button.setAttribute('aria-pressed', 'true');
+			});
+			});
+
+			if (colorInput && colorValue) {
+				colorInput.addEventListener('input', function () {
+					colorValue.textContent = colorInput.value.toUpperCase();
+				});
+			}
+		});
+	</script>
+	<?php
+}
+add_action( 'admin_footer', 'calymyk_new_category_admin_assets' );
 
 function calymyk_new_save_category_fields( $term_id ) {
 	if ( isset( $_POST['calymyk_category_color'] ) ) {
