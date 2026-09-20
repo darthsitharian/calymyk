@@ -1021,6 +1021,27 @@ html[data-theme="dark"] {
 	list-style: none;
 }
 
+.cm-featured-post-card__link-wrapper {
+	display: block;
+	width: 100%;
+	height: 100%;
+	color: inherit;
+	text-decoration: none;
+}
+
+.cm-featured-post-card__link-wrapper:focus-visible {
+	outline: 2px solid var(--wp--preset--color--accent);
+	outline-offset: 3px;
+}
+
+.cm-featured-post-card__title-text {
+	color: inherit;
+}
+
+.cm-featured-post-card__link-wrapper:hover .cm-featured-post-card__title-text {
+	color: var(--wp--preset--color--accent);
+}
+
 .cm-featured-post-card {
 	position: relative;
 	display: flex;
