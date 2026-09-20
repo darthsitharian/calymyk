@@ -433,6 +433,30 @@ function calymyk_new_register_promotion_meta() {
 
 	register_post_meta(
 		'post',
+		'_calymyk_promotion_unlimited',
+		array(
+			'type'              => 'boolean',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'rest_sanitize_boolean',
+			'auth_callback'     => function () { return current_user_can( 'edit_posts' ); },
+		)
+	);
+
+	register_post_meta(
+		'post',
+		'_calymyk_promotion_referral_url',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'esc_url_raw',
+			'auth_callback'     => function () { return current_user_can( 'edit_posts' ); },
+		)
+	);
+
+	register_post_meta(
+		'post',
 		'_calymyk_promotion_end',
 		array(
 			'type'              => 'string',
@@ -512,6 +536,13 @@ add_action( 'save_post_post', 'calymyk_new_save_post_promotion' );
 /**
  * Render promotion terms in the post sidebar.
  */
+function calymyk_new_promotion_referral_shortcode() {
+	$url = get_post_meta( get_the_ID(), '_calymyk_promotion_referral_url', true );
+	if ( ! $url ) return '';
+	return '<section class="cm-promotion-sidebar-section"><p class="cm-eyebrow">REFLINK</p><p><a href="' . esc_url( $url ) . '" target="_blank" rel="nofollow sponsored noopener noreferrer">Przejdź przez reflink →</a></p></section>';
+}
+add_shortcode( 'calymyk_promotion_referral', 'calymyk_new_promotion_referral_shortcode' );
+
 function calymyk_new_promotion_terms_shortcode() {
 	$url = get_post_meta( get_the_ID(), '_calymyk_promotion_terms_url', true );
 	if ( ! $url ) {
@@ -598,8 +629,9 @@ add_shortcode( 'calymyk_post_tool', 'calymyk_new_post_tool_shortcode' );
 function calymyk_new_promotion_duration_shortcode() {
 	$start = get_post_meta( get_the_ID(), '_calymyk_promotion_start', true );
 	$end   = get_post_meta( get_the_ID(), '_calymyk_promotion_end', true );
+	$unlimited = (bool) get_post_meta( get_the_ID(), '_calymyk_promotion_unlimited', true );
 
-	if ( ! $start && ! $end ) {
+	if ( ! $start && ! $end && ! $unlimited ) {
 		return '';
 	}
 
@@ -611,7 +643,11 @@ function calymyk_new_promotion_duration_shortcode() {
 	$start_label = $format_date( $start );
 	$end_label   = $format_date( $end );
 
-	if ( $start_label && $end_label ) {
+	if ( $unlimited && $start_label ) {
+		$label = 'od ' . $start_label . ' · do odwołania';
+	} elseif ( $unlimited ) {
+		$label = 'do odwołania';
+	} elseif ( $start_label && $end_label ) {
 		$label = $start_label . ' – ' . $end_label;
 	} elseif ( $start_label ) {
 		$label = 'od ' . $start_label;
