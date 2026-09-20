@@ -604,11 +604,17 @@ function calymyk_new_promotion_prep_shortcode() {
 		return '';
 	}
 
-	$output = '<section class="cm-promotion-sidebar-section"><p class="cm-eyebrow">PRZYGOTUJ PRZED STARTEM</p><ul class="cm-promotion-sidebar-list">';
+	$output = '<section class="cm-promotion-sidebar-section cm-promotion-prep-card">';
+	$output .= '<div class="cm-promotion-sidebar-heading">';
+	$output .= '<span class="cm-promotion-sidebar-heading__icon" aria-hidden="true">';
+	$output .= '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14.7 6.3 3-3a4 4 0 0 1-5.2 5.9L7 14.7a4 4 0 0 1-5.9-5.2l3-3 3.1 3.1 3.1-3.1-3.1-3.1 3-3a4 4 0 0 1 5.2 5.2l-3 3 3.1 3.1 3.1-3.1-3.1-3.1Z"/><path d="m14 14 6.5 6.5"/><path d="m18.5 17.5 2-2"/><path d="m16.5 20.5 2-2"/></svg>';
+	$output .= '</span><h2>Przygotuj przed startem:</h2></div>';
+	$output .= '<ul class="cm-promotion-sidebar-list">';
 	foreach ( $items as $item ) {
-		$output .= '<li>' . esc_html( $item ) . '</li>';
+		$output .= '<li><span class="cm-promotion-sidebar-list__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m7 12 3 3 7-7"/></svg></span><span>' . esc_html( $item ) . '</span></li>';
 	}
-	return $output . '</ul></section>';
+	$output .= '</ul></section>';
+	return $output;
 }
 add_shortcode( 'calymyk_promotion_prep', 'calymyk_new_promotion_prep_shortcode' );
 
@@ -621,20 +627,28 @@ function calymyk_new_promotion_faq_shortcode() {
 		return '';
 	}
 
-	$output = '<section class="cm-promotion-sidebar-section"><p class="cm-eyebrow">FAQ</p><div class="cm-promotion-sidebar-faq">';
+	$has_items = false;
+	$output = '<section class="cm-promotion-sidebar-section cm-promotion-faq-card">';
+	$output .= '<div class="cm-promotion-sidebar-heading">';
+	$output .= '<span class="cm-promotion-sidebar-heading__icon" aria-hidden="true">';
+	$output .= '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8.5 8.5 0 1 1-4.1-7.3L20 4v7.5Z"/><path d="M9.7 9a2.6 2.6 0 1 1 4.6 1.7c-.9 1-1.9 1.2-1.9 2.8"/><path d="M12 17.2h.01"/></svg>';
+	$output .= '</span><h2>Najczęściej zadawane pytania (FAQ)</h2></div>';
+	$output .= '<div class="cm-promotion-sidebar-faq">';
 	foreach ( $items as $item ) {
 		$question = isset( $item['question'] ) ? trim( $item['question'] ) : '';
 		$answer   = isset( $item['answer'] ) ? trim( $item['answer'] ) : '';
 		if ( ! $question && ! $answer ) {
 			continue;
 		}
-		$output .= '<details><summary>' . esc_html( $question ?: 'Pytanie' ) . '</summary>';
+		$has_items = true;
+		$output .= '<details><summary><span>' . esc_html( $question ?: 'Pytanie' ) . '</span><svg class="cm-promotion-sidebar-faq__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>';
 		if ( $answer ) {
 			$output .= '<p>' . esc_html( $answer ) . '</p>';
 		}
 		$output .= '</details>';
 	}
-	return $output . '</div></section>';
+	$output .= '</div></section>';
+	return $has_items ? $output : '';
 }
 add_shortcode( 'calymyk_promotion_faq', 'calymyk_new_promotion_faq_shortcode' );
 
