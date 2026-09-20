@@ -49,6 +49,22 @@
 			{ question: '', answer: '' }
 		];
 
+		const documentItems = Array.isArray(safeMeta._calymyk_promotion_documents)
+			? safeMeta._calymyk_promotion_documents
+			: (safeMeta._calymyk_promotion_terms_url ? [
+				{ label: 'Regulamin promocji', url: safeMeta._calymyk_promotion_terms_url }
+			] : [
+				{ label: '', url: '' }
+			]);
+
+		function updateDocument(index, key, value) {
+			const next = documentItems.slice();
+			next[index] = Object.assign({}, next[index], { [key]: value });
+			updateMeta('_calymyk_promotion_documents', next);
+		}
+
+
+
 		function updatePrep(index, value) {
 			const next = prepItems.slice();
 			next[index] = value;
