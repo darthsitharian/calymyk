@@ -2070,6 +2070,59 @@ html[data-theme="dark"] {
 	margin: 0;
 }
 
+.cm-breadcrumbs {
+	margin: 0 0 18px;
+	color: var(--wp--preset--color--contrast-3);
+	font-family: var(--wp--preset--font-family--mono);
+	font-size: 0.68rem;
+	font-weight: 500;
+	line-height: 1.5;
+}
+
+.cm-breadcrumbs ol {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 4px 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cm-breadcrumbs li {
+	display: inline-flex;
+	align-items: center;
+	min-width: 0;
+}
+
+.cm-breadcrumbs li + li::before {
+	content: "›";
+	margin-right: 8px;
+	color: var(--wp--preset--color--contrast-3);
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: 0.9rem;
+	line-height: 1;
+}
+
+.cm-breadcrumbs a {
+	color: var(--wp--preset--color--contrast-3);
+	text-decoration: none;
+	transition: color 160ms ease;
+}
+
+.cm-breadcrumbs a:hover,
+.cm-breadcrumbs a:focus-visible {
+	color: var(--wp--preset--color--accent);
+}
+
+.cm-breadcrumbs__current {
+	color: var(--wp--preset--color--contrast-2);
+}
+
+.cm-breadcrumbs__current span {
+	overflow-wrap: anywhere;
+}
+
 .cm-single__title {
 	max-width: 980px;
 	margin: 8px 0 0;
