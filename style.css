@@ -1249,6 +1249,11 @@ html[data-theme="dark"] {
 	display: none;
 }
 
+.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__body,
+.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__body {
+	background: linear-gradient(to top, rgb(0 0 0 / 0.68), rgb(0 0 0 / 0.18) 65%, transparent);
+}
+
 /* Bottom-left pair: image fills the card and title sits over it. */
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card,
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card {
