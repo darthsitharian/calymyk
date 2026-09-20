@@ -808,27 +808,31 @@ function calymyk_new_promotion_faq_shortcode() {
 	$output .= '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8.5 8.5 0 1 1-4.1-7.3L20 4v7.5Z"/><path d="M9.7 9a2.6 2.6 0 1 1 4.6 1.7c-.9 1-1.9 1.2-1.9 2.8"/><path d="M12 17.2h.01"/></svg>';
 	$output .= '</span><h2>Najczęściej zadawane pytania (FAQ)</h2></div>';
 	$output .= '<div class="cm-promotion-sidebar-faq">';
+	$number = 0;
+
 	foreach ( $items as $item ) {
 		$question = isset( $item['question'] ) ? trim( $item['question'] ) : '';
 		$answer   = isset( $item['answer'] ) ? trim( $item['answer'] ) : '';
 		if ( ! $question && ! $answer ) {
 			continue;
 		}
+
 		$has_items = true;
-		$output .= '<details><summary><span>' . esc_html( $question ?: 'Pytanie' ) . '</span><span class="cm-promotion-sidebar-faq__chevron cm-icon cm-icon--chevron" aria-hidden="true"></span></summary>';
+		$number++;
+		$output .= '<details><summary><span class="cm-promotion-sidebar-faq__number">' . esc_html( $number ) . '.</span><span class="cm-promotion-sidebar-faq__question">' . esc_html( $question ?: 'Pytanie' ) . '</span><span class="cm-promotion-sidebar-faq__chevron cm-icon cm-icon--chevron" aria-hidden="true"></span></summary>';
+
 		if ( $answer ) {
 			$output .= '<p>' . esc_html( $answer ) . '</p>';
 		}
+
 		$output .= '</details>';
 	}
+
 	$output .= '</div></section>';
 	return $has_items ? $output : '';
 }
 add_shortcode( 'calymyk_promotion_faq', 'calymyk_new_promotion_faq_shortcode' );
 
-/**
- * Render the tool assigned to the current promotion.
- */
 function calymyk_new_post_tool_shortcode() {
 	$tool_id = absint( get_post_meta( get_the_ID(), '_calymyk_post_tool', true ) );
 	if ( ! $tool_id || 'tool' !== get_post_type( $tool_id ) ) {
