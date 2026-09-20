@@ -1075,8 +1075,8 @@ html[data-theme="dark"] {
 
 .cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__title {
 	margin: 0;
-	font-size: clamp(2rem, 3.2vw, 4rem);
-	line-height: 1.04;
+	font-size: clamp(1.75rem, 2.7vw, 3.25rem);
+	line-height: 1.06;
 }
 
 .cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__title a {
@@ -1088,7 +1088,7 @@ html[data-theme="dark"] {
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card {
 	background: transparent;
 	border: 0;
-	border-radius: 0;
+	border-radius: 12px;
 }
 
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__link,
@@ -1105,6 +1105,12 @@ html[data-theme="dark"] {
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__body,
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__body {
 	padding: 18px 24px 22px;
+}
+
+.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__title,
+.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__title {
+	font-size: 1.25rem;
+	line-height: 1.18;
 }
 
 /* Right column: four equal-height horizontal cards. */
