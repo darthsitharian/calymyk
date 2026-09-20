@@ -1121,6 +1121,10 @@ html[data-theme="dark"] {
 
 .cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__title a {
 	color: #fff;
+	background: rgba(0, 0, 0, 0.68);
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+	padding: 3px 8px 5px;
 }
 
 /* Bottom-left pair: image above text, without card background or CTA. */
@@ -1173,7 +1177,7 @@ html[data-theme="dark"] {
 }
 
 .cm-featured-post-card--compact .cm-featured-post-card__body {
-	padding: 4px 0 20px 24px;
+	padding: 28px 0 20px 24px;
 	justify-content: center;
 }
 
