@@ -1156,7 +1156,12 @@ html[data-theme="dark"] {
 /* Bottom-left pair: image above text. */
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__image,
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__image {
-	flex: 0 0 52%;
+	flex: 0 0 auto;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 9;
+	border-radius: 12px;
+	overflow: hidden;
 }
 
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__body,
@@ -1192,10 +1197,14 @@ html[data-theme="dark"] {
 }
 
 .cm-featured-post-card--compact .cm-featured-post-card__image {
-	flex: 0 0 34%;
+	flex: 0 0 min(34%, 180px);
+	width: min(34%, 180px);
 	max-width: 180px;
-	height: 100%;
+	height: auto;
+	aspect-ratio: 1 / 1;
+	align-self: flex-start;
 	border-radius: 10px;
+	overflow: hidden;
 }
 
 .cm-featured-post-card--compact .cm-featured-post-card__image img {
@@ -1241,7 +1250,10 @@ html[data-theme="dark"] {
 
 	.cm-featured-post-card--compact .cm-featured-post-card__image {
 		flex-basis: 32%;
+		width: min(32%, 150px);
 		max-width: 150px;
+		height: auto;
+		aspect-ratio: 1 / 1;
 	}
 
 	.cm-featured-post-card--compact .cm-featured-post-card__body {
