@@ -278,35 +278,62 @@ add_filter( 'register_post_type_args', 'calymyk_new_post_template', 10, 2 );
 function calymyk_new_render_promotion_steps( $attributes ) {
 	$steps = isset( $attributes['steps'] ) && is_array( $attributes['steps'] ) ? $attributes['steps'] : array();
 	$output = '<section class="cm-promotion-section cm-promotion-steps"><p class="cm-eyebrow">NAWIGATOR KROKÓW</p><div class="cm-promotion-steps__list">';
+
 	foreach ( $steps as $index => $step ) {
-		$title = ! empty( $step['title'] ) ? $step['title'] : 'Krok ' . ( $index + 1 );
+		$title       = ! empty( $step['title'] ) ? $step['title'] : 'Krok ' . ( $index + 1 );
 		$description = isset( $step['description'] ) ? $step['description'] : '';
-		$fields = isset( $step['fields'] ) && is_array( $step['fields'] ) ? $step['fields'] : array();
-		$output .= '<article class="cm-promotion-step"><div class="cm-promotion-step__header"><div class="cm-promotion-step__number">' . esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ) . '</div><div class="cm-promotion-step__heading"><p class="cm-promotion-step__eyebrow">KROK ' . esc_html( $index + 1 ) . '</p><h3>' . esc_html( $title ) . '</h3></div></div>';
+		$fields      = isset( $step['fields'] ) && is_array( $step['fields'] ) ? $step['fields'] : array();
+
+		$output .= '<details class="cm-promotion-step">';
+		$output .= '<summary class="cm-promotion-step__toggle" aria-label="Rozwiń krok ' . esc_attr( $index + 1 ) . '"><span class="cm-promotion-step__toggle-icon cm-icon cm-icon--chevron" aria-hidden="true"></span></summary>';
+		$output .= '<div class="cm-promotion-step__header"><div class="cm-promotion-step__number">' . esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ) . '</div><div class="cm-promotion-step__heading"><p class="cm-promotion-step__eyebrow">KROK ' . esc_html( $index + 1 ) . '</p><h3>' . esc_html( $title ) . '</h3></div></div>';
+		$output .= '<div class="cm-promotion-step__body">';
+
 		if ( $description ) {
 			$output .= '<p class="cm-promotion-step__description">' . wp_kses_post( $description ) . '</p>';
 		}
+
 		if ( $fields ) {
-			$output .= '<div class="cm-promotion-step__fields">';
+			$valid_fields = array();
+
 			foreach ( $fields as $field ) {
-				$field_title = isset( $field['title'] ) ? trim( $field['title'] ) : '';
+				$field_title   = isset( $field['title'] ) ? trim( $field['title'] ) : '';
 				$field_content = isset( $field['content'] ) ? trim( $field['content'] ) : '';
+
 				if ( ! $field_title && ! $field_content ) {
 					continue;
 				}
-				$output .= '<div class="cm-promotion-step__field">';
-				if ( $field_title ) {
-					$output .= '<p class="cm-promotion-step__field-title">' . esc_html( $field_title ) . '</p>';
+
+				$valid_fields[] = array(
+					'title'   => $field_title,
+					'content' => $field_content,
+				);
+			}
+
+			if ( $valid_fields ) {
+				$output .= '<div class="cm-promotion-step__fields">';
+
+				foreach ( $valid_fields as $field ) {
+					$output .= '<div class="cm-promotion-step__field">';
+
+					if ( $field['title'] ) {
+						$output .= '<p class="cm-promotion-step__field-title">' . esc_html( $field['title'] ) . '</p>';
+					}
+
+					if ( $field['content'] ) {
+						$output .= '<div class="cm-promotion-step__field-content">' . wpautop( wp_kses_post( $field['content'] ) ) . '</div>';
+					}
+
+					$output .= '</div>';
 				}
-				if ( $field_content ) {
-					$output .= '<div class="cm-promotion-step__field-content">' . wpautop( wp_kses_post( $field_content ) ) . '</div>';
-				}
+
 				$output .= '</div>';
 			}
-			$output .= '</div>';
 		}
-		$output .= '</article>';
+
+		$output .= '</div></details>';
 	}
+
 	return $output . '</div></section>';
 }
 
