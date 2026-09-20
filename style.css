@@ -958,15 +958,9 @@ html[data-theme="dark"] {
 	padding: 0;
 	box-sizing: border-box;
 	background: var(--wp--preset--color--base-2);
-	border: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 14%, transparent);
+	border: 0;
 	border-radius: 12px;
 	overflow: hidden;
-	transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
-}
-
-.cm-featured-post-card:hover {
-	transform: translateY(-2px);
-	border-color: color-mix(in srgb, var(--wp--preset--color--accent) 55%, transparent);
 }
 
 .cm-featured-post-card__image {
@@ -1103,7 +1097,7 @@ html[data-theme="dark"] {
 /* Right column: four equal-height horizontal cards. */
 .cm-featured-post-card--compact {
 	flex-direction: row;
-	border-width: 0 0 1px;
+	border: 0;
 	border-radius: 0;
 	background: transparent;
 }
