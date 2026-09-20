@@ -479,6 +479,51 @@ function calymyk_new_register_promotion_meta() {
 
 	register_post_meta(
 		'post',
+		'_calymyk_promotion_documents',
+		array(
+			'type'         => 'array',
+			'single'       => true,
+			'show_in_rest' => array(
+				'schema' => array(
+					'type'  => 'array',
+					'items' => array(
+						'type'       => 'object',
+						'properties' => array(
+							'label' => array( 'type' => 'string' ),
+							'url'   => array( 'type' => 'string' ),
+						),
+					),
+				),
+			),
+			'sanitize_callback' => function ( $value ) {
+				if ( ! is_array( $value ) ) {
+					return array();
+				}
+				return array_values(
+					array_filter(
+						array_map(
+							function ( $item ) {
+								return array(
+									'label' => isset( $item['label'] ) ? sanitize_text_field( $item['label'] ) : '',
+									'url'   => isset( $item['url'] ) ? esc_url_raw( $item['url'] ) : '',
+								);
+							},
+							$value
+						),
+						function ( $item ) {
+							return ! empty( $item['label'] ) || ! empty( $item['url'] );
+						}
+					)
+				);
+			},
+			'auth_callback' => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+
+	register_post_meta(
+		'post',
 		'_calymyk_promotion_unlimited',
 		array(
 			'type'              => 'boolean',
@@ -756,13 +801,49 @@ function calymyk_new_promotion_referral_shortcode() {
 add_shortcode( 'calymyk_promotion_referral', 'calymyk_new_promotion_referral_shortcode' );
 
 function calymyk_new_promotion_terms_shortcode() {
-	$url = get_post_meta( get_the_ID(), '_calymyk_promotion_terms_url', true );
-	if ( ! $url ) {
+	$documents = get_post_meta( get_the_ID(), '_calymyk_promotion_documents', true );
+
+	if ( ! is_array( $documents ) || empty( $documents ) ) {
+		$legacy_url = get_post_meta( get_the_ID(), '_calymyk_promotion_terms_url', true );
+		$documents  = $legacy_url
+			? array( array( 'label' => 'Regulamin promocji', 'url' => $legacy_url ) )
+			: array();
+	}
+
+	$valid_documents = array();
+	foreach ( $documents as $document ) {
+		$label = isset( $document['label'] ) ? trim( $document['label'] ) : '';
+		$url   = isset( $document['url'] ) ? trim( $document['url'] ) : '';
+
+		if ( ! $label || ! $url ) {
+			continue;
+		}
+
+		$valid_documents[] = array(
+			'label' => $label,
+			'url'   => $url,
+		);
+	}
+
+	if ( empty( $valid_documents ) ) {
 		return '';
 	}
 
-	return '<section class="cm-promotion-sidebar-section"><p class="cm-eyebrow">REGULAMIN PROMOCJI</p><p><a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">Zobacz regulamin promocji →</a></p></section>';
+	$output = '<section class="cm-promotion-sidebar-section cm-promotion-documents">';
+	$output .= '<p class="cm-eyebrow">WAŻNE DOKUMENTY</p>';
+	$output .= '<div class="cm-promotion-documents__list">';
+
+	foreach ( $valid_documents as $document ) {
+		$output .= '<a class="cm-promotion-document" href="' . esc_url( $document['url'] ) . '" target="_blank" rel="noopener noreferrer">';
+		$output .= '<span>' . esc_html( $document['label'] ) . '</span><span aria-hidden="true">→</span>';
+		$output .= '</a>';
+	}
+
+	$output .= '</div></section>';
+
+	return $output;
 }
+
 add_shortcode( 'calymyk_promotion_terms', 'calymyk_new_promotion_terms_shortcode' );
 
 /**
