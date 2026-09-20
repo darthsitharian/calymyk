@@ -3640,3 +3640,55 @@ html[data-theme="dark"] {
 	}
 }
 
+
+
+/* Local icon assets */
+.cm-icon {
+	display: inline-block;
+	flex: 0 0 auto;
+	background-color: currentColor;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-position: center;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+}
+
+.cm-promotion-sidebar-heading__icon.cm-icon {
+	width: 22px;
+	height: 22px;
+}
+
+.cm-promotion-sidebar-list__icon.cm-icon {
+	width: 13px;
+	height: 13px;
+}
+
+.cm-promotion-sidebar-faq__chevron.cm-icon {
+	width: 12px;
+	height: 12px;
+	color: var(--wp--preset--color--contrast-2);
+	transition: transform 160ms ease;
+}
+
+.cm-icon--tools {
+	-webkit-mask-image: url("./assets/icons/tools.svg");
+	mask-image: url("./assets/icons/tools.svg");
+}
+
+.cm-icon--help {
+	-webkit-mask-image: url("./assets/icons/help.svg");
+	mask-image: url("./assets/icons/help.svg");
+}
+
+.cm-icon--check {
+	-webkit-mask-image: url("./assets/icons/check-square.svg");
+	mask-image: url("./assets/icons/check-square.svg");
+}
+
+.cm-icon--chevron {
+	-webkit-mask-image: url("./assets/icons/chevron-down.svg");
+	mask-image: url("./assets/icons/chevron-down.svg");
+}
+
