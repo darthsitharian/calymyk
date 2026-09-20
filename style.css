@@ -3435,6 +3435,7 @@ html[data-theme="dark"] {
 	justify-content: space-between;
 	gap: 16px;
 	box-sizing: border-box;
+	min-height: 100%;
 	background: var(--wp--preset--color--accent);
 	border-color: transparent;
 	color: var(--wp--preset--color--base);
