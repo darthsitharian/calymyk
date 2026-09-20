@@ -252,7 +252,7 @@ function calymyk_new_category_add_fields() {
 	?>
 	<div class="form-field">
 		<label for="calymyk_category_color">Kolor kategorii</label>
-		<?php calymyk_new_category_color_field( calymyk_new_category_default_color( 'ai' ) ); ?>
+		<?php calymyk_new_category_color_field( '#00B85C' ); ?>
 	</div>
 	<div class="form-field">
 		<label>Ikona kategorii</label>
