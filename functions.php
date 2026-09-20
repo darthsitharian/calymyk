@@ -26,6 +26,14 @@ function calymyk_new_enqueue_assets() {
 		wp_get_theme()->get( 'Version' ),
 		true
 	);
+
+	wp_enqueue_script(
+		'calymyk-new-hero-cards',
+		get_template_directory_uri() . '/assets/js/hero-cards.js',
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
 }
 
 add_action( 'wp_enqueue_scripts', 'calymyk_new_enqueue_assets' );
@@ -416,11 +424,17 @@ function calymyk_new_register_category_icon_block() {
 }
 add_action( 'init', 'calymyk_new_register_category_icon_block', 31 );
 function calymyk_new_render_category_navigation_block() {
+	$excluded_ids = array( (int) get_option( 'default_category' ) );
+	$polecamy      = get_category_by_slug( 'polecamy' );
+
+	if ( $polecamy ) {
+		$excluded_ids[] = (int) $polecamy->term_id;
+	}
+
 	$categories = get_categories(
 		array(
 			'hide_empty' => true,
-			'exclude'    => array( get_option( 'default_category' ) ),
-			'name__not_in' => array( 'polecamy' ),
+			'exclude'    => array_values( array_unique( $excluded_ids ) ),
 			'orderby'    => 'name',
 			'order'      => 'ASC',
 		)
