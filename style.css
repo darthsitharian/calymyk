@@ -1273,7 +1273,7 @@ html[data-theme="dark"] {
 	display: none;
 }
 
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__excerpt,
+..cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__excerpt,
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__excerpt {
 	margin: 12px 0 0;
 	color: var(--wp--preset--color--contrast-2);
@@ -1283,6 +1283,16 @@ html[data-theme="dark"] {
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
 	overflow: hidden;
+}
+
+.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__excerpt,
+.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__excerpt {
+	background: rgba(0, 0, 0, 0.68);
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+	padding: 2px 7px 4px;
+	width: fit-content;
+	max-width: 100%;
 }
 
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__title,
