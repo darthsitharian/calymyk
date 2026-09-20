@@ -122,14 +122,36 @@
 				value: safeMeta._calymyk_promotion_referral_url || '',
 				onChange: function (value) { updateMeta('_calymyk_promotion_referral_url', value); }
 			}),
-			createElement(TextControl, {
-				label: 'Link do regulaminu promocji',
-				type: 'url',
-				value: safeMeta._calymyk_promotion_terms_url || '',
-				onChange: function (value) {
-					updateMeta('_calymyk_promotion_terms_url', value);
-				}
+			createElement('hr', {}),
+			createElement('h3', {}, 'Ważne dokumenty'),
+			documentItems.map(function (item, index) {
+				return createElement('div', { key: 'document-' + index, style: { marginBottom: '16px' } },
+					createElement(TextControl, {
+						label: 'Nazwa dokumentu ' + (index + 1),
+						value: item.label || '',
+						onChange: function (value) { updateDocument(index, 'label', value); }
+					}),
+					createElement(TextControl, {
+						label: 'Link do dokumentu',
+						type: 'url',
+						value: item.url || '',
+						onChange: function (value) { updateDocument(index, 'url', value); }
+					}),
+					createElement(Button, {
+						isDestructive: true,
+						isSmall: true,
+						onClick: function () {
+							updateMeta('_calymyk_promotion_documents', documentItems.filter(function (_, i) { return i !== index; }));
+						}
+					}, 'Usuń dokument')
+				);
 			}),
+			createElement(Button, {
+				variant: 'secondary',
+				onClick: function () {
+					updateMeta('_calymyk_promotion_documents', documentItems.concat([{ label: '', url: '' }]));
+				}
+			}, '+ Dodaj dokument'),
 			createElement('hr', {}),
 			createElement('h3', {}, 'Przygotuj przed startem'),
 			prepItems.map(function (item, index) {
