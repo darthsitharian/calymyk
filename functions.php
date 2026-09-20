@@ -114,6 +114,48 @@ add_action( 'init', 'calymyk_new_register_tools' );
  * The values are stored as term meta so the frontend can render the
  * category consistently in cards and other promotion surfaces.
  */
+function calymyk_new_category_default_color( $term_or_slug ) {
+	$slug = is_object( $term_or_slug ) && isset( $term_or_slug->slug )
+		? $term_or_slug->slug
+		: sanitize_title( (string) $term_or_slug );
+
+	$colors = array(
+		'ai'        => '#A855F7',
+		'tech'      => '#3B82F6',
+		'marketing' => '#F97316',
+		'handel'    => '#EF4444',
+		'finanse'   => '#10B981',
+		'biznes'    => '#F59E0B',
+	);
+
+	return isset( $colors[ $slug ] ) ? $colors[ $slug ] : '#00B85C';
+}
+
+function calymyk_new_apply_category_colors_once() {
+	if ( get_option( 'calymyk_new_category_colors_v1' ) ) {
+		return;
+	}
+
+	$colors = array(
+		'ai'        => '#A855F7',
+		'tech'      => '#3B82F6',
+		'marketing' => '#F97316',
+		'handel'    => '#EF4444',
+		'finanse'   => '#10B981',
+		'biznes'    => '#F59E0B',
+	);
+
+	foreach ( $colors as $slug => $color ) {
+		$term = get_category_by_slug( $slug );
+		if ( $term ) {
+			update_term_meta( $term->term_id, '_calymyk_category_color', $color );
+		}
+	}
+
+	update_option( 'calymyk_new_category_colors_v1', 1, false );
+}
+add_action( 'init', 'calymyk_new_apply_category_colors_once', 25 );
+
 function calymyk_new_category_icon_options() {
 	return array(
 		'database'      => 'Baza danych',
@@ -210,7 +252,7 @@ function calymyk_new_category_add_fields() {
 	?>
 	<div class="form-field">
 		<label for="calymyk_category_color">Kolor kategorii</label>
-		<?php calymyk_new_category_color_field( '#00B85C' ); ?>
+		<?php calymyk_new_category_color_field( calymyk_new_category_default_color( 'ai' ) ); ?>
 	</div>
 	<div class="form-field">
 		<label>Ikona kategorii</label>
@@ -221,7 +263,7 @@ function calymyk_new_category_add_fields() {
 add_action( 'category_add_form_fields', 'calymyk_new_category_add_fields' );
 
 function calymyk_new_category_edit_fields( $term ) {
-	$color = get_term_meta( $term->term_id, '_calymyk_category_color', true ) ?: '#00B85C';
+	$color = get_term_meta( $term->term_id, '_calymyk_category_color', true ) ?: calymyk_new_category_default_color( $term );
 	$icon  = get_term_meta( $term->term_id, '_calymyk_category_icon', true ) ?: 'document';
 	?>
 	<tr class="form-field">
@@ -374,7 +416,7 @@ function calymyk_new_category_icon_shortcode() {
 	}
 
 	$category = $categories[0];
-	$color    = get_term_meta( $category->term_id, '_calymyk_category_color', true ) ?: '#00B85C';
+	$color    = get_term_meta( $category->term_id, '_calymyk_category_color', true ) ?: calymyk_new_category_default_color( $category );
 
 
 	return '<span class="cm-category-icon" style="--cm-category-color:' . esc_attr( $color ) . '" aria-label="' . esc_attr( $category->name ) . '" title="' . esc_attr( $category->name ) . '"></span>';
@@ -418,7 +460,7 @@ function calymyk_new_render_category_navigation_block() {
 	$output = '<nav class="cm-category-nav" aria-label="Kategorie"><ul class="cm-category-nav__list">';
 
 	foreach ( $categories as $category ) {
-		$color = get_term_meta( $category->term_id, '_calymyk_category_color', true ) ?: '#00B85C';
+		$color = get_term_meta( $category->term_id, '_calymyk_category_color', true ) ?: calymyk_new_category_default_color( $category );
 
 		$output .= '<li class="cm-category-nav__item">';
 		$output .= '<a class="cm-category-nav__link" href="' . esc_url( get_category_link( $category ) ) . '">';
