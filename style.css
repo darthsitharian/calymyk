@@ -843,7 +843,7 @@ html[data-theme="dark"] {
 
 .cm-featured-hero {
 	width: 100%;
-	height: calc(100dvh - var(--cm-header-height));
+	height: calc(80dvh - var(--cm-header-height));
 	min-height: 0;
 	box-sizing: border-box;
 	overflow: hidden;
