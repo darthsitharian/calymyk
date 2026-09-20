@@ -3663,13 +3663,12 @@ html[data-theme="dark"] {
 .cm-promotion-sidebar-faq summary {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	gap: 10px;
+	gap: 8px;
 	min-height: 34px;
 	box-sizing: border-box;
-	padding: 8px 9px;
-	border-radius: 5px;
-	background: var(--wp--preset--color--base);
+	padding: 8px 2px;
+	border-radius: 0;
+	background: transparent;
 	color: var(--wp--preset--color--contrast-2);
 	font-size: 0.75rem;
 	font-weight: 500;
@@ -3685,10 +3684,26 @@ html[data-theme="dark"] {
 	display: none;
 }
 
+.cm-promotion-sidebar-faq__number {
+	flex: 0 0 18px;
+	width: 18px;
+	color: var(--wp--preset--color--accent);
+	font-family: var(--wp--preset--font-family--mono);
+	font-size: 0.7rem;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.cm-promotion-sidebar-faq__question {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
 .cm-promotion-sidebar-faq__chevron {
 	flex: 0 0 12px;
 	width: 12px;
 	height: 12px;
+	margin-left: auto;
 	color: var(--wp--preset--color--contrast-2);
 	transition: transform 160ms ease;
 }
@@ -3698,7 +3713,7 @@ html[data-theme="dark"] {
 }
 
 .cm-promotion-sidebar-faq details > p {
-	margin: 4px 0 0;
+	margin: 2px 0 0;
 	padding: 9px;
 	border-radius: 5px;
 	background: var(--wp--preset--color--base);
@@ -3718,7 +3733,6 @@ html[data-theme="dark"] {
 		font-size: 0.8125rem;
 	}
 }
-
 
 
 /* Local icon assets */
