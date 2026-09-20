@@ -3269,3 +3269,141 @@ html[data-theme="dark"] {
 	font-size: var(--wp--preset--font-size--small);
 	line-height: 1.55;
 }
+
+/* =========================================================
+   CALYMYK — PROMOTIONS ARCHIVE
+   ========================================================= */
+
+.cm-archive__title {
+	max-width: 900px;
+	margin: 8px 0 0;
+	font-size: clamp(2.5rem, 5.5vw, 4.75rem);
+	line-height: 1.02;
+	letter-spacing: -0.045em;
+}
+
+.cm-archive-query {
+	margin-top: 0;
+}
+
+.cm-archive-grid {
+	display: grid !important;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: var(--cm-grid-gap);
+}
+
+.cm-archive-grid > * {
+	grid-column: span 4;
+	min-width: 0;
+	margin: 0;
+}
+
+.cm-post-card {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: 0;
+	padding: 0 0 24px;
+	background: var(--wp--preset--color--base-2);
+	border: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 10%, transparent);
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+.cm-post-card__image {
+	margin: 0;
+}
+
+.cm-post-card__image img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+}
+
+.cm-post-card__meta {
+	margin: 20px 24px 0;
+	gap: 12px;
+}
+
+.cm-post-card__category {
+	color: var(--wp--preset--color--accent);
+	font-family: var(--wp--preset--font-family--mono);
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 600;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+}
+
+.cm-post-card__date {
+	color: var(--wp--preset--color--contrast-3);
+	font-size: var(--wp--preset--font-size--xs);
+}
+
+.cm-post-card__title {
+	margin: 10px 24px 0;
+	font-size: var(--wp--preset--font-size--large);
+	line-height: 1.2;
+}
+
+.cm-post-card__title a {
+	text-decoration: none;
+}
+
+.cm-post-card__excerpt {
+	margin: 12px 24px 0;
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.6;
+}
+
+.cm-post-card > .cm-promotion-duration,
+.cm-post-card > .cm-post-tool {
+	margin-left: 24px;
+	margin-right: 24px;
+}
+
+.cm-post-card > .cm-promotion-duration {
+	margin-top: 20px;
+	padding: 14px 16px;
+}
+
+.cm-post-card > .cm-post-tool {
+	margin-top: 12px;
+	padding: 14px 16px;
+}
+
+.cm-post-card > .cm-promotion-duration .cm-eyebrow,
+.cm-post-card > .cm-post-tool .cm-eyebrow {
+	font-size: 10px;
+}
+
+.cm-post-card > .cm-promotion-duration__value,
+.cm-post-card .cm-post-tool__title {
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.cm-post-card > .wp-block-read-more {
+	margin: auto 24px 0;
+	padding-top: 20px;
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.cm-post-card > .wp-block-read-more:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+@media (max-width: 900px) {
+	.cm-archive-grid > * {
+		grid-column: span 6;
+	}
+}
+
+@media (max-width: 600px) {
+	.cm-archive-grid > * {
+		grid-column: 1 / -1;
+	}
+}
