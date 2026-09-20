@@ -1048,35 +1048,31 @@ html[data-theme="dark"] {
 .cm-category-icon {
 	position: absolute;
 	top: 0;
-	right: 20px;
+	left: 0;
+	right: auto;
 	z-index: 4;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 48px;
-	height: 32px;
+	display: block;
+	width: 42%;
+	height: 3px;
 	box-sizing: border-box;
 	padding: 0;
 	background: var(--cm-category-color, var(--wp--preset--color--accent));
-	color: #fff;
-	clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 72%, 0 88%);
-	filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.12));
+	pointer-events: none;
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform 260ms ease;
 }
 
-
-.cm-featured-post-card--compact .cm-category-icon {
-	width: 35px;
-	height: 32px;
-}
-
-.cm-featured-post-card--compact .cm-category-icon svg {
-	width: 17px;
-	height: 17px;
+.cm-featured-post-card:hover .cm-category-icon,
+.cm-featured-post-card:focus-within .cm-category-icon {
+	transform: scaleX(1);
 }
 
 .cm-featured-post-card--compact .cm-category-icon {
+	left: 0;
 	right: auto;
-	left: 12px;
+	width: 42%;
+	height: 3px;
 }
 
 .cm-featured-post-card__image img {
@@ -1428,19 +1424,6 @@ html[data-theme="dark"] {
 		flex-direction: column;
 	}
 
-	.cm-category-icon {
-		top: 0;
-		right: 12px;
-		left: auto;
-		width: 42px;
-		height: 56px;
-		padding-bottom: 6px;
-	}
-
-	.cm-category-icon svg {
-		width: 21px;
-		height: 21px;
-	}
 
 	.cm-featured-post-card__image,
 	.cm-featured-post-card--compact .cm-featured-post-card__image,
