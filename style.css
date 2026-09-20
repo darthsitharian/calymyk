@@ -3460,7 +3460,8 @@ html[data-theme="dark"] {
    CALYMYK — GLOBAL CONTENT WIDTH
    ========================================================= */
 
-/* Keep every main content surface aligned to the same 90vw page shell. */
+/* Keep every main content surface aligned to the same 90vw page shell,
+   with a 1320px cap on large screens. */
 .cm-single,
 .cm-tool-single,
 .cm-tools-archive,
@@ -3469,7 +3470,7 @@ html[data-theme="dark"] {
 .cm-page-template,
 .wp-block-group.cm-page-shell {
 	width: 90dvw;
-	max-width: none;
+	max-width: var(--cm-container-wide);
 	margin-inline: auto;
 	box-sizing: border-box;
 }
