@@ -1083,6 +1083,19 @@ html[data-theme="dark"] {
 	color: #fff;
 }
 
+/* Bottom-left pair: image above text, without card background or CTA. */
+.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card,
+.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card {
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+}
+
+.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__link,
+.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__link {
+	display: none;
+}
+
 /* Bottom-left pair: image above text. */
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__image,
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__image {
