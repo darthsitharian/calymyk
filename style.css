@@ -3474,3 +3474,169 @@ html[data-theme="dark"] {
 	margin-inline: auto;
 	box-sizing: border-box;
 }
+
+
+/* =========================================================
+   CALYMYK — PROMOTION SIDEBAR CARDS
+   ========================================================= */
+
+.cm-promotion-prep-card,
+.cm-promotion-faq-card {
+	padding: 18px;
+	border: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 8%, transparent);
+	border-radius: 8px;
+	background: var(--wp--preset--color--base-2);
+}
+
+.cm-promotion-sidebar-heading {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 0 0 14px;
+}
+
+.cm-promotion-sidebar-heading__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 24px;
+	width: 24px;
+	height: 24px;
+	color: var(--wp--preset--color--accent);
+}
+
+.cm-promotion-sidebar-heading__icon svg {
+	display: block;
+	width: 22px;
+	height: 22px;
+}
+
+.cm-promotion-sidebar-heading h2 {
+	margin: 0;
+	color: var(--wp--preset--color--contrast);
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: 1rem;
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+}
+
+.cm-promotion-prep-card .cm-promotion-sidebar-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cm-promotion-prep-card .cm-promotion-sidebar-list li {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	min-width: 0;
+	margin: 0;
+	padding: 8px 9px;
+	border-radius: 5px;
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast-2);
+	font-size: 0.75rem;
+	line-height: 1.35;
+}
+
+.cm-promotion-sidebar-list__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 14px;
+	width: 14px;
+	height: 14px;
+	color: var(--wp--preset--color--accent);
+}
+
+.cm-promotion-sidebar-list__icon svg {
+	display: block;
+	width: 13px;
+	height: 13px;
+}
+
+.cm-promotion-faq-card {
+	margin-top: 16px;
+}
+
+.cm-promotion-faq-card .cm-promotion-sidebar-heading {
+	margin-bottom: 12px;
+}
+
+.cm-promotion-sidebar-faq {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.cm-promotion-sidebar-faq details {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+}
+
+.cm-promotion-sidebar-faq summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	min-height: 34px;
+	box-sizing: border-box;
+	padding: 8px 9px;
+	border-radius: 5px;
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast-2);
+	font-size: 0.75rem;
+	font-weight: 500;
+	line-height: 1.35;
+	list-style: none;
+}
+
+.cm-promotion-sidebar-faq summary::-webkit-details-marker {
+	display: none;
+}
+
+.cm-promotion-sidebar-faq summary::marker {
+	display: none;
+}
+
+.cm-promotion-sidebar-faq__chevron {
+	flex: 0 0 12px;
+	width: 12px;
+	height: 12px;
+	color: var(--wp--preset--color--contrast-2);
+	transition: transform 160ms ease;
+}
+
+.cm-promotion-sidebar-faq details[open] .cm-promotion-sidebar-faq__chevron {
+	transform: rotate(180deg);
+}
+
+.cm-promotion-sidebar-faq details > p {
+	margin: 4px 0 0;
+	padding: 9px;
+	border-radius: 5px;
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast-2);
+	font-size: 0.75rem;
+	line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+	.cm-promotion-sidebar-heading h2 {
+		font-size: 1.05rem;
+	}
+
+	.cm-promotion-prep-card .cm-promotion-sidebar-list li,
+	.cm-promotion-sidebar-faq summary,
+	.cm-promotion-sidebar-faq details > p {
+		font-size: 0.8125rem;
+	}
+}
+
