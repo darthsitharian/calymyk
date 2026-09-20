@@ -978,8 +978,8 @@ html[data-theme="dark"] {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 17px;
-	height: 17px;
+	width: 34px;
+	height: 34px;
 	box-sizing: border-box;
 	border-radius: 8px;
 	background: var(--cm-category-color, var(--wp--preset--color--accent));
@@ -1017,8 +1017,8 @@ html[data-theme="dark"] {
 }
 
 .cm-featured-post-card--compact .cm-category-icon svg {
-	width: 34px;
-	height: 34px;
+	width: 17px;
+	height: 17px;
 }
 
 .cm-featured-post-card__image img {
