@@ -415,6 +415,53 @@ function calymyk_new_register_category_icon_block() {
 	);
 }
 add_action( 'init', 'calymyk_new_register_category_icon_block', 31 );
+function calymyk_new_render_category_navigation_block() {
+	$categories = get_categories(
+		array(
+			'hide_empty' => true,
+			'exclude'    => array( get_option( 'default_category' ) ),
+			'orderby'    => 'name',
+			'order'      => 'ASC',
+		)
+	);
+
+	if ( empty( $categories ) ) {
+		return '';
+	}
+
+	$output = '<nav class="cm-category-nav" aria-label="Kategorie"><ul class="cm-category-nav__list">';
+
+	foreach ( $categories as $category ) {
+		$color = get_term_meta( $category->term_id, '_calymyk_category_color', true ) ?: '#00B85C';
+		$icon  = get_term_meta( $category->term_id, '_calymyk_category_icon', true ) ?: 'document';
+		$svg   = calymyk_new_category_icon_svg( $icon );
+
+		$output .= '<li class="cm-category-nav__item">';
+		$output .= '<a class="cm-category-nav__link" href="' . esc_url( get_category_link( $category ) ) . '">';
+		$output .= '<span class="cm-category-nav__icon" style="--cm-category-color:' . esc_attr( $color ) . '">';
+		$output .= $svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$output .= '</span>';
+		$output .= '<span class="cm-category-nav__label">' . esc_html( $category->name ) . '</span>';
+		$output .= '</a>';
+		$output .= '</li>';
+	}
+
+	$output .= '</ul></nav>';
+
+	return $output;
+}
+
+function calymyk_new_register_category_navigation_block() {
+	register_block_type(
+		'calymyk/category-navigation',
+		array(
+			'api_version'     => 3,
+			'render_callback' => 'calymyk_new_render_category_navigation_block',
+		)
+	);
+}
+add_action( 'init', 'calymyk_new_register_category_navigation_block', 32 );
+
 
 function calymyk_new_render_category_icon_block() {
 	return calymyk_new_category_icon_shortcode();
