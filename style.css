@@ -970,6 +970,57 @@ html[data-theme="dark"] {
 	overflow: hidden;
 }
 
+.cm-category-icon {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	z-index: 4;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 68px;
+	height: 68px;
+	box-sizing: border-box;
+	border-radius: 14px;
+	background: var(--cm-category-color, var(--wp--preset--color--accent));
+	color: #fff;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.cm-category-icon svg {
+	display: block;
+	width: 38px;
+	height: 38px;
+}
+
+.cm-featured-hero__left-grid > li:nth-child(2) .cm-category-icon,
+.cm-featured-hero__left-grid > li:nth-child(3) .cm-category-icon {
+	width: 52px;
+	height: 52px;
+	top: 16px;
+	left: 16px;
+	border-radius: 12px;
+}
+
+.cm-featured-hero__left-grid > li:nth-child(2) .cm-category-icon svg,
+.cm-featured-hero__left-grid > li:nth-child(3) .cm-category-icon svg {
+	width: 28px;
+	height: 28px;
+}
+
+.cm-featured-post-card--compact .cm-category-icon {
+	width: 60px;
+	height: 60px;
+	top: 10px;
+	left: 10px;
+	border-radius: 12px;
+}
+
+.cm-featured-post-card--compact .cm-category-icon svg {
+	width: 34px;
+	height: 34px;
+}
+
 .cm-featured-post-card__image img {
 	display: block;
 	width: 100%;
@@ -1217,6 +1268,41 @@ html[data-theme="dark"] {
 		height: auto;
 		min-height: 0;
 		flex-direction: column;
+	}
+
+	.cm-featured-hero__left-grid > li:first-child .cm-category-icon {
+		top: 16px;
+		left: 16px;
+		width: 58px;
+		height: 58px;
+		border-radius: 12px;
+	}
+
+	.cm-featured-hero__left-grid > li:first-child .cm-category-icon svg {
+		width: 32px;
+		height: 32px;
+	}
+
+	.cm-featured-hero__left-grid > li:nth-child(2) .cm-category-icon,
+	.cm-featured-hero__left-grid > li:nth-child(3) .cm-category-icon {
+		width: 48px;
+		height: 48px;
+		top: 12px;
+		left: 12px;
+	}
+
+	.cm-featured-post-card--compact .cm-category-icon {
+		width: 48px;
+		height: 48px;
+		top: 8px;
+		left: 8px;
+	}
+
+	.cm-featured-hero__left-grid > li:nth-child(2) .cm-category-icon svg,
+	.cm-featured-hero__left-grid > li:nth-child(3) .cm-category-icon svg,
+	.cm-featured-post-card--compact .cm-category-icon svg {
+		width: 26px;
+		height: 26px;
 	}
 
 	.cm-featured-post-card__image,
