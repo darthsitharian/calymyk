@@ -1054,7 +1054,7 @@ html[data-theme="dark"] {
 	align-items: center;
 	justify-content: center;
 	width: 48px;
-	height: 64px;
+	height: 32px;
 	box-sizing: border-box;
 	padding: 0;
 	background: var(--cm-category-color, var(--wp--preset--color--accent));
