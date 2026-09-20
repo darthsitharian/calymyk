@@ -97,6 +97,156 @@ function calymyk_new_register_tools() {
 }
 
 add_action( 'init', 'calymyk_new_register_tools' );
+
+
+/**
+ * Category presentation settings.
+ *
+ * Each standard post category can have its own accent color and icon.
+ * The values are stored as term meta so the frontend can render the
+ * category consistently in cards and other promotion surfaces.
+ */
+function calymyk_new_category_icon_options() {
+	return array(
+		'database'      => 'Baza danych',
+		'document'      => 'Dokument',
+		'chart'         => 'Wykres',
+		'education'     => 'Edukacja',
+		'shopping-cart' => 'Zakupy',
+		'wallet'        => 'Portfel',
+		'gift'          => 'Prezent',
+		'trophy'        => 'Nagroda',
+	);
+}
+
+function calymyk_new_register_category_meta() {
+	register_term_meta(
+		'category',
+		'_calymyk_category_color',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_hex_color',
+			'auth_callback'     => function () {
+				return current_user_can( 'manage_categories' );
+			},
+		)
+	);
+
+	register_term_meta(
+		'category',
+		'_calymyk_category_icon',
+		array(
+			'type'              => 'string',
+			'single'            => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => function ( $value ) {
+				$options = calymyk_new_category_icon_options();
+				return isset( $options[ $value ] ) ? $value : 'document';
+			},
+			'auth_callback'     => function () {
+				return current_user_can( 'manage_categories' );
+			},
+		)
+	);
+}
+add_action( 'init', 'calymyk_new_register_category_meta', 20 );
+
+function calymyk_new_category_add_fields() {
+	?>
+	<div class="form-field">
+		<label for="calymyk_category_color">Kolor kategorii</label>
+		<input type="color" id="calymyk_category_color" name="calymyk_category_color" value="#00B85C">
+		<p>Kolor ikony kategorii używany na froncie.</p>
+	</div>
+	<div class="form-field">
+		<label for="calymyk_category_icon">Ikona kategorii</label>
+		<select id="calymyk_category_icon" name="calymyk_category_icon">
+			<?php foreach ( calymyk_new_category_icon_options() as $value => $label ) : ?>
+				<option value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $label ); ?></option>
+			<?php endforeach; ?>
+		</select>
+	</div>
+	<?php
+}
+add_action( 'category_add_form_fields', 'calymyk_new_category_add_fields' );
+
+function calymyk_new_category_edit_fields( $term ) {
+	$color = get_term_meta( $term->term_id, '_calymyk_category_color', true ) ?: '#00B85C';
+	$icon  = get_term_meta( $term->term_id, '_calymyk_category_icon', true ) ?: 'document';
+	?>
+	<tr class="form-field">
+		<th scope="row"><label for="calymyk_category_color">Kolor kategorii</label></th>
+		<td>
+			<input type="color" id="calymyk_category_color" name="calymyk_category_color" value="<?php echo esc_attr( $color ); ?>">
+			<p class="description">Kolor ikony kategorii używany na froncie.</p>
+		</td>
+	</tr>
+	<tr class="form-field">
+		<th scope="row"><label for="calymyk_category_icon">Ikona kategorii</label></th>
+		<td>
+			<select id="calymyk_category_icon" name="calymyk_category_icon">
+				<?php foreach ( calymyk_new_category_icon_options() as $value => $label ) : ?>
+					<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $icon, $value ); ?>><?php echo esc_html( $label ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</td>
+	</tr>
+	<?php
+}
+add_action( 'category_edit_form_fields', 'calymyk_new_category_edit_fields' );
+
+function calymyk_new_save_category_fields( $term_id ) {
+	if ( isset( $_POST['calymyk_category_color'] ) ) {
+		$color = sanitize_hex_color( wp_unslash( $_POST['calymyk_category_color'] ) );
+		if ( $color ) {
+			update_term_meta( $term_id, '_calymyk_category_color', $color );
+		} else {
+			delete_term_meta( $term_id, '_calymyk_category_color' );
+		}
+	}
+
+	if ( isset( $_POST['calymyk_category_icon'] ) ) {
+		$icon    = sanitize_key( wp_unslash( $_POST['calymyk_category_icon'] ) );
+		$options = calymyk_new_category_icon_options();
+		if ( isset( $options[ $icon ] ) ) {
+			update_term_meta( $term_id, '_calymyk_category_icon', $icon );
+		}
+	}
+}
+add_action( 'created_category', 'calymyk_new_save_category_fields' );
+add_action( 'edited_category', 'calymyk_new_save_category_fields' );
+
+/**
+ * Render the category icon for the current promotion.
+ */
+function calymyk_new_category_icon_shortcode() {
+	$categories = get_the_category();
+	if ( empty( $categories ) ) {
+		return '';
+	}
+
+	$category = $categories[0];
+	$color    = get_term_meta( $category->term_id, '_calymyk_category_color', true ) ?: '#00B85C';
+	$icon     = get_term_meta( $category->term_id, '_calymyk_category_icon', true ) ?: 'document';
+
+	$paths = array(
+		'database'      => '<ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5"/><path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>',
+		'document'      => '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 12h6M9 16h6"/>',
+		'chart'         => '<path d="M5 20V10M12 20V4M19 20v-7"/>',
+		'education'     => '<path d="m3 9 9-5 9 5-9 5z"/><path d="M7 11v5c2.7 2.2 6.3 2.2 10 0v-5M21 9v7"/>',
+		'shopping-cart' => '<path d="M3 4h2l2.4 11h10.7l2-8H6.2"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/>',
+		'wallet'        => '<path d="M4 6h15a2 2 0 0 1 2 2v10H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><path d="M4 6V4h12a3 3 0 0 1 3 3"/><path d="M16 12h5"/>',
+		'gift'          => '<path d="M4 10h16v10H4zM12 10v10M2 7h20v3H2z"/><path d="M12 7H8.5a2.5 2.5 0 1 1 2.2-3.7L12 7Zm0 0h3.5a2.5 2.5 0 1 0-2.2-3.7L12 7Z"/>',
+		'trophy'        => '<path d="M8 4h8v4a4 4 0 0 1-8 0V4Z"/><path d="M8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4M12 12v5M8 20h8M9 17h6"/>',
+	);
+
+	$path = isset( $paths[ $icon ] ) ? $paths[ $icon ] : $paths['document'];
+
+	return '<span class="cm-category-icon" style="--cm-category-color:' . esc_attr( $color ) . '" aria-label="' . esc_attr( $category->name ) . '" title="' . esc_attr( $category->name ) . '"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' . $path . '</svg></span>';
+}
+add_shortcode( 'calymyk_category_icon', 'calymyk_new_category_icon_shortcode' );
 /**
  * Refresh rewrite rules when the theme is activated so custom post type URLs work.
  */
