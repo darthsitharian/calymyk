@@ -285,8 +285,7 @@ function calymyk_new_render_promotion_steps( $attributes ) {
 		$fields      = isset( $step['fields'] ) && is_array( $step['fields'] ) ? $step['fields'] : array();
 
 		$output .= '<details class="cm-promotion-step">';
-		$output .= '<summary class="cm-promotion-step__toggle" aria-label="Rozwiń krok ' . esc_attr( $index + 1 ) . '"><span class="cm-promotion-step__toggle-icon cm-icon cm-icon--chevron" aria-hidden="true"></span></summary>';
-		$output .= '<div class="cm-promotion-step__header"><div class="cm-promotion-step__number">' . esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ) . '</div><div class="cm-promotion-step__heading"><p class="cm-promotion-step__eyebrow">KROK ' . esc_html( $index + 1 ) . '</p><h3>' . esc_html( $title ) . '</h3></div></div>';
+		$output .= '<summary class="cm-promotion-step__toggle"><span class="cm-promotion-step__header"><span class="cm-promotion-step__number">' . esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ) . '</span><span class="cm-promotion-step__heading"><span class="cm-promotion-step__eyebrow">KROK ' . esc_html( $index + 1 ) . '</span><span class="cm-promotion-step__title">' . esc_html( $title ) . '</span></span></span><span class="cm-promotion-step__toggle-icon cm-icon cm-icon--chevron" aria-hidden="true"></span></summary>';
 		$output .= '<div class="cm-promotion-step__body">';
 
 		if ( $description ) {
