@@ -1052,7 +1052,7 @@ html[data-theme="dark"] {
 	right: auto;
 	z-index: 4;
 	display: block;
-	width: 42%;
+	width: 100%;
 	height: 3px;
 	box-sizing: border-box;
 	padding: 0;
@@ -1071,7 +1071,7 @@ html[data-theme="dark"] {
 .cm-featured-post-card--compact .cm-category-icon {
 	left: 0;
 	right: auto;
-	width: 42%;
+	width: 100%;
 	height: 3px;
 }
 
