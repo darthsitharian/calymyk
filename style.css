@@ -1268,11 +1268,21 @@ html[data-theme="dark"] {
 	background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.5) 48%, transparent);
 }
 
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__excerpt,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__excerpt,
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__link,
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__link {
 	display: none;
+}
+
+.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__excerpt,
+.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__excerpt {
+	margin: 12px 0 0;
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.45;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
 }
 
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__title,
