@@ -2099,7 +2099,7 @@ html[data-theme="dark"] {
 	content: "›";
 	margin-right: 8px;
 	color: var(--wp--preset--color--contrast-3);
-	font-family: var(--wp--preset--font-family--sans);
+	font-family: inherit;
 	font-size: 0.9rem;
 	line-height: 1;
 }
