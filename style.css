@@ -3267,9 +3267,9 @@ html[data-theme="dark"] {
 	justify-content: space-between;
 	gap: 12px;
 	padding: 10px 0;
-	color: var(--wp--preset--color--accent);
-	font-size: var(--wp--preset--font-size--small);
-	font-weight: 600;
+	color: var(--wp--preset--color--contrast);
+	font-size: 0.8125rem;
+	font-weight: 500;
 	text-decoration: none;
 	border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 8%, transparent);
 }
@@ -3281,12 +3281,13 @@ html[data-theme="dark"] {
 
 .cm-promotion-document:hover,
 .cm-promotion-document:focus-visible {
-	color: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--accent);
 }
 
 .cm-promotion-document span:last-child {
 	flex: 0 0 auto;
 }
+
 
 .cm-promotion-terms {
 	padding-top: 8px;
@@ -3527,14 +3528,13 @@ html[data-theme="dark"] {
 	color: var(--wp--preset--color--base);
 	font-weight: 800;
 	text-decoration: none;
-	transition: transform 160ms ease, filter 160ms ease;
+	transition: filter 160ms ease;
 }
 .cm-promotion-referral-box:hover,
 .cm-promotion-referral-box:focus-visible {
 	color: var(--wp--preset--color--base);
 	text-decoration: none;
 	filter: brightness(0.94);
-	transform: translateY(-1px);
 }
 .cm-promotion-referral-box > span {
 	font-size: 1.05rem;
