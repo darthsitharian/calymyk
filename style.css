@@ -3418,6 +3418,8 @@ html[data-theme="dark"] {
 	margin-bottom: 32px;
 }
 .cm-promotion-meta-box {
+	height: 100%;
+	box-sizing: border-box;
 	margin: 0;
 	padding: 20px;
 	background: var(--wp--preset--color--base-2);
