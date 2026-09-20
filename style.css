@@ -3431,3 +3431,27 @@ html[data-theme="dark"] {
 @media (max-width: 600px) {
 	.cm-promotion-meta-row { grid-template-columns: 1fr; }
 }
+
+/* =========================================================
+   CALYMYK — SIDEBAR BOX TYPOGRAPHY
+   ========================================================= */
+
+.cm-promotion-sidebar-section .cm-eyebrow,
+.cm-post-tool .cm-eyebrow {
+	font-size: calc(var(--wp--preset--font-size--xs) * 1.25);
+}
+
+.cm-promotion-sidebar-section,
+.cm-post-tool {
+	font-size: 0.9375em;
+}
+
+.cm-promotion-sidebar-section > p:not(.cm-eyebrow),
+.cm-promotion-sidebar-section li,
+.cm-promotion-sidebar-section summary,
+.cm-promotion-sidebar-section a,
+.cm-post-tool__title,
+.cm-post-tool__cta,
+.cm-post-tool__cta a {
+	font-size: 0.9375em;
+}
