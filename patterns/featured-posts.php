@@ -30,9 +30,7 @@
 							<!-- wp:calymyk/category-icon /-->
 							<!-- wp:post-title {"isLink":true,"level":3,"className":"cm-featured-post-card__title"} /-->
 							<!-- wp:post-excerpt {"moreText":"","excerptLength":22,"className":"cm-featured-post-card__excerpt"} /-->
-							<!-- wp:read-more {"content":"Czytaj dalej →","className":"cm-featured-post-card__link"} /-->
-
-						</div>
+</div>
 						<!-- /wp:group -->
 
 					</div>
