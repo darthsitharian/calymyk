@@ -3,7 +3,7 @@
 
 	const { registerPlugin } = wp.plugins;
 	const { PluginDocumentSettingPanel } = wp.editPost;
-	const { SelectControl, TextControl, TextareaControl, Button } = wp.components;
+	const { SelectControl, TextControl, TextareaControl, Button, ToggleControl } = wp.components;
 	const { createElement } = wp.element;
 	const { useSelect } = wp.data;
 	const { useEntityProp } = wp.coreData;
@@ -85,6 +85,13 @@
 					updateMeta('_calymyk_promotion_start', value);
 				}
 			}),
+			createElement(ToggleControl, {
+				label: 'Promocja do odwołania',
+				checked: !!safeMeta._calymyk_promotion_unlimited,
+				onChange: function (value) {
+					updateMeta('_calymyk_promotion_unlimited', value);
+				}
+			}),
 			createElement(TextControl, {
 				label: 'Promocja do',
 				type: 'date',
@@ -92,6 +99,12 @@
 				onChange: function (value) {
 					updateMeta('_calymyk_promotion_end', value);
 				}
+			}),
+			createElement(TextControl, {
+				label: 'Reflink',
+				type: 'url',
+				value: safeMeta._calymyk_promotion_referral_url || '',
+				onChange: function (value) { updateMeta('_calymyk_promotion_referral_url', value); }
 			}),
 			createElement(TextControl, {
 				label: 'Link do regulaminu promocji',
