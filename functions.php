@@ -565,7 +565,7 @@ function calymyk_new_promotion_meta_row_shortcode() {
 	$output = '<div class="cm-promotion-meta-row">';
 	$output .= '<section class="cm-promotion-meta-box"><p class="cm-eyebrow">CZAS TRWANIA PROMOCJI</p><p class="cm-promotion-meta-box__value">' . esc_html( $duration ) . '</p></section>';
 	if ( $referral ) {
-		$output .= '<section class="cm-promotion-meta-box"><p class="cm-eyebrow">REFLINK</p><p class="cm-promotion-meta-box__value"><a href="' . esc_url( $referral ) . '" target="_blank" rel="nofollow sponsored noopener noreferrer">Przejdź przez reflink →</a></p></section>';
+		$output .= '<a class="cm-promotion-meta-box cm-promotion-referral-box" href="' . esc_url( $referral ) . '" target="_blank" rel="nofollow sponsored noopener noreferrer"><span>Przejdź do promocji →</span></a>';
 	}
 	return $output . '</div>';
 }
