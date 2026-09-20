@@ -978,10 +978,10 @@ html[data-theme="dark"] {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 68px;
-	height: 68px;
+	width: 17px;
+	height: 17px;
 	box-sizing: border-box;
-	border-radius: 14px;
+	border-radius: 8px;
 	background: var(--cm-category-color, var(--wp--preset--color--accent));
 	color: #fff;
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -989,31 +989,31 @@ html[data-theme="dark"] {
 
 .cm-category-icon svg {
 	display: block;
-	width: 38px;
-	height: 38px;
+	width: 19px;
+	height: 19px;
 }
 
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-category-icon,
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-category-icon {
-	width: 52px;
-	height: 52px;
-	top: 16px;
-	left: 16px;
-	border-radius: 12px;
+	width: 26px;
+	height: 26px;
+	top: 12px;
+	left: 12px;
+	border-radius: 7px;
 }
 
 .cm-featured-hero__left-grid > li:nth-child(2) .cm-category-icon svg,
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-category-icon svg {
-	width: 28px;
-	height: 28px;
+	width: 14px;
+	height: 14px;
 }
 
 .cm-featured-post-card--compact .cm-category-icon {
-	width: 60px;
-	height: 60px;
-	top: 10px;
-	left: 10px;
-	border-radius: 12px;
+	width: 30px;
+	height: 30px;
+	top: 8px;
+	left: 8px;
+	border-radius: 7px;
 }
 
 .cm-featured-post-card--compact .cm-category-icon svg {
