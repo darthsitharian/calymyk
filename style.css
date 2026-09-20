@@ -469,6 +469,14 @@ Text Domain: calymyk-new
    TABLET
    --------------------------------------------------------- */
 
+@media (min-width: 1280px) {
+	.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__excerpt,
+	.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__excerpt,
+	.cm-featured-post-card--compact .cm-featured-post-card__excerpt {
+		-webkit-line-clamp: 4;
+	}
+}
+
 @media (max-width: 1024px) {
     .cm-header__left {
         gap: 24px;
@@ -1012,7 +1020,7 @@ html[data-theme="dark"] {
 
 .cm-featured-post-card--compact .cm-category-icon {
 	right: auto;
-	left: 0;
+	left: 12px;
 }
 
 .cm-featured-post-card__image img {
@@ -1171,7 +1179,7 @@ html[data-theme="dark"] {
 .cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__excerpt {
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
+	-webkit-line-clamp: 3;
 	overflow: hidden;
 }
 
@@ -1214,7 +1222,7 @@ html[data-theme="dark"] {
 	font-size: var(--wp--preset--font-size--small);
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
+	-webkit-line-clamp: 3;
 	overflow: hidden;
 }
 
