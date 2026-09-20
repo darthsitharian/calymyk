@@ -27,16 +27,56 @@ function calymyk_new_enqueue_assets() {
 		true
 	);
 
-	wp_enqueue_script(
-		'calymyk-new-hero-cards',
-		get_template_directory_uri() . '/assets/js/hero-cards.js',
-		array(),
-		wp_get_theme()->get( 'Version' ),
-		true
-	);
 }
 
 add_action( 'wp_enqueue_scripts', 'calymyk_new_enqueue_assets' );
+
+/**
+ * Make each featured hero card a real, full-card link.
+ *
+ * Query Loop renders the card group inside the post-template <li>.
+ * We wrap the complete card server-side so the entire card is one
+ * semantic link, rather than relying on click-handling JavaScript.
+ */
+function calymyk_new_make_hero_cards_links( $block_content, $block, $instance ) {
+
+	if ( is_admin() || empty( $block_content ) || 'core/group' !== $block['blockName'] ) {
+		return $block_content;
+	}
+
+	$class_name = isset( $block['attrs']['className'] ) ? (string) $block['attrs']['className'] : '';
+
+	if ( false === strpos( ' ' . $class_name . ' ', ' cm-featured-post-card ' ) ) {
+		return $block_content;
+	}
+
+	$post_id = isset( $instance->context['postId'] ) ? (int) $instance->context['postId'] : get_the_ID();
+
+	if ( ! $post_id ) {
+		return $block_content;
+	}
+
+	$url = get_permalink( $post_id );
+
+	if ( ! $url ) {
+		return $block_content;
+	}
+
+	// Remove the nested title link because the whole card becomes the link.
+	$block_content = preg_replace_callback(
+		'/(<h3\\b[^>]*cm-featured-post-card__title[^>]*>)(.*?)(<\\/h3>)/s',
+		function ( $matches ) {
+			$inner = preg_replace( '#<a\\b[^>]*>(.*?)</a>#s', '$1', $matches[2] );
+			return $matches[1] . '<span class="cm-featured-post-card__title-text">' . $inner . '</span>' . $matches[3];
+		},
+		$block_content
+	);
+
+	return '<a class="cm-featured-post-card__link-wrapper" href="' . esc_url( $url ) . '">' . $block_content . '</a>';
+}
+
+add_filter( 'render_block', 'calymyk_new_make_hero_cards_links', 20, 3 );
+
 
 /**
  * Limit the Zyskomat recommendation Query Loop to posts
