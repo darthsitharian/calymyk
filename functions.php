@@ -376,24 +376,6 @@ function calymyk_new_category_icon_shortcode() {
 	$category = $categories[0];
 	$color    = get_term_meta( $category->term_id, '_calymyk_category_color', true ) ?: '#00B85C';
 
-	$icon_files = array(
-		'database'      => 'database.svg',
-		'document'      => 'document.svg',
-		'chart'         => 'chart.svg',
-		'education'     => 'education.svg',
-		'shopping-cart' => 'shopping-cart.svg',
-		'wallet'        => 'wallet.svg',
-		'gift'          => 'gift.svg',
-		'trophy'        => 'trophy.svg',
-	);
-
-	$file_name = isset( $icon_files[ $icon ] ) ? $icon_files[ $icon ] : 'document.svg';
-	$file_path = get_template_directory() . '/assets/icons/categories/' . $file_name;
-	$svg       = file_exists( $file_path ) ? file_get_contents( $file_path ) : '';
-
-	if ( ! $svg ) {
-		$svg = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 12h6M9 16h6"/></svg>';
-	}
 
 	return '<span class="cm-category-icon" style="--cm-category-color:' . esc_attr( $color ) . '" aria-label="' . esc_attr( $category->name ) . '" title="' . esc_attr( $category->name ) . '"></span>';
 }
