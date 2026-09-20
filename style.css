@@ -3963,3 +3963,89 @@ html[data-theme="dark"] {
 		flex-direction: column;
 	}
 }
+
+
+/* =========================================================
+   CALYMYK — COLLAPSIBLE PROMOTION STEPS
+   ========================================================= */
+
+.cm-promotion-step {
+	position: relative;
+	padding: 16px;
+}
+
+.cm-promotion-step__toggle {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 5px;
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast-2);
+	cursor: pointer;
+	list-style: none;
+	transition: color 160ms ease, background-color 160ms ease;
+}
+
+.cm-promotion-step__toggle::-webkit-details-marker {
+	display: none;
+}
+
+.cm-promotion-step__toggle::marker {
+	display: none;
+}
+
+.cm-promotion-step__toggle:hover,
+.cm-promotion-step__toggle:focus-visible {
+	background: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--base);
+	outline: none;
+}
+
+.cm-promotion-step__toggle-icon {
+	width: 14px;
+	height: 14px;
+	transition: transform 180ms ease;
+}
+
+.cm-promotion-step[open] .cm-promotion-step__toggle-icon {
+	transform: rotate(180deg);
+}
+
+.cm-promotion-step__header {
+	padding-right: 44px;
+}
+
+.cm-promotion-step__body {
+	margin-top: 0;
+}
+
+.cm-promotion-step__description {
+	margin: 18px 0 0 !important;
+}
+
+.cm-promotion-step__fields {
+	margin-top: 14px;
+}
+
+.cm-promotion-step__field-content p + p {
+	margin-top: 8px;
+}
+
+@media (max-width: 700px) {
+	.cm-promotion-step__toggle {
+		top: 14px;
+		right: 14px;
+	}
+
+	.cm-promotion-step__header {
+		padding-right: 38px;
+	}
+}
