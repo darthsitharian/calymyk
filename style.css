@@ -1000,6 +1000,16 @@ html[data-theme="dark"] {
 	height: 24px;
 }
 
+.cm-featured-post-card--compact .cm-category-icon {
+	width: 41px;
+	height: 54px;
+}
+
+.cm-featured-post-card--compact .cm-category-icon svg {
+	width: 20px;
+	height: 20px;
+}
+
 .cm-featured-post-card__image img {
 	display: block;
 	width: 100%;
