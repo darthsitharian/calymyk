@@ -3977,6 +3977,7 @@ html[data-theme="dark"] {
 
 .cm-promotion-step__toggle {
 	display: flex;
+	box-sizing: border-box;
 	align-items: flex-start;
 	justify-content: space-between;
 	gap: 16px;
