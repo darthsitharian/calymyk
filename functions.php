@@ -554,6 +554,134 @@ function calymyk_new_save_post_promotion( $post_id ) {
 add_action( 'save_post_post', 'calymyk_new_save_post_promotion' );
 
 /**
+ * Render visible breadcrumbs for single promotion posts.
+ *
+ * Each promotion belongs to one category, so the breadcrumb path uses
+ * that category (and its parents, when applicable) as the content hierarchy.
+ */
+function calymyk_new_breadcrumbs_shortcode() {
+	if ( ! is_singular( 'post' ) ) {
+		return '';
+	}
+
+	$categories = get_the_category();
+	$category   = ! empty( $categories ) ? $categories[0] : null;
+
+	$items = array(
+		array(
+			'label' => 'Strona główna',
+			'url'   => home_url( '/' ),
+		),
+	);
+
+	if ( $category ) {
+		$ancestors = get_ancestors( $category->term_id, 'category' );
+		$ancestors = array_reverse( $ancestors );
+
+		foreach ( $ancestors as $ancestor_id ) {
+			$ancestor = get_category( $ancestor_id );
+			if ( $ancestor && ! is_wp_error( $ancestor ) ) {
+				$items[] = array(
+					'label' => $ancestor->name,
+					'url'   => get_category_link( $ancestor->term_id ),
+				);
+			}
+		}
+
+		$items[] = array(
+			'label' => $category->name,
+			'url'   => get_category_link( $category->term_id ),
+		);
+	}
+
+	$items[] = array(
+		'label' => get_the_title(),
+		'url'   => '',
+	);
+
+	$output = '<nav class="cm-breadcrumbs" aria-label="Okruszki"><ol>';
+	$last_index = count( $items ) - 1;
+
+	foreach ( $items as $index => $item ) {
+		$output .= '<li' . ( $index === $last_index ? ' class="cm-breadcrumbs__current"' : '' ) . '>';
+		if ( $item['url'] && $index !== $last_index ) {
+			$output .= '<a href="' . esc_url( $item['url'] ) . '">' . esc_html( $item['label'] ) . '</a>';
+		} else {
+			$output .= '<span aria-current="page">' . esc_html( $item['label'] ) . '</span>';
+		}
+		$output .= '</li>';
+	}
+
+	return $output . '</ol></nav>';
+}
+add_shortcode( 'calymyk_breadcrumbs', 'calymyk_new_breadcrumbs_shortcode' );
+
+/**
+ * Add BreadcrumbList structured data for single promotion posts.
+ * The visible breadcrumb trail remains the primary user-facing navigation.
+ */
+function calymyk_new_breadcrumbs_schema() {
+	if ( ! is_singular( 'post' ) ) {
+		return;
+	}
+
+	$categories = get_the_category();
+	$category   = ! empty( $categories ) ? $categories[0] : null;
+	$items      = array(
+		array(
+			'name' => 'Strona główna',
+			'item' => home_url( '/' ),
+		),
+	);
+
+	if ( $category ) {
+		$ancestors = get_ancestors( $category->term_id, 'category' );
+		$ancestors = array_reverse( $ancestors );
+
+		foreach ( $ancestors as $ancestor_id ) {
+			$ancestor = get_category( $ancestor_id );
+			if ( $ancestor && ! is_wp_error( $ancestor ) ) {
+				$items[] = array(
+					'name' => $ancestor->name,
+					'item' => get_category_link( $ancestor->term_id ),
+				);
+			}
+		}
+
+		$items[] = array(
+			'name' => $category->name,
+			'item' => get_category_link( $category->term_id ),
+		);
+	}
+
+	$items[] = array(
+		'name' => get_the_title(),
+	);
+
+	$list_items = array();
+	foreach ( $items as $index => $item ) {
+		$list_item = array(
+			'@type'    => 'ListItem',
+			'position' => $index + 1,
+			'name'     => $item['name'],
+		);
+		if ( ! empty( $item['item'] ) ) {
+			$list_item['item'] = $item['item'];
+		}
+		$list_items[] = $list_item;
+	}
+
+	$schema = array(
+		'@context'        => 'https://schema.org',
+		'@type'           => 'BreadcrumbList',
+		'itemListElement' => $list_items,
+	);
+
+	echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>\\n';
+}
+add_action( 'wp_head', 'calymyk_new_breadcrumbs_schema' );
+
+/**
  * Render compact promotion meta boxes below the featured image.
  */
 function calymyk_new_promotion_meta_row_shortcode() {
