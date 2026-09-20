@@ -534,6 +534,44 @@ function calymyk_new_save_post_promotion( $post_id ) {
 add_action( 'save_post_post', 'calymyk_new_save_post_promotion' );
 
 /**
+ * Render compact promotion meta boxes below the featured image.
+ */
+function calymyk_new_promotion_meta_row_shortcode() {
+	$start = get_post_meta( get_the_ID(), '_calymyk_promotion_start', true );
+	$end = get_post_meta( get_the_ID(), '_calymyk_promotion_end', true );
+	$unlimited = (bool) get_post_meta( get_the_ID(), '_calymyk_promotion_unlimited', true );
+	$referral = get_post_meta( get_the_ID(), '_calymyk_promotion_referral_url', true );
+
+	if ( ! $start && ! $end && ! $unlimited && ! $referral ) return '';
+
+	$format_date = static function ( $date ) {
+		$timestamp = strtotime( $date );
+		return $timestamp ? wp_date( 'j.m.Y', $timestamp ) : '';
+	};
+	$start_label = $format_date( $start );
+	$end_label = $format_date( $end );
+	if ( $unlimited && $start_label ) {
+		$duration = 'od ' . $start_label . ' · do odwołania';
+	} elseif ( $unlimited ) {
+		$duration = 'do odwołania';
+	} elseif ( $start_label && $end_label ) {
+		$duration = $start_label . ' – ' . $end_label;
+	} elseif ( $start_label ) {
+		$duration = 'od ' . $start_label;
+	} else {
+		$duration = 'do ' . $end_label;
+	}
+
+	$output = '<div class="cm-promotion-meta-row">';
+	$output .= '<section class="cm-promotion-meta-box"><p class="cm-eyebrow">CZAS TRWANIA PROMOCJI</p><p class="cm-promotion-meta-box__value">' . esc_html( $duration ) . '</p></section>';
+	if ( $referral ) {
+		$output .= '<section class="cm-promotion-meta-box"><p class="cm-eyebrow">REFLINK</p><p class="cm-promotion-meta-box__value"><a href="' . esc_url( $referral ) . '" target="_blank" rel="nofollow sponsored noopener noreferrer">Przejdź przez reflink →</a></p></section>';
+	}
+	return $output . '</div>';
+}
+add_shortcode( 'calymyk_promotion_meta_row', 'calymyk_new_promotion_meta_row_shortcode' );
+
+/**
  * Render promotion terms in the post sidebar.
  */
 function calymyk_new_promotion_referral_shortcode() {
