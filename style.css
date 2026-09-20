@@ -1071,7 +1071,7 @@ html[data-theme="dark"] {
 .cm-featured-post-card--compact .cm-category-icon {
 	left: 0;
 	right: auto;
-	width: 100%;
+	width: min(34%, 180px);
 	height: 3px;
 }
 
@@ -1372,6 +1372,10 @@ html[data-theme="dark"] {
 		max-width: 150px;
 		height: auto;
 		aspect-ratio: 1 / 1;
+	}
+
+	.cm-featured-post-card--compact .cm-category-icon {
+		width: min(32%, 150px);
 	}
 
 	.cm-featured-post-card--compact .cm-featured-post-card__body {
