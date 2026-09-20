@@ -3455,3 +3455,21 @@ html[data-theme="dark"] {
 .cm-post-tool__cta a {
 	font-size: 0.9375em;
 }
+
+/* =========================================================
+   CALYMYK — GLOBAL CONTENT WIDTH
+   ========================================================= */
+
+/* Keep every main content surface aligned to the same 90vw page shell. */
+.cm-single,
+.cm-tool-single,
+.cm-tools-archive,
+.cm-archive,
+.cm-page-content,
+.cm-page-template,
+.wp-block-group.cm-page-shell {
+	width: 90dvw;
+	max-width: none;
+	margin-inline: auto;
+	box-sizing: border-box;
+}
