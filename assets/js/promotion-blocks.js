@@ -15,14 +15,42 @@
 		};
 		return createElement('div', useBlockProps({ className: 'cm-promotion-editor-block cm-promotion-steps-editor' }),
 			createElement('p', { className: 'cm-eyebrow' }, 'NAWIGATOR KROKÓW'),
-			steps.map((step, index) => createElement('div', { className: 'cm-promotion-step-editor', key: index },
-				createElement('div', { className: 'cm-promotion-step-editor__number' }, String(index + 1).padStart(2, '0')),
-				createElement('div', { className: 'cm-promotion-step-editor__fields' },
-					createElement(TextControl, { label: 'Nazwa kroku', value: step.title || '', onChange: v => update(index, 'title', v) }),
-					createElement(TextareaControl, { label: 'Opis', value: step.description || '', onChange: v => update(index, 'description', v), rows: 3 }),
-					createElement(Button, { isDestructive: true, isSmall: true, onClick: () => setAttributes({ steps: steps.filter((_, i) => i !== index) }) }, 'Usuń krok')
-				)
-			)),
+			steps.map((step, index) => {
+				const fields = step.fields || [];
+				const updateField = (fieldIndex, key, value) => {
+					const nextSteps = steps.slice();
+					const nextFields = fields.slice();
+					nextFields[fieldIndex] = Object.assign({}, nextFields[fieldIndex], { [key]: value });
+					nextSteps[index] = Object.assign({}, nextSteps[index], { fields: nextFields });
+					setAttributes({ steps: nextSteps });
+				};
+				return createElement('div', { className: 'cm-promotion-step-editor', key: index },
+					createElement('div', { className: 'cm-promotion-step-editor__number' }, String(index + 1).padStart(2, '0')),
+					createElement('div', { className: 'cm-promotion-step-editor__fields' },
+						createElement(TextControl, { label: 'Nazwa kroku', value: step.title || '', onChange: v => update(index, 'title', v) }),
+						createElement(TextareaControl, { label: 'Opis kroku', value: step.description || '', onChange: v => update(index, 'description', v), rows: 3 }),
+						createElement('div', { className: 'cm-promotion-step-editor__content-fields' },
+							createElement('strong', null, 'Pola z treścią'),
+							fields.map((field, fieldIndex) => createElement('div', { className: 'cm-promotion-step-editor__content-field', key: fieldIndex },
+								createElement(TextControl, { label: 'Nagłówek pola', value: field.title || '', onChange: v => updateField(fieldIndex, 'title', v) }),
+								createElement(TextareaControl, { label: 'Treść pola', value: field.content || '', onChange: v => updateField(fieldIndex, 'content', v), rows: 3 }),
+								createElement(Button, { isDestructive: true, isSmall: true, onClick: () => {
+									const nextSteps = steps.slice();
+									nextSteps[index] = Object.assign({}, nextSteps[index], { fields: fields.filter((_, i) => i !== fieldIndex) });
+									setAttributes({ steps: nextSteps });
+								} }, 'Usuń pole')
+							)),
+							createElement(Button, { variant: 'secondary', isSmall: true, onClick: () => {
+								const nextSteps = steps.slice();
+								nextSteps[index] = Object.assign({}, nextSteps[index], { fields: fields.concat([{ title: '', content: '' }]) });
+								setAttributes({ steps: nextSteps });
+							} }, '+ Dodaj pole treści')
+						)
+						,
+						createElement(Button, { isDestructive: true, isSmall: true, onClick: () => setAttributes({ steps: steps.filter((_, i) => i !== index) }) }, 'Usuń krok')
+					)
+				);
+			}),
 			createElement(Button, { variant: 'secondary', onClick: () => setAttributes({ steps: steps.concat([{ title: 'Krok ' + (steps.length + 1), description: '' }]) }) }, '+ Dodaj krok')
 		);
 	}
