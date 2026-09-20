@@ -420,6 +420,7 @@ function calymyk_new_render_category_navigation_block() {
 		array(
 			'hide_empty' => true,
 			'exclude'    => array( get_option( 'default_category' ) ),
+			'name__not_in' => array( 'polecamy' ),
 			'orderby'    => 'name',
 			'order'      => 'ASC',
 		)
