@@ -784,7 +784,7 @@ function calymyk_new_promotion_meta_row_shortcode() {
 	$output = '<div class="cm-promotion-meta-row">';
 	$output .= '<section class="cm-promotion-meta-box"><p class="cm-eyebrow">CZAS TRWANIA PROMOCJI</p><p class="cm-promotion-meta-box__value">' . esc_html( $duration ) . '</p></section>';
 	if ( $referral ) {
-		$output .= '<a class="cm-promotion-meta-box cm-promotion-referral-box" href="' . esc_url( $referral ) . '" target="_blank" rel="nofollow sponsored noopener noreferrer"><span>Przejdź do promocji →</span></a>';
+		$output .= '<a class="cm-promotion-meta-box cm-promotion-referral-box" href="' . esc_url( $referral ) . '" target="_blank" rel="nofollow sponsored noopener noreferrer"><span>Przejdź do promocji</span></a>';
 	}
 	return $output . '</div>';
 }
@@ -835,7 +835,7 @@ function calymyk_new_promotion_terms_shortcode() {
 
 	foreach ( $valid_documents as $document ) {
 		$output .= '<a class="cm-promotion-document" href="' . esc_url( $document['url'] ) . '" target="_blank" rel="noopener noreferrer">';
-		$output .= '<span>' . esc_html( $document['label'] ) . '</span><span aria-hidden="true">→</span>';
+		$output .= '<span>' . esc_html( $document['label'] ) . '</span>';
 		$output .= '</a>';
 	}
 
