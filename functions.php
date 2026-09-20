@@ -247,6 +247,25 @@ function calymyk_new_category_icon_shortcode() {
 	return '<span class="cm-category-icon" style="--cm-category-color:' . esc_attr( $color ) . '" aria-label="' . esc_attr( $category->name ) . '" title="' . esc_attr( $category->name ) . '"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' . $path . '</svg></span>';
 }
 add_shortcode( 'calymyk_category_icon', 'calymyk_new_category_icon_shortcode' );
+
+/**
+ * Dynamic category icon block for Query Loop cards.
+ */
+function calymyk_new_register_category_icon_block() {
+	register_block_type(
+		'calymyk/category-icon',
+		array(
+			'api_version'      => 3,
+			'render_callback'  => 'calymyk_new_render_category_icon_block',
+		)
+	);
+}
+add_action( 'init', 'calymyk_new_register_category_icon_block', 31 );
+
+function calymyk_new_render_category_icon_block() {
+	return calymyk_new_category_icon_shortcode();
+}
+
 /**
  * Refresh rewrite rules when the theme is activated so custom post type URLs work.
  */
