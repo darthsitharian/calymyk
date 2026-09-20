@@ -934,7 +934,8 @@ html[data-theme="dark"] {
 .cm-featured-hero__right-grid {
 	display: grid !important;
 	grid-template-columns: 1fr !important;
-	grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
+	grid-template-rows: repeat(4, auto) !important;
+	align-content: start;
 	gap: var(--cm-grid-gap) !important;
 	width: 100% !important;
 	height: 100% !important;
@@ -1212,7 +1213,7 @@ html[data-theme="dark"] {
 }
 
 .cm-featured-post-card--compact .cm-featured-post-card__body {
-	padding: 4px 0 20px 24px;
+	padding: 0 0 0 24px;
 	justify-content: center;
 	overflow: hidden;
 }
@@ -1222,7 +1223,7 @@ html[data-theme="dark"] {
 }
 
 .cm-featured-post-card--compact .cm-featured-post-card__title {
-	margin-top: 8px;
+	margin-top: 0;
 	font-size: clamp(1rem, 1.45vw, 1.35rem);
 }
 
