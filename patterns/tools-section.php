@@ -10,32 +10,16 @@
 <!-- wp:group {"className":"cm-tools-section","layout":{"type":"default"}} -->
 <div class="wp-block-group cm-tools-section">
 
-	<!-- wp:group {"className":"cm-section-header cm-grid","layout":{"type":"default"}} -->
-	<div class="wp-block-group cm-section-header cm-grid">
+	<!-- wp:group {"className":"cm-section-header","layout":{"type":"default"}} -->
+	<div class="wp-block-group cm-section-header">
 
-		<!-- wp:group {"className":"cm-span-8","layout":{"type":"default"}} -->
-		<div class="wp-block-group cm-span-8">
+		<!-- wp:heading {"level":2} -->
+		<h2 class="wp-block-heading">Narzędzia, które warto mieć pod ręką.</h2>
+		<!-- /wp:heading -->
 
-			<!-- wp:paragraph {"className":"cm-eyebrow"} -->
-			<p class="cm-eyebrow">NARZĘDZIA</p>
-			<!-- /wp:paragraph -->
-
-			<!-- wp:heading {"level":2} -->
-			<h2 class="wp-block-heading">Narzędzia, które warto mieć pod ręką.</h2>
-			<!-- /wp:heading -->
-
-		</div>
-		<!-- /wp:group -->
-
-		<!-- wp:group {"className":"cm-span-4 cm-section-header__aside","layout":{"type":"default"}} -->
-		<div class="wp-block-group cm-span-4 cm-section-header__aside">
-
-			<!-- wp:paragraph -->
-			<p>Wybrane narzędzia do pracy, organizacji, tworzenia i codziennego działania.</p>
-			<!-- /wp:paragraph -->
-
-		</div>
-		<!-- /wp:group -->
+		<!-- wp:paragraph -->
+		<p>Wybrane narzędzia do pracy, organizacji, tworzenia i codziennego działania.</p>
+		<!-- /wp:paragraph -->
 
 	</div>
 	<!-- /wp:group -->
