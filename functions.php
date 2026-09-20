@@ -176,8 +176,8 @@ function calymyk_new_register_promotion_blocks() {
 				'steps' => array(
 					'type'    => 'array',
 					'default' => array(
-						array( 'title' => 'Krok 1', 'description' => '' ),
-						array( 'title' => 'Krok 2', 'description' => '' ),
+						array( 'title' => 'Krok 1', 'description' => '', 'fields' => array() ),
+						array( 'title' => 'Krok 2', 'description' => '', 'fields' => array() ),
 					),
 				),
 			),
@@ -281,11 +281,31 @@ function calymyk_new_render_promotion_steps( $attributes ) {
 	foreach ( $steps as $index => $step ) {
 		$title = ! empty( $step['title'] ) ? $step['title'] : 'Krok ' . ( $index + 1 );
 		$description = isset( $step['description'] ) ? $step['description'] : '';
-		$output .= '<article class="cm-promotion-step"><div class="cm-promotion-step__number">' . esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ) . '</div><div><h3>' . esc_html( $title ) . '</h3>';
+		$fields = isset( $step['fields'] ) && is_array( $step['fields'] ) ? $step['fields'] : array();
+		$output .= '<article class="cm-promotion-step"><div class="cm-promotion-step__header"><div class="cm-promotion-step__number">' . esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ) . '</div><div class="cm-promotion-step__heading"><p class="cm-promotion-step__eyebrow">KROK ' . esc_html( $index + 1 ) . '</p><h3>' . esc_html( $title ) . '</h3></div></div>';
 		if ( $description ) {
-			$output .= '<p>' . wp_kses_post( $description ) . '</p>';
+			$output .= '<p class="cm-promotion-step__description">' . wp_kses_post( $description ) . '</p>';
 		}
-		$output .= '</div></article>';
+		if ( $fields ) {
+			$output .= '<div class="cm-promotion-step__fields">';
+			foreach ( $fields as $field ) {
+				$field_title = isset( $field['title'] ) ? trim( $field['title'] ) : '';
+				$field_content = isset( $field['content'] ) ? trim( $field['content'] ) : '';
+				if ( ! $field_title && ! $field_content ) {
+					continue;
+				}
+				$output .= '<div class="cm-promotion-step__field">';
+				if ( $field_title ) {
+					$output .= '<p class="cm-promotion-step__field-title">' . esc_html( $field_title ) . '</p>';
+				}
+				if ( $field_content ) {
+					$output .= '<div class="cm-promotion-step__field-content">' . wpautop( wp_kses_post( $field_content ) ) . '</div>';
+				}
+				$output .= '</div>';
+			}
+			$output .= '</div>';
+		}
+		$output .= '</article>';
 	}
 	return $output . '</div></section>';
 }
