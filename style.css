@@ -3255,6 +3255,39 @@ html[data-theme="dark"] {
 	color: var(--wp--preset--color--contrast-2);
 }
 
+.cm-promotion-documents__list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.cm-promotion-document {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 0;
+	color: var(--wp--preset--color--accent);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	text-decoration: none;
+	border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 8%, transparent);
+}
+
+.cm-promotion-document:first-child {
+	padding-top: 0;
+	border-top: 0;
+}
+
+.cm-promotion-document:hover,
+.cm-promotion-document:focus-visible {
+	color: var(--wp--preset--color--contrast);
+}
+
+.cm-promotion-document span:last-child {
+	flex: 0 0 auto;
+}
+
 .cm-promotion-terms {
 	padding-top: 8px;
 	padding-bottom: 16px;
