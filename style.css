@@ -972,25 +972,32 @@ html[data-theme="dark"] {
 
 .cm-category-icon {
 	position: absolute;
-	top: 20px;
+	top: 0;
 	right: 20px;
 	z-index: 4;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 39px;
-	height: 39px;
+	width: 48px;
+	height: 64px;
 	box-sizing: border-box;
-	border-radius: 9px;
+	padding: 0 0 7px;
 	background: var(--cm-category-color, var(--wp--preset--color--accent));
 	color: #fff;
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+	clip-path: polygon(
+		0 0,
+		100% 0,
+		100% 88%,
+		50% 72%,
+		0 88%
+	);
+	filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.18));
 }
 
 .cm-category-icon svg {
 	display: block;
-	width: 22px;
-	height: 22px;
+	width: 24px;
+	height: 24px;
 }
 
 .cm-featured-post-card__image img {
@@ -1243,17 +1250,17 @@ html[data-theme="dark"] {
 	}
 
 	.cm-category-icon {
-		top: 12px;
+		top: 0;
 		right: 12px;
 		left: auto;
-		width: 34px;
-		height: 34px;
-		border-radius: 8px;
+		width: 42px;
+		height: 56px;
+		padding-bottom: 6px;
 	}
 
 	.cm-category-icon svg {
-		width: 19px;
-		height: 19px;
+		width: 21px;
+		height: 21px;
 	}
 
 	.cm-featured-post-card__image,
