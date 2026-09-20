@@ -514,6 +514,28 @@ Text Domain: calymyk-new
     display: none;
 }
 
+.cm-tools-section .cm-section-header,
+.cm-recommendations__header {
+	display: block;
+	max-width: 900px;
+	margin-inline: auto;
+	text-align: center;
+}
+
+.cm-tools-section .cm-section-header h2,
+.cm-recommendations__header h2 {
+	margin: 0;
+}
+
+.cm-tools-section .cm-section-header p,
+.cm-recommendations__header p {
+	max-width: 720px;
+	margin: 16px auto 0;
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--wp--preset--font-size--medium);
+	line-height: 1.55;
+}
+
 /* ---------------------------------------------------------
    TABLET
    --------------------------------------------------------- */
