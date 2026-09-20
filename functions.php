@@ -770,12 +770,6 @@ function calymyk_new_related_posts_shortcode() {
 
 		$output .= '<h3 class="cm-related-post-card__title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h3>';
 
-		$excerpt = get_the_excerpt();
-		if ( $excerpt ) {
-			$output .= '<p class="cm-related-post-card__excerpt">' . esc_html( wp_trim_words( $excerpt, 24 ) ) . '</p>';
-		}
-
-		$output .= '<div class="cm-related-post-card__footer"><a class="cm-related-post-card__link" href="' . esc_url( get_permalink() ) . '">Czytaj więcej →</a><time datetime="' . esc_attr( get_the_date( 'c' ) ) . '">' . esc_html( get_the_date() ) . '</time></div>';
 		$output .= '</article>';
 	}
 
@@ -824,12 +818,6 @@ function calymyk_new_related_tools_shortcode() {
 
 		$output .= '<h3 class="cm-related-post-card__title"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h3>';
 
-		$excerpt = get_the_excerpt();
-		if ( $excerpt ) {
-			$output .= '<p class="cm-related-post-card__excerpt">' . esc_html( wp_trim_words( $excerpt, 24 ) ) . '</p>';
-		}
-
-		$output .= '<div class="cm-related-post-card__footer"><a class="cm-related-post-card__link" href="' . esc_url( get_permalink() ) . '">Zobacz narzędzie →</a></div>';
 		$output .= '</article>';
 	}
 
