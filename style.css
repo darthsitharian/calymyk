@@ -1060,7 +1060,7 @@ html[data-theme="dark"] {
 	pointer-events: none;
 	transform: scaleX(0);
 	transform-origin: left center;
-	transition: transform 260ms ease;
+	transition: transform 520ms ease;
 }
 
 .cm-featured-post-card:hover .cm-category-icon,
