@@ -23,7 +23,7 @@ function calymyk_new_enqueue_assets() {
 		'calymyk-new-tools-carousel',
 		get_template_directory_uri() . '/assets/js/tools-carousel.js',
 		array(),
-		wp_get_theme()->get( 'Version' ),
+		filemtime( get_template_directory() . '/assets/js/tools-carousel.js' ),
 		true
 	);
 
