@@ -8,6 +8,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Keep search-result excerpts short and consistent.
+ */
+function calymyk_new_search_excerpt_length( $excerpt ) {
+	if ( ! is_search() ) {
+		return $excerpt;
+	}
+
+	$excerpt = wp_strip_all_tags( $excerpt );
+	return wp_html_excerpt( $excerpt, 100, '…' );
+}
+add_filter( 'get_the_excerpt', 'calymyk_new_search_excerpt_length', 20 );
+
+/**
  * Load theme assets.
  */
 function calymyk_new_enqueue_assets() {
