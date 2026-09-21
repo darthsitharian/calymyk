@@ -1533,9 +1533,40 @@ html[data-theme="dark"] {
    CALYMYK — TOOL CARDS
    ========================================================= */
 
+.cm-tools-query {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%);
+}
+
+.cm-tools-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 24px !important;
+    width: max-content !important;
+    max-width: none !important;
+    margin: 0;
+    padding: 0 4vw;
+    box-sizing: border-box;
+    overflow: visible !important;
+    transition: transform 80ms linear;
+}
+
+.cm-tools-grid > li {
+    flex: 0 0 182px;
+    width: 182px !important;
+    min-width: 182px;
+    max-width: 182px;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .cm-tool-card {
     position: relative;
     display: block;
+    width: 100%;
     min-height: 182px;
     margin: 0;
     padding: 0;
@@ -1568,12 +1599,12 @@ html[data-theme="dark"] {
 
 .cm-tool-card__title {
     position: absolute;
-    right: 24px;
-    bottom: 24px;
-    left: 24px;
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
     z-index: 2;
     margin: 0;
-    font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+    font-size: 1.15rem;
     line-height: 1.12;
 }
 
@@ -1582,12 +1613,33 @@ html[data-theme="dark"] {
     background: rgba(0, 0, 0, 0.68);
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
-    padding: 3px 8px 5px;
+    padding: 3px 7px 5px;
     text-decoration: none;
 }
 
 .cm-tool-card__title a:hover {
     color: #fff;
+}
+
+.cm-tools-query::before,
+.cm-tools-query::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+    width: 18%;
+    pointer-events: none;
+}
+
+.cm-tools-query::before {
+    left: 0;
+    background: linear-gradient(to right, var(--wp--preset--color--base) 0%, transparent 100%);
+}
+
+.cm-tools-query::after {
+    right: 0;
+    background: linear-gradient(to left, var(--wp--preset--color--base) 0%, transparent 100%);
 }
 
 /* =========================================================
@@ -1610,6 +1662,54 @@ html[data-theme="dark"] {
     }
 }
 
+
+@media (max-width: 768px) {
+
+    .cm-section-header__aside {
+        grid-column: 1 / -1;
+        padding-top: 8px;
+    }
+
+    .cm-tools-query {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-mask-image: none;
+        mask-image: none;
+        scrollbar-width: none;
+    }
+
+    .cm-tools-query::-webkit-scrollbar {
+        display: none;
+    }
+
+    .cm-tools-grid {
+        gap: 16px !important;
+        padding-inline: 20px;
+    }
+
+    .cm-tools-grid > li {
+        flex-basis: 154px;
+        width: 154px !important;
+        min-width: 154px;
+        max-width: 154px;
+    }
+
+    .cm-tool-card {
+        min-height: 154px;
+    }
+
+    .cm-tool-card__title {
+        right: 14px;
+        bottom: 14px;
+        left: 14px;
+        font-size: 1rem;
+    }
+
+    .cm-tools-query::before,
+    .cm-tools-query::after {
+        display: none;
+    }
+}
 
 /* =========================================================
    CALYMYK — POST ARCHIVE
