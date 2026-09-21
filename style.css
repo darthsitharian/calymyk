@@ -4495,3 +4495,106 @@ html[data-theme="dark"] {
 		padding: 0 14px 14px;
 	}
 }
+
+
+/* =========================================================
+   CALYMYK — TOOLS AUTO CAROUSEL
+   CSS-only marquee based on the reference carousel pattern.
+   Desktop: continuous movement, hover pauses.
+   Mobile: native horizontal scrolling remains enabled.
+   ========================================================= */
+
+@media (min-width: 769px) {
+	.cm-tools-query {
+		position: relative;
+		width: 100%;
+		height: 182px;
+		overflow: hidden;
+		-webkit-mask-image: linear-gradient(to right, transparent, #000 8% 92%, transparent);
+		mask-image: linear-gradient(to right, transparent, #000 8% 92%, transparent);
+	}
+
+	.cm-tools-query .cm-tools-grid {
+		--cm-tool-width: 280px;
+		--cm-tool-gap: 24px;
+		--cm-tool-duration: 30s;
+		position: relative;
+		display: block !important;
+		width: 100% !important;
+		height: 182px;
+		margin: 0;
+		padding: 0;
+		overflow: visible !important;
+		list-style: none;
+	}
+
+	/* Detect the number of rendered tools so the timing stays correct. */
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(1):last-child) { --cm-tool-items: 1; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(2):last-child) { --cm-tool-items: 2; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(3):last-child) { --cm-tool-items: 3; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(4):last-child) { --cm-tool-items: 4; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(5):last-child) { --cm-tool-items: 5; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(6):last-child) { --cm-tool-items: 6; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(7):last-child) { --cm-tool-items: 7; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(8):last-child) { --cm-tool-items: 8; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(9):last-child) { --cm-tool-items: 9; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(10):last-child) { --cm-tool-items: 10; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(11):last-child) { --cm-tool-items: 11; }
+	.cm-tools-query .cm-tools-grid:has(> li:nth-child(12):last-child) { --cm-tool-items: 12; }
+
+	.cm-tools-query .cm-tools-grid > li {
+		position: absolute !important;
+		top: 0;
+		left: calc(100% + var(--cm-tool-gap));
+		display: block !important;
+		width: var(--cm-tool-width) !important;
+		min-width: var(--cm-tool-width) !important;
+		max-width: var(--cm-tool-width) !important;
+		height: 182px;
+		margin: 0 !important;
+		padding: 0 !important;
+		animation: cm-tools-marquee var(--cm-tool-duration) linear infinite;
+		animation-delay: calc(var(--cm-tool-duration) / var(--cm-tool-items) * var(--cm-tool-index) * -1);
+		will-change: transform;
+	}
+
+	.cm-tools-query .cm-tools-grid > li:nth-child(1) { --cm-tool-index: 0; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(2) { --cm-tool-index: 1; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(3) { --cm-tool-index: 2; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(4) { --cm-tool-index: 3; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(5) { --cm-tool-index: 4; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(6) { --cm-tool-index: 5; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(7) { --cm-tool-index: 6; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(8) { --cm-tool-index: 7; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(9) { --cm-tool-index: 8; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(10) { --cm-tool-index: 9; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(11) { --cm-tool-index: 10; }
+	.cm-tools-query .cm-tools-grid > li:nth-child(12) { --cm-tool-index: 11; }
+
+	.cm-tools-query:hover .cm-tools-grid > li {
+		animation-play-state: paused;
+	}
+
+	@keyframes cm-tools-marquee {
+		100% {
+			transform: translateX(
+				calc(
+					(var(--cm-tool-items) * (var(--cm-tool-width) + var(--cm-tool-gap))) * -1
+				)
+			);
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.cm-tools-query {
+		overflow-x: auto;
+		overflow-y: hidden;
+		-webkit-mask-image: none;
+		mask-image: none;
+	}
+
+	.cm-tools-query .cm-tools-grid {
+		width: max-content !important;
+	}
+}
