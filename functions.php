@@ -40,6 +40,16 @@ function calymyk_new_enqueue_assets() {
 		true
 	);
 
+	if ( is_post_type_archive( 'tool' ) ) {
+		wp_enqueue_script(
+			'calymyk-new-tool-filters',
+			get_template_directory_uri() . '/assets/js/tool-filters.js',
+			array(),
+			wp_get_theme()->get( 'Version' ),
+			true
+		);
+	}
+
 }
 
 add_action( 'wp_enqueue_scripts', 'calymyk_new_enqueue_assets' );
