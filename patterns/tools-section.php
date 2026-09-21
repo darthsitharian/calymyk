@@ -32,7 +32,7 @@
 	<div class="wp-block-query cm-tools-query" data-cm-tools-carousel="true">
 
 		<!-- wp:post-template {"className":"cm-tools-grid"} -->
-			<!-- wp:group {"className":"cm-span-4 cm-tool-card","layout":{"type":"default"}} -->
+			<!-- wp:group {"className":"cm-tool-card","layout":{"type":"default"}} -->
 			<article class="wp-block-group cm-span-4 cm-tool-card">
 
 				<!-- wp:post-featured-image {"isLink":true,"className":"cm-tool-card__image"} /-->
