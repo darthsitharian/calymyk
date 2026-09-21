@@ -1962,10 +1962,10 @@ html[data-theme="dark"] {
 
 .cm-tools-query .cm-tools-grid > li {
 	display: block !important;
-	flex: 0 0 182px !important;
-	width: 182px !important;
-	min-width: 182px !important;
-	max-width: 182px !important;
+	flex: 0 0 300px !important;
+	width: 300px !important;
+	min-width: 300px !important;
+	max-width: 300px !important;
 	margin: 0 !important;
 	padding: 0 !important;
 	list-style: none;
