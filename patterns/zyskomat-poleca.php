@@ -31,7 +31,7 @@
 	<!-- wp:query {"namespace":"calymyk-new/recommendations","queryId":20,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"cm-recommendations__query"} -->
 	<div class="wp-block-query cm-recommendations__query">
 
-		<!-- wp:post-template {"className":"cm-recommendations__grid cm-grid","layout":{"type":"default"}} -->
+		<!-- wp:post-template {"className":"cm-recommendations__grid","layout":{"type":"default"}} -->
 
 			<!-- wp:group {"className":"cm-recommendation-card","layout":{"type":"default"}} -->
 			<div class="wp-block-group cm-recommendation-card">
