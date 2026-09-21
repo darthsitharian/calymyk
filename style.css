@@ -3189,6 +3189,15 @@ html[data-theme="dark"] {
 	color: var(--wp--preset--color--accent);
 }
 
+.cm-tools-archive__controls .wp-block-tag-cloud a.is-active {
+	color: var(--wp--preset--color--accent);
+	font-weight: 700;
+}
+
+.cm-tools-archive-grid > [hidden] {
+	display: none !important;
+}
+
 .cm-tool-archive-card__cta {
 	margin: auto 24px 0;
 	padding-top: 20px;
