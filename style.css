@@ -1543,7 +1543,9 @@ html[data-theme="dark"] {
 
 .cm-tools-grid {
     display: flex !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
+    grid-template-columns: none !important;
     gap: 24px !important;
     width: max-content !important;
     max-width: none !important;
@@ -1555,7 +1557,8 @@ html[data-theme="dark"] {
 }
 
 .cm-tools-grid > li {
-    flex: 0 0 182px;
+    display: block !important;
+    flex: 0 0 182px !important;
     width: 182px !important;
     min-width: 182px;
     max-width: 182px;
