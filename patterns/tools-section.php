@@ -33,7 +33,7 @@
 
 		<!-- wp:post-template {"className":"cm-tools-grid"} -->
 			<!-- wp:group {"className":"cm-tool-card","layout":{"type":"default"}} -->
-			<article class="wp-block-group cm-span-4 cm-tool-card">
+			<article class="wp-block-group cm-tool-card">
 
 				<!-- wp:post-featured-image {"isLink":true,"className":"cm-tool-card__image"} /-->
 
