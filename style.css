@@ -3219,6 +3219,24 @@ html[data-theme="dark"] {
 	display: none !important;
 }
 
+.cm-tool-archive-card__category a {
+	color: var(--wp--preset--color--contrast-2);
+	text-decoration: none;
+}
+
+.cm-tool-archive-card__category a:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+.cm-tool-archive-card__title a {
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
+}
+
+.cm-tool-archive-card__title a:hover {
+	color: var(--wp--preset--color--contrast);
+}
+
 @media (max-width: 768px) {
 	.cm-tools-archive__filters {
 		gap: 8px 16px;
