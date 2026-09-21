@@ -2034,9 +2034,11 @@ html[data-theme="dark"] {
 
 /* =========================================================
    CALYMYK — ZYSKOMAT POLECA
+   Native CSS scroll carousel.
+   Uses scroll-snap with ::scroll-button / ::scroll-marker when
+   supported, while retaining normal horizontal scrolling as fallback.
    ========================================================= */
 
-/* Section spacing and shared 12-column structure. */
 .cm-recommendations {
 	width: 100%;
 	margin: 0;
@@ -2048,23 +2050,52 @@ html[data-theme="dark"] {
 	align-items: end;
 }
 
+.cm-recommendations__query {
+	position: relative;
+	width: 100%;
+}
+
 .cm-recommendations__grid {
+	--cm-rec-card-width: 320px;
 	display: grid !important;
-	grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
-	gap: var(--cm-grid-gap) !important;
+	grid-auto-flow: column;
+	grid-auto-columns: var(--cm-rec-card-width);
+	gap: 24px !important;
 	width: 100% !important;
 	margin: 0;
-	padding: 0;
+	padding: 32px max(24px, calc((100% - var(--cm-container-wide)) / 2));
 	list-style: none;
 	align-items: stretch;
+	overflow-x: auto;
+	overflow-y: hidden;
+	scroll-snap-type: x mandatory;
+	scroll-snap-stop: always;
+	scroll-behavior: smooth;
+	overscroll-behavior-x: contain;
+	scrollbar-width: none;
+	box-sizing: border-box;
+	anchor-name: --cm-recommendations;
+}
+
+.cm-recommendations__grid::-webkit-scrollbar {
+	display: none;
+}
+
+.cm-recommendations__grid::before,
+.cm-recommendations__grid::after {
+	content: "";
 }
 
 .cm-recommendations__grid > li {
-	grid-column: span 4;
-	min-width: 0;
+	position: relative;
+	width: var(--cm-rec-card-width);
+	min-width: var(--cm-rec-card-width);
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	scroll-snap-align: center;
+	scroll-snap-stop: always;
+	container-type: scroll-state;
 }
 
 .cm-recommendation-card {
@@ -2150,13 +2181,12 @@ html[data-theme="dark"] {
 	margin: 12px 0 0;
 	color: var(--wp--preset--color--contrast-2);
 	font-size: var(--wp--preset--font-size--small);
-	line-height: 1.6;
+	line-height: 1.55;
 }
 
 .cm-recommendation-card .wp-block-read-more {
-	display: inline-block;
 	margin-top: auto;
-	padding-top: 24px;
+	padding-top: 20px;
 	color: var(--wp--preset--color--contrast);
 	font-size: var(--wp--preset--font-size--small);
 	font-weight: 600;
@@ -2167,9 +2197,103 @@ html[data-theme="dark"] {
 	color: var(--wp--preset--color--accent);
 }
 
-@media (max-width: 1024px) {
-	.cm-recommendations__grid > li {
-		grid-column: span 6;
+/* Progressive enhancement for browsers supporting the native scroll controls. */
+@supports selector(::scroll-button(*)) {
+	.cm-recommendations__grid {
+		overflow-x: auto;
+	}
+
+	.cm-recommendations__grid::scroll-button(*) {
+		position: absolute;
+		position-anchor: --cm-recommendations;
+		z-index: 5;
+		width: 44px;
+		height: 44px;
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		background: var(--wp--preset--color--contrast);
+		color: var(--wp--preset--color--base);
+		font: inherit;
+		font-size: 1rem;
+		line-height: 1;
+		display: grid;
+		place-content: center;
+		opacity: 0.78;
+		cursor: pointer;
+		transition: opacity 150ms ease, transform 150ms ease;
+	}
+
+	.cm-recommendations__grid::scroll-button(inline-start) {
+		content: "‹";
+		left: calc(anchor(left) + 8px);
+	}
+
+	.cm-recommendations__grid::scroll-button(inline-end) {
+		content: "›";
+		right: calc(anchor(right) + 8px);
+	}
+
+	.cm-recommendations__grid::scroll-button(*):not(:disabled):where(:hover, :focus-visible) {
+		opacity: 1;
+		transform: scale(1.08);
+	}
+
+	.cm-recommendations__grid::scroll-button(*):disabled {
+		opacity: 0.25;
+		cursor: default;
+	}
+
+	.cm-recommendations__grid::scroll-button(*):focus-visible {
+		outline: 2px solid var(--wp--preset--color--accent);
+		outline-offset: 3px;
+	}
+}
+
+@supports selector(::scroll-marker-group) {
+	.cm-recommendations__grid {
+		scroll-marker-group: after;
+	}
+
+	.cm-recommendations__grid::scroll-marker-group {
+		position: absolute;
+		position-anchor: --cm-recommendations;
+		z-index: 5;
+		inline-size: min(90cqi, 400px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		padding-top: 10px;
+		top: anchor(bottom);
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.cm-recommendations__grid > li::scroll-marker {
+		content: "";
+		width: 8px;
+		height: 8px;
+		border: 0;
+		border-radius: 50%;
+		background: var(--wp--preset--color--contrast);
+		opacity: 0.25;
+		transform: scale(0.85);
+		transition: opacity 150ms ease, transform 150ms ease;
+	}
+
+	.cm-recommendations__grid > li::scroll-marker:target-current {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	.cm-recommendations__grid > li::scroll-marker:where(:hover, :focus-visible) {
+		opacity: 1;
+	}
+
+	.cm-recommendations__grid > li::scroll-marker:focus-visible {
+		outline: 2px solid var(--wp--preset--color--accent);
+		outline-offset: 3px;
 	}
 }
 
@@ -2178,8 +2302,10 @@ html[data-theme="dark"] {
 		padding-top: 64px;
 	}
 
-	.cm-recommendations__grid > li {
-		grid-column: 1 / -1;
+	.cm-recommendations__grid {
+		--cm-rec-card-width: min(82vw, 320px);
+		gap: 16px !important;
+		padding-inline: 20px;
 	}
 }
 
