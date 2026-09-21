@@ -1,16 +1,6 @@
 (function () {
 	'use strict';
 
-	function getSlug(url) {
-		try {
-			const parsed = new URL(url, window.location.origin);
-			const parts = parsed.pathname.split('/').filter(Boolean);
-			return parts.length ? parts[parts.length - 1] : '';
-		} catch (error) {
-			return '';
-		}
-	}
-
 	function initToolFilters() {
 		const controls = document.querySelector('.cm-tools-archive__controls');
 		const tagCloud = controls && controls.querySelector('.wp-block-tag-cloud');
@@ -21,13 +11,12 @@
 		}
 
 		const links = Array.from(tagCloud.querySelectorAll('a'));
-		const cards = Array.from(grid.querySelectorAll('.cm-tool-archive-card'));
+		const items = Array.from(grid.children);
 
-		if (!links.length || !cards.length) {
+		if (!links.length || !items.length) {
 			return;
 		}
 
-		// Turn the taxonomy links into local filter controls.
 		const filterBar = document.createElement('div');
 		filterBar.className = 'cm-tools-archive__filters';
 		filterBar.setAttribute('role', 'group');
@@ -47,31 +36,21 @@
 			button.type = 'button';
 			button.className = 'cm-tools-archive__filter';
 			button.textContent = link.textContent.trim();
-			button.dataset.slug = getSlug(link.href);
+			button.dataset.slug = new URL(link.href, window.location.origin).pathname
+				.split('/')
+				.filter(Boolean)
+				.pop() || '';
+
 			filterBar.appendChild(button);
 			filterButtons.push(button);
 		});
 
 		tagCloud.replaceWith(filterBar);
 
-		const cardCategories = new Map();
-
-		cards.forEach(function (card) {
-			const slugs = Array.from(
-				card.querySelectorAll('.cm-tool-archive-card__category a')
-			)
-				.map(function (link) {
-					return getSlug(link.href);
-				})
-				.filter(Boolean);
-
-			cardCategories.set(card, slugs);
-		});
-
-		function filterCards(slug, activeButton) {
-			cards.forEach(function (card) {
-				const categories = cardCategories.get(card) || [];
-				card.hidden = Boolean(slug) && !categories.includes(slug);
+		function filterItems(slug, activeButton) {
+			items.forEach(function (item) {
+				const matches = !slug || item.classList.contains('tool_category-' + slug);
+				item.hidden = !matches;
 			});
 
 			filterButtons.forEach(function (button) {
@@ -83,13 +62,13 @@
 
 		filterButtons.forEach(function (button) {
 			button.addEventListener('click', function () {
-				filterCards(button.dataset.slug, button);
+				filterItems(button.dataset.slug, button);
 			});
 		});
 
-		filterCards('', allButton);
+		filterItems('', allButton);
 	}
-
+	
 	if (document.readyState === 'loading') {
 		document.addEventListener('DOMContentLoaded', initToolFilters, { once: true });
 	} else {
