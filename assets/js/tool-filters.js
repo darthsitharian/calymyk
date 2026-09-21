@@ -20,12 +20,39 @@
 			return;
 		}
 
-		const filterLinks = Array.from(tagCloud.querySelectorAll('a'));
+		const links = Array.from(tagCloud.querySelectorAll('a'));
 		const cards = Array.from(grid.querySelectorAll('.cm-tool-archive-card'));
 
-		if (!filterLinks.length || !cards.length) {
+		if (!links.length || !cards.length) {
 			return;
 		}
+
+		// Turn the taxonomy links into local filter controls.
+		const filterBar = document.createElement('div');
+		filterBar.className = 'cm-tools-archive__filters';
+		filterBar.setAttribute('role', 'group');
+		filterBar.setAttribute('aria-label', 'Kategorie narzędzi');
+
+		const allButton = document.createElement('button');
+		allButton.type = 'button';
+		allButton.className = 'cm-tools-archive__filter is-active';
+		allButton.textContent = 'Wszystkie';
+		allButton.dataset.slug = '';
+		filterBar.appendChild(allButton);
+
+		const filterButtons = [allButton];
+
+		links.forEach(function (link) {
+			const button = document.createElement('button');
+			button.type = 'button';
+			button.className = 'cm-tools-archive__filter';
+			button.textContent = link.textContent.trim();
+			button.dataset.slug = getSlug(link.href);
+			filterBar.appendChild(button);
+			filterButtons.push(button);
+		});
+
+		tagCloud.replaceWith(filterBar);
 
 		const cardCategories = new Map();
 
@@ -41,31 +68,26 @@
 			cardCategories.set(card, slugs);
 		});
 
-		function setActive(activeLink) {
-			filterLinks.forEach(function (link) {
-				const active = link === activeLink;
-				link.classList.toggle('is-active', active);
-				link.setAttribute('aria-current', active ? 'true' : 'false');
-			});
-		}
-
-		function filterCards(slug, activeLink) {
+		function filterCards(slug, activeButton) {
 			cards.forEach(function (card) {
 				const categories = cardCategories.get(card) || [];
 				card.hidden = Boolean(slug) && !categories.includes(slug);
 			});
 
-		setActive(activeLink);
+			filterButtons.forEach(function (button) {
+				const active = button === activeButton;
+				button.classList.toggle('is-active', active);
+				button.setAttribute('aria-pressed', active ? 'true' : 'false');
+			});
 		}
 
-		filterLinks.forEach(function (link) {
-			link.addEventListener('click', function (event) {
-				event.preventDefault();
-				filterCards(getSlug(link.href), link);
+		filterButtons.forEach(function (button) {
+			button.addEventListener('click', function () {
+				filterCards(button.dataset.slug, button);
 			});
 		});
 
-		filterCards('', null);
+		filterCards('', allButton);
 	}
 
 	if (document.readyState === 'loading') {
