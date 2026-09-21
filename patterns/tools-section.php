@@ -28,7 +28,7 @@
 	<div style="height:40px" aria-hidden="true" class="wp-block-spacer"></div>
 	<!-- /wp:spacer -->
 
-	<!-- wp:query {"query":{"perPage":3,"postType":"tool","inherit":false},"className":"cm-tools-query"} -->
+	<!-- wp:query {"query":{"perPage":100,"postType":"tool","inherit":false},"className":"cm-tools-query"} -->
 	<div class="wp-block-query cm-tools-query">
 
 		<!-- wp:post-template {"className":"cm-grid cm-tools-grid"} -->
@@ -37,13 +37,7 @@
 
 				<!-- wp:post-featured-image {"isLink":true,"className":"cm-tool-card__image"} /-->
 
-				<!-- wp:post-terms {"term":"tool_category","className":"cm-tool-card__category"} /-->
-
-				<!-- wp:post-title {"isLink":true} /-->
-
-				<!-- wp:post-excerpt {"className":"cm-tool-card__description"} /-->
-
-				<!-- wp:read-more {"content":"Zobacz narzędzie →","className":"cm-tool-card__link"} /-->
+				<!-- wp:post-title {"isLink":true,"className":"cm-tool-card__title"} /-->
 
 			</article>
 			<!-- /wp:group -->
