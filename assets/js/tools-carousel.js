@@ -13,7 +13,13 @@
 
 			const track = carousel.querySelector('.cm-tools-grid');
 
-			if (!track || track.scrollWidth <= carousel.clientWidth) {
+			if (!track) {
+				return;
+			}
+
+			const maxScroll = Math.max(0, track.scrollWidth - carousel.clientWidth);
+
+			if (maxScroll <= 0) {
 				return;
 			}
 
@@ -25,6 +31,8 @@
 
 			const stop = () => {
 				direction = 0;
+				lastTime = 0;
+
 				if (frame) {
 					cancelAnimationFrame(frame);
 					frame = 0;
@@ -44,34 +52,31 @@
 				const delta = Math.min(time - lastTime, 32);
 				lastTime = time;
 
-				const maxShift = Math.max(0, track.scrollWidth - carousel.clientWidth);
-				const current = Number(track.dataset.cmShift || 0);
-				const next = Math.max(-maxShift, Math.min(0, current + direction * delta * 0.055));
+				const current = carousel.scrollLeft;
+				const speed = 0.42;
+				const next = Math.max(0, Math.min(maxScroll, current + direction * delta * speed));
 
-				track.dataset.cmShift = String(next);
-				track.style.transform = `translate3d(${next}px, 0, 0)`;
+				carousel.scrollLeft = next;
 
-				if (next === 0 || next === -maxShift) {
-					direction = 0;
-					frame = 0;
+				if (next <= 0 || next >= maxScroll) {
+					stop();
 					return;
 				}
 
 				frame = requestAnimationFrame(tick);
 			};
 
-			carousel.addEventListener('mousemove', (event) => {
+			const updateDirection = (event) => {
 				const rect = carousel.getBoundingClientRect();
 				const x = event.clientX - rect.left;
-				const edge = Math.max(90, rect.width * 0.18);
+				const edgeWidth = Math.min(180, Math.max(120, rect.width * 0.14));
 
-				if (x < edge) {
-					direction = 1;
-				} else if (x > rect.width - edge) {
+				if (x <= edgeWidth) {
 					direction = -1;
+				} else if (x >= rect.width - edgeWidth) {
+					direction = 1;
 				} else {
 					stop();
-					lastTime = 0;
 					return;
 				}
 
@@ -79,9 +84,10 @@
 					lastTime = 0;
 					frame = requestAnimationFrame(tick);
 				}
-			});
+			};
 
-			carousel.addEventListener('mouseleave', stop);
+			carousel.addEventListener('pointermove', updateDirection, { passive: true });
+			carousel.addEventListener('pointerleave', stop, { passive: true });
 			window.addEventListener('resize', stop, { passive: true });
 		});
 	};
