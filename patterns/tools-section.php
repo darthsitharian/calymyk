@@ -29,7 +29,7 @@
 	<!-- /wp:spacer -->
 
 	<!-- wp:query {"query":{"perPage":100,"postType":"tool","inherit":false},"className":"cm-tools-query"} -->
-	<div class="wp-block-query cm-tools-query">
+	<div class="wp-block-query cm-tools-query" data-cm-tools-carousel="true">
 
 		<!-- wp:post-template {"className":"cm-grid cm-tools-grid"} -->
 			<!-- wp:group {"className":"cm-span-4 cm-tool-card","layout":{"type":"default"}} -->
