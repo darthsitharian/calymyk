@@ -75,9 +75,8 @@
 					return;
 				}
 
-				lastTime = 0;
-
 				if (!frame) {
+					lastTime = 0;
 					frame = requestAnimationFrame(tick);
 				}
 			});
