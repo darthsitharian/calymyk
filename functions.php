@@ -20,14 +20,6 @@ function calymyk_new_enqueue_assets() {
 	);
 
 	wp_enqueue_script(
-		'calymyk-new-tools-carousel',
-		get_template_directory_uri() . '/assets/js/tools-carousel.js',
-		array(),
-		filemtime( get_template_directory() . '/assets/js/tools-carousel.js' ),
-		true
-	);
-
-	wp_enqueue_script(
 		'calymyk-new-theme-toggle',
 		get_template_directory_uri() . '/assets/js/theme-toggle.js',
 		array(),
