@@ -189,21 +189,13 @@ Text Domain: calymyk-new
 }
 
 .cm-sidebar__menu {
-	margin: 0;
-}
-
-.cm-sidebar__menu .wp-block-navigation__container {
-	width: 100%;
-	align-items: stretch;
+	display: flex;
+	flex-direction: column;
 	gap: var(--cm-space-1);
-}
-
-.cm-sidebar__menu .wp-block-navigation-item {
-	width: 100%;
 	margin: 0;
 }
 
-.cm-sidebar__menu .wp-block-navigation-item__content {
+.cm-sidebar__menu a {
 	display: flex;
 	align-items: center;
 	min-height: 40px;
@@ -219,8 +211,8 @@ Text Domain: calymyk-new
 		background-color var(--cm-motion-fast) ease;
 }
 
-.cm-sidebar__menu .wp-block-navigation-item__content:hover,
-.cm-sidebar__menu .wp-block-navigation-item__content:focus-visible {
+.cm-sidebar__menu a:hover,
+.cm-sidebar__menu a:focus-visible {
 	color: var(--wp--preset--color--contrast);
 	background: var(--wp--preset--color--base);
 }
