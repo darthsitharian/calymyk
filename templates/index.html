@@ -3,26 +3,100 @@
 <!-- wp:group {"className":"cm-site-layout","layout":{"type":"default"}} -->
 <div class="wp-block-group cm-site-layout">
 
-<!-- wp:main {"layout":{"type":"default"}} -->
-<main class="wp-block-group cm-site-main cm-page-shell">
+	<!-- wp:main {"layout":{"type":"default"}} -->
+	<main id="wp--skip-link--target" class="wp-block-group cm-site-main cm-page-shell">
 
-	<!-- HERO -->
-	<!-- wp:pattern {"slug":"calymyk-new/featured-posts"} /-->
+		<!-- BANNER -->
+		<!-- wp:group {"className":"cm-home-banner","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-banner"></section>
+		<!-- /wp:group -->
 
-	<!-- CATEGORY -->
-	<!-- wp:pattern {"slug":"calymyk-new/category-section"} /-->
+		<!-- POPULARNE PROMOCJE -->
+		<!-- wp:group {"className":"cm-home-section cm-home-section--popular","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-section cm-home-section--popular">
+			<!-- wp:heading {"level":2,"className":"cm-home-section__title"} -->
+			<h2 class="wp-block-heading cm-home-section__title">Popularne promocje</h2>
+			<!-- /wp:heading -->
+		</section>
+		<!-- /wp:group -->
 
-	<!-- POPULAR / PROMO -->
-	<!-- wp:pattern {"slug":"calymyk-new/popular-promo"} /-->
+		<!-- NARZĘDZIA -->
+		<!-- wp:group {"className":"cm-home-section cm-home-section--tools","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-section cm-home-section--tools">
+			<!-- wp:heading {"level":2,"className":"cm-home-section__title"} -->
+			<h2 class="wp-block-heading cm-home-section__title">Narzędzia</h2>
+			<!-- /wp:heading -->
+		</section>
+		<!-- /wp:group -->
 
-	<!-- TOOLS MARQUEE -->
-	<!-- wp:pattern {"slug":"calymyk-new/tools-section"} /-->
+		<!-- NAJNOWSZE PROMOCJE -->
+		<!-- wp:group {"className":"cm-home-section cm-home-section--latest","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-section cm-home-section--latest">
+			<!-- wp:heading {"level":2,"className":"cm-home-section__title"} -->
+			<h2 class="wp-block-heading cm-home-section__title">Najnowsze promocje</h2>
+			<!-- /wp:heading -->
+		</section>
+		<!-- /wp:group -->
 
+		<!-- AI -->
+		<!-- wp:group {"className":"cm-home-section cm-home-section--ai","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-section cm-home-section--ai">
+			<!-- wp:heading {"level":2,"className":"cm-home-section__title"} -->
+			<h2 class="wp-block-heading cm-home-section__title">AI</h2>
+			<!-- /wp:heading -->
+		</section>
+		<!-- /wp:group -->
 
-</main>
-<!-- /wp:main -->
+		<!-- BIZNES -->
+		<!-- wp:group {"className":"cm-home-section cm-home-section--biznes","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-section cm-home-section--biznes">
+			<!-- wp:heading {"level":2,"className":"cm-home-section__title"} -->
+			<h2 class="wp-block-heading cm-home-section__title">Biznes</h2>
+			<!-- /wp:heading -->
+		</section>
+		<!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"sidebar"} /-->
+		<!-- MARKETING -->
+		<!-- wp:group {"className":"cm-home-section cm-home-section--marketing","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-section cm-home-section--marketing">
+			<!-- wp:heading {"level":2,"className":"cm-home-section__title"} -->
+			<h2 class="wp-block-heading cm-home-section__title">Marketing</h2>
+			<!-- /wp:heading -->
+		</section>
+		<!-- /wp:group -->
+
+		<!-- HANDEL -->
+		<!-- wp:group {"className":"cm-home-section cm-home-section--handel","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-section cm-home-section--handel">
+			<!-- wp:heading {"level":2,"className":"cm-home-section__title"} -->
+			<h2 class="wp-block-heading cm-home-section__title">Handel</h2>
+			<!-- /wp:heading -->
+		</section>
+		<!-- /wp:group -->
+
+		<!-- TECH -->
+		<!-- wp:group {"className":"cm-home-section cm-home-section--tech","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-section cm-home-section--tech">
+			<!-- wp:heading {"level":2,"className":"cm-home-section__title"} -->
+			<h2 class="wp-block-heading cm-home-section__title">Tech</h2>
+			<!-- /wp:heading -->
+		</section>
+		<!-- /wp:group -->
+
+		<!-- FINANSE -->
+		<!-- wp:group {"className":"cm-home-section cm-home-section--finanse","layout":{"type":"default"}} -->
+		<section class="wp-block-group cm-home-section cm-home-section--finanse">
+			<!-- wp:heading {"level":2,"className":"cm-home-section__title"} -->
+			<h2 class="wp-block-heading cm-home-section__title">Finanse</h2>
+			<!-- /wp:heading -->
+		</section>
+		<!-- /wp:group -->
+
+	</main>
+	<!-- /wp:main -->
+
+	<!-- SIDEBAR — stały element homepage -->
+	<!-- wp:template-part {"slug":"sidebar"} /-->
 
 </div>
 <!-- /wp:group -->
