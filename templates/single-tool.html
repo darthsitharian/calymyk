@@ -1,7 +1,10 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","className":"cm-tool-single","layout":{"type":"default"}} -->
-<main class="wp-block-group cm-tool-single">
+<!-- wp:group {"className":"cm-site-layout","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-site-layout">
+
+<!-- wp:group {"tagName":"main","className":"cm-tool-single cm-site-main","layout":{"type":"default"}} -->
+<main class="wp-block-group cm-tool-single cm-site-main">
 
 	<!-- wp:group {"className":"cm-tool-single__grid cm-grid","layout":{"type":"default"}} -->
 	<div class="wp-block-group cm-tool-single__grid cm-grid">
@@ -20,31 +23,6 @@
 		</div>
 		<!-- /wp:group -->
 
-		<!-- wp:group {"className":"cm-span-4 cm-tool-single__sidebar","layout":{"type":"default"}} -->
-		<aside class="wp-block-group cm-span-4 cm-tool-single__sidebar" aria-label="Informacje o narzędziu">
-
-			<!-- wp:group {"className":"cm-tool-single__card","layout":{"type":"default"}} -->
-			<div class="wp-block-group cm-tool-single__card">
-				<!-- wp:paragraph {"className":"cm-eyebrow"} -->
-				<p class="cm-eyebrow">NARZĘDZIE</p>
-				<!-- /wp:paragraph -->
-
-				<!-- wp:post-terms {"term":"tool_category","separator":", ","className":"cm-tool-single__categories"} /-->
-
-				<!-- wp:separator {"className":"is-style-wide"} /-->
-
-				<!-- wp:shortcode -->[calymyk_tool_url]<!-- /wp:shortcode -->
-
-				<!-- wp:paragraph {"className":"cm-tool-single__label"} -->
-				<p class="cm-tool-single__label">DODANO</p>
-				<!-- /wp:paragraph -->
-
-				<!-- wp:post-date {"isLink":false} /-->
-			</div>
-			<!-- /wp:group -->
-
-		</aside>
-		<!-- /wp:group -->
 
 	</div>
 	<!-- /wp:group -->
@@ -53,6 +31,13 @@
 	<!-- wp:shortcode -->[calymyk_related_tools]<!-- /wp:shortcode -->
 
 </main>
+<!-- /wp:group -->
+
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"sidebar"} /-->
+
+</div>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer"} /-->
