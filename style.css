@@ -120,6 +120,163 @@ Text Domain: calymyk-new
 	box-sizing: border-box;
 }
 
+
+/* =========================================================
+   CALYMYK — GLOBAL RIGHT SIDEBAR SHELL
+   ========================================================= */
+
+.cm-site-layout {
+	width: 90%;
+	max-width: var(--cm-container-wide);
+	margin-inline: auto;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+	gap: var(--cm-grid-gap);
+	align-items: start;
+	box-sizing: border-box;
+}
+
+.cm-site-main {
+	width: 100%;
+	max-width: none;
+	min-width: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.cm-site-layout .cm-page-shell {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+}
+
+.cm-site-main .cm-single__primary,
+.cm-site-main .cm-tool-single__primary {
+	grid-column: 1 / -1;
+}
+
+.cm-sidebar {
+	position: sticky;
+	top: calc(72px + var(--cm-space-5));
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+	padding: var(--cm-space-5);
+	border: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 10%, transparent);
+	border-radius: var(--cm-radius-lg);
+	background: var(--wp--preset--color--base-2);
+}
+
+.cm-sidebar__nav,
+.cm-sidebar__categories {
+	margin: 0;
+}
+
+.cm-sidebar__categories {
+	margin-top: var(--cm-space-7);
+	padding-top: var(--cm-space-6);
+	border-top: 1px solid color-mix(in srgb, var(--wp--preset--color--contrast) 10%, transparent);
+}
+
+.cm-sidebar__label {
+	margin: 0 0 var(--cm-space-3);
+	color: var(--wp--preset--color--contrast-3);
+	font-family: var(--wp--preset--font-family--mono);
+	font-size: var(--cm-font-xs);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	line-height: 1.4;
+}
+
+.cm-sidebar__menu {
+	margin: 0;
+}
+
+.cm-sidebar__menu .wp-block-navigation__container {
+	width: 100%;
+	align-items: stretch;
+	gap: var(--cm-space-1);
+}
+
+.cm-sidebar__menu .wp-block-navigation-item {
+	width: 100%;
+	margin: 0;
+}
+
+.cm-sidebar__menu .wp-block-navigation-item__content {
+	display: flex;
+	align-items: center;
+	min-height: 40px;
+	box-sizing: border-box;
+	padding: 0 var(--cm-space-3);
+	border-radius: var(--cm-radius-sm);
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--cm-font-sm);
+	font-weight: 600;
+	text-decoration: none;
+	transition:
+		color var(--cm-motion-fast) ease,
+		background-color var(--cm-motion-fast) ease;
+}
+
+.cm-sidebar__menu .wp-block-navigation-item__content:hover,
+.cm-sidebar__menu .wp-block-navigation-item__content:focus-visible {
+	color: var(--wp--preset--color--contrast);
+	background: var(--wp--preset--color--base);
+}
+
+.cm-sidebar__category-links {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cm-space-2);
+	margin: 0;
+}
+
+.cm-sidebar__category-links a {
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--cm-font-sm);
+	font-weight: 500;
+	text-decoration: none;
+	transition: color var(--cm-motion-fast) ease;
+}
+
+.cm-sidebar__category-links a:hover,
+.cm-sidebar__category-links a:focus-visible {
+	color: var(--wp--preset--color--accent);
+}
+
+.cm-sidebar > .cm-promotion-prep-card,
+.cm-sidebar > .cm-promotion-faq-card,
+.cm-sidebar > .cm-promotion-sidebar-section,
+.cm-sidebar > .cm-tool-single__card {
+	margin-top: var(--cm-space-5);
+}
+
+@media (max-width: 1024px) {
+	.cm-site-layout {
+		grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+	}
+}
+
+@media (max-width: 768px) {
+	.cm-site-layout {
+		width: 90%;
+		grid-template-columns: 1fr;
+	}
+
+	.cm-sidebar {
+		position: static;
+	}
+
+	.cm-site-layout .cm-sidebar {
+		order: 2;
+	}
+
+	.cm-site-main {
+		order: 1;
+	}
+}
+
 /* =========================================================
    CALYMYK — 12 COLUMN GRID
    ========================================================= */
