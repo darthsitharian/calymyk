@@ -1041,7 +1041,23 @@ function calymyk_new_register_promotion_meta() {
 			'show_in_rest' => array(
 				'schema' => array(
 					'type' => 'array',
-					'items' => array( 'type' => 'object' ),
+					'items' => array(
+						'type' => 'object',
+						'properties' => array(
+							'title' => array( 'type' => 'string' ),
+							'description' => array( 'type' => 'string' ),
+							'fields' => array(
+								'type' => 'array',
+								'items' => array(
+									'type' => 'object',
+									'properties' => array(
+										'title' => array( 'type' => 'string' ),
+										'content' => array( 'type' => 'string' ),
+									),
+								),
+							),
+						),
+					),
 				),
 			),
 			'sanitize_callback' => function ( $value ) {
