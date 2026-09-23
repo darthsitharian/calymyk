@@ -767,12 +767,16 @@ add_action( 'save_post_tool', 'calymyk_new_save_tool_details' );
 
 /**
  * Register Calymyk promotion blocks.
+ *
+ * Promotion-specific data lives in post meta. The blocks are only the
+ * Gutenberg editing/presentation layer, so the single post owns one
+ * canonical dataset shared by the main content and sidebar.
  */
 function calymyk_new_register_promotion_blocks() {
 	wp_register_script(
 		'calymyk-new-promotion-blocks',
 		get_template_directory_uri() . '/assets/js/promotion-blocks.js',
-		array( 'wp-blocks', 'wp-block-editor', 'wp-components', 'wp-element', 'wp-i18n' ),
+		array( 'wp-blocks', 'wp-block-editor', 'wp-components', 'wp-element', 'wp-i18n', 'wp-data', 'wp-core-data' ),
 		wp_get_theme()->get( 'Version' ),
 		true
 	);
@@ -780,16 +784,7 @@ function calymyk_new_register_promotion_blocks() {
 	register_block_type(
 		'calymyk/promotion-steps',
 		array(
-			'api_version'   => 3,
-			'attributes'    => array(
-				'steps' => array(
-					'type'    => 'array',
-					'default' => array(
-						array( 'title' => 'Krok 1', 'description' => '', 'fields' => array() ),
-						array( 'title' => 'Krok 2', 'description' => '', 'fields' => array() ),
-					),
-				),
-			),
+			'api_version' => 3,
 			'editor_script' => 'calymyk-new-promotion-blocks',
 			'render_callback' => 'calymyk_new_render_promotion_steps',
 		)
@@ -798,48 +793,27 @@ function calymyk_new_register_promotion_blocks() {
 	register_block_type(
 		'calymyk/promotion-prep',
 		array(
-			'api_version'   => 3,
-			'attributes'    => array(
-				'items' => array(
-					'type'    => 'array',
-					'default' => array( '', '', '' ),
-				),
-			),
+			'api_version' => 3,
 			'editor_script' => 'calymyk-new-promotion-blocks',
-			'render_callback' => 'calymyk_new_render_promotion_prep',
+			render_callback' => 'calymyk_new_render_promotion_prep',
 		)
 	);
 
 	register_block_type(
 		'calymyk/promotion-faq',
 		array(
-			'api_version'   => 3,
-			'attributes'    => array(
-				'items' => array(
-					'type'    => 'array',
-					'default' => array(
-						array( 'question' => '', 'answer' => '' ),
-						array( 'question' => '', 'answer' => '' ),
-					),
-				),
-			),
+			'api_version' => 3,
 			'editor_script' => 'calymyk-new-promotion-blocks',
-			'render_callback' => 'calymyk_new_render_promotion_faq',
+			render_callback' => 'calymyk_new_render_promotion_faq',
 		)
 	);
 
 	register_block_type(
 		'calymyk/promotion-terms',
 		array(
-			'api_version'   => 3,
-			'attributes'    => array(
-				'url' => array(
-					'type'    => 'string',
-					'default' => '',
-				),
-			),
+			'api_version' => 3,
 			'editor_script' => 'calymyk-new-promotion-blocks',
-			'render_callback' => 'calymyk_new_render_promotion_terms',
+			render_callback' => 'calymyk_new_render_promotion_terms',
 		)
 	);
 }
@@ -857,8 +831,6 @@ function calymyk_new_block_category( $categories ) {
 	return $categories;
 }
 add_filter( 'block_categories_all', 'calymyk_new_block_category' );
-
-
 
 /**
  * Give every new standard post the same promotion block structure.
@@ -882,16 +854,26 @@ function calymyk_new_post_template( $args, $post_type ) {
 }
 add_filter( 'register_post_type_args', 'calymyk_new_post_template', 10, 2 );
 
+/**
+ * Read canonical promotion data from post meta.
+ */
+function calymyk_new_promotion_meta_value( $key, $default = array() ) {
+	$value = get_post_meta( get_the_ID(), $key, true );
+	return null === $value || '' === $value ? $default : $value;
+}
 
+function calymyk_new_render_promotion_steps() {
+	$steps = calymyk_new_promotion_meta_value( '_calymyk_promotion_steps' );
+	if ( ! is_array( $steps ) ) {
+		$steps = array();
+	}
 
-function calymyk_new_render_promotion_steps( $attributes ) {
-	$steps = isset( $attributes['steps'] ) && is_array( $attributes['steps'] ) ? $attributes['steps'] : array();
 	$output = '<section class="cm-promotion-section cm-promotion-steps"><p class="cm-eyebrow">NAWIGATOR KROKÓW</p><div class="cm-promotion-steps__list">';
 
 	foreach ( $steps as $index => $step ) {
-		$title       = ! empty( $step['title'] ) ? $step['title'] : 'Krok ' . ( $index + 1 );
+		$title = ! empty( $step['title'] ) ? $step['title'] : 'Krok ' . ( $index + 1 );
 		$description = isset( $step['description'] ) ? $step['description'] : '';
-		$fields      = isset( $step['fields'] ) && is_array( $step['fields'] ) ? $step['fields'] : array();
+		$fields = isset( $step['fields'] ) && is_array( $step['fields'] ) ? $step['fields'] : array();
 
 		$output .= '<details class="cm-promotion-step">';
 		$output .= '<summary class="cm-promotion-step__toggle"><span class="cm-promotion-step__header"><span class="cm-promotion-step__number">' . esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ) . '</span><span class="cm-promotion-step__heading"><span class="cm-promotion-step__eyebrow">KROK ' . esc_html( $index + 1 ) . '</span><span class="cm-promotion-step__title">' . esc_html( $title ) . '</span></span></span><svg class="cm-promotion-step__toggle-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"></path></svg></summary>';
@@ -903,83 +885,120 @@ function calymyk_new_render_promotion_steps( $attributes ) {
 
 		if ( $fields ) {
 			$valid_fields = array();
-
 			foreach ( $fields as $field ) {
-				$field_title   = isset( $field['title'] ) ? trim( $field['title'] ) : '';
+				$field_title = isset( $field['title'] ) ? trim( $field['title'] ) : '';
 				$field_content = isset( $field['content'] ) ? trim( $field['content'] ) : '';
-
-				if ( ! $field_title && ! $field_content ) {
-					continue;
-				}
-
-				$valid_fields[] = array(
-					'title'   => $field_title,
-					'content' => $field_content,
-				);
+				if ( ! $field_title && ! $field_content ) continue;
+				$valid_fields[] = array( 'title' => $field_title, 'content' => $field_content );
 			}
 
 			if ( $valid_fields ) {
 				$output .= '<div class="cm-promotion-step__fields">';
-
 				foreach ( $valid_fields as $field ) {
 					$output .= '<div class="cm-promotion-step__field">';
-
-					if ( $field['title'] ) {
-						$output .= '<p class="cm-promotion-step__field-title">' . esc_html( $field['title'] ) . '</p>';
-					}
-
-					if ( $field['content'] ) {
-						$output .= '<div class="cm-promotion-step__field-content">' . wpautop( wp_kses_post( $field['content'] ) ) . '</div>';
-					}
-
+					if ( $field['title'] ) $output .= '<p class="cm-promotion-step__field-title">' . esc_html( $field['title'] ) . '</p>';
+					if ( $field['content'] ) $output .= '<div class="cm-promotion-step__field-content">' . wpautop( wp_kses_post( $field['content'] ) ) . '</div>';
 					$output .= '</div>';
 				}
-
 				$output .= '</div>';
 			}
 		}
-
 		$output .= '</div></details>';
 	}
 
 	return $output . '</div></section>';
 }
 
-function calymyk_new_render_promotion_prep( $attributes ) {
-	$items = isset( $attributes['items'] ) && is_array( $attributes['items'] ) ? $attributes['items'] : array();
+function calymyk_new_render_promotion_prep() {
+	$items = calymyk_new_promotion_meta_value( '_calymyk_promotion_prep' );
+	if ( ! is_array( $items ) ) $items = array();
+
 	$output = '<section class="cm-promotion-section cm-promotion-prep"><p class="cm-eyebrow">PRZYGOTUJ PRZED STARTEM</p><ul>';
 	foreach ( $items as $item ) {
-		if ( '' !== trim( $item ) ) {
-			$output .= '<li>' . esc_html( $item ) . '</li>';
-		}
+		if ( '' !== trim( $item ) ) $output .= '<li>' . esc_html( $item ) . '</li>';
 	}
 	return $output . '</ul></section>';
 }
 
-function calymyk_new_render_promotion_faq( $attributes ) {
-	$items = isset( $attributes['items'] ) && is_array( $attributes['items'] ) ? $attributes['items'] : array();
+function calymyk_new_render_promotion_faq() {
+	$items = calymyk_new_promotion_meta_value( '_calymyk_promotion_faq' );
+	if ( ! is_array( $items ) ) $items = array();
+
 	$output = '<section class="cm-promotion-section cm-promotion-faq"><p class="cm-eyebrow">FAQ</p><div class="cm-promotion-faq__list">';
 	foreach ( $items as $item ) {
 		$question = isset( $item['question'] ) ? trim( $item['question'] ) : '';
 		$answer = isset( $item['answer'] ) ? trim( $item['answer'] ) : '';
-		if ( ! $question && ! $answer ) {
-			continue;
-		}
+		if ( ! $question && ! $answer ) continue;
 		$output .= '<details><summary>' . esc_html( $question ?: 'Pytanie' ) . '</summary><p>' . esc_html( $answer ) . '</p></details>';
 	}
 	return $output . '</div></section>';
 }
 
-function calymyk_new_render_promotion_terms( $attributes ) {
-	$url = isset( $attributes['url'] ) ? esc_url( $attributes['url'] ) : '';
+function calymyk_new_render_promotion_terms() {
+	$documents = calymyk_new_promotion_meta_value( '_calymyk_promotion_documents' );
+	if ( ! is_array( $documents ) ) $documents = array();
+
 	$output = '<section class="cm-promotion-section cm-promotion-terms"><p class="cm-eyebrow">REGULAMIN PROMOCJI</p>';
-	if ( $url ) {
-		$output .= '<p><a href="' . $url . '" target="_blank" rel="noopener noreferrer">Zobacz regulamin promocji →</a></p>';
+	if ( ! empty( $documents ) ) {
+		$output .= '<div class="cm-promotion-documents__list">';
+		foreach ( $documents as $document ) {
+			$label = isset( $document['label'] ) ? trim( $document['label'] ) : '';
+			$url = isset( $document['url'] ) ? trim( $document['url'] ) : '';
+			if ( ! $label || ! $url ) continue;
+			$output .= '<p><a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $label ) . ' →</a></p>';
+		}
+		$output .= '</div>';
 	} else {
-		$output .= '<p class="cm-promotion-editor-note">Dodaj link do regulaminu promocji.</p>';
+		$output .= '<p class="cm-promotion-editor-note">Dodaj dokument promocji.</p>';
 	}
 	return $output . '</section>';
 }
+
+/**
+ * Migrate legacy block attributes into the canonical post-meta model.
+ *
+ * Existing promotions keep their content. New edits use meta only.
+ */
+function calymyk_new_migrate_promotion_blocks_to_meta( $post_id ) {
+	if ( 'post' !== get_post_type( $post_id ) || wp_is_post_revision( $post_id ) ) return;
+	if ( ! current_user_can( 'edit_post', $post_id ) ) return;
+
+	$blocks = parse_blocks( (string) get_post_field( 'post_content', $post_id ) );
+	$found = array();
+
+	$walk = function ( $items ) use ( &$walk, &$found ) {
+		foreach ( $items as $block ) {
+			$name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+			$attrs = isset( $block['attrs'] ) && is_array( $block['attrs'] ) ? $block['attrs'] : array();
+			if ( $name && ! isset( $found[ $name ] ) ) $found[ $name ] = $attrs;
+			if ( ! empty( $block['innerBlocks'] ) ) $walk( $block['innerBlocks'] );
+		}
+	};
+
+	$walk( $blocks );
+
+	$map = array(
+		'calymyk/promotion-steps' => '_calymyk_promotion_steps',
+		'calymyk/promotion-prep' => '_calymyk_promotion_prep',
+		'calymyk/promotion-faq' => '_calymyk_promotion_faq',
+	);
+
+	foreach ( $map as $block_name => $meta_key ) {
+		if ( ! array_key_exists( $meta_key, $found ) && ! array_key_exists( $meta_key, get_post_meta( $post_id ) ) ) continue;
+		if ( get_post_meta( $post_id, $meta_key, true ) ) continue;
+		$attrs = isset( $found[ $block_name ] ) ? $found[ $block_name ] : array();
+		$value = isset( $attrs['steps'] ) ? $attrs['steps'] : ( isset( $attrs['items'] ) ? $attrs['items'] : array() );
+		if ( 'calymyk/promotion-faq' === $block_name && isset( $attrs['items'] ) ) $value = $attrs['items'];
+		if ( ! empty( $value ) ) update_post_meta( $post_id, $meta_key, $value );
+	}
+
+	$meta_key = '_calymyk_promotion_documents';
+	if ( ! get_post_meta( $post_id, $meta_key, true ) && isset( $found['calymyk/promotion-terms']['url'] ) ) {
+		$url = esc_url_raw( $found['calymyk/promotion-terms']['url'] );
+		if ( $url ) update_post_meta( $post_id, $meta_key, array( array( 'label' => 'Regulamin promocji', 'url' => $url ) ) );
+	}
+}
+add_action( 'save_post_post', 'calymyk_new_migrate_promotion_blocks_to_meta', 30 );
 
 /**
  * Register promotion metadata for the block editor.
@@ -1010,6 +1029,38 @@ function calymyk_new_register_promotion_meta() {
 			'auth_callback'     => function () {
 				return current_user_can( 'edit_posts' );
 			},
+		)
+	);
+
+	register_post_meta(
+		'post',
+		'_calymyk_promotion_steps',
+		array(
+			'type' => 'array',
+			'single' => true,
+			'show_in_rest' => array(
+				'schema' => array(
+					'type' => 'array',
+					'items' => array( 'type' => 'object' ),
+				),
+			),
+			'sanitize_callback' => function ( $value ) {
+				if ( ! is_array( $value ) ) return array();
+				return array_values( array_map( function ( $step ) {
+					$fields = isset( $step['fields'] ) && is_array( $step['fields'] ) ? $step['fields'] : array();
+					return array(
+						'title' => isset( $step['title'] ) ? sanitize_text_field( $step['title'] ) : '',
+						'description' => isset( $step['description'] ) ? sanitize_textarea_field( $step['description'] ) : '',
+						'fields' => array_values( array_map( function ( $field ) {
+							return array(
+								'title' => isset( $field['title'] ) ? sanitize_text_field( $field['title'] ) : '',
+								'content' => isset( $field['content'] ) ? sanitize_textarea_field( $field['content'] ) : '',
+							);
+						}, $fields ) ),
+					);
+			}, $value ) );
+			},
+			'auth_callback' => function () { return current_user_can( 'edit_posts' ); },
 		)
 	);
 
