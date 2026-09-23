@@ -3,10 +3,12 @@
 
 	const { registerPlugin } = wp.plugins;
 	const { PluginDocumentSettingPanel } = wp.editPost;
-	const { SelectControl, TextControl, TextareaControl, Button, ToggleControl } = wp.components;
+	const { SelectControl, AsyncSelect, TextControl, TextareaControl, Button, ToggleControl } = wp.components;
 	const { createElement } = wp.element;
 	const { useSelect } = wp.data;
 	const { useEntityProp } = wp.coreData;
+	const apiFetch = wp.apiFetch;
+	const { addQueryArgs } = wp.url;
 
 	function PromotionMetaPanel() {
 		const [meta, setMeta] = useEntityProp('postType', 'post', 'meta');
@@ -16,14 +18,31 @@
 			return select('core/editor').getCurrentPostType();
 		}, []);
 
-		const tools = useSelect(function (select) {
-			return select('core').getEntityRecords('postType', 'tool', {
-				per_page: 100,
-				orderby: 'title',
-				order: 'asc',
-				status: 'publish'
+		const selectedToolId = parseInt(safeMeta._calymyk_post_tool || 0, 10) || 0;
+		const selectedTool = useSelect(function (select) {
+			return selectedToolId
+				? select('core').getEntityRecord('postType', 'tool', selectedToolId)
+				: null;
+		}, [selectedToolId]);
+
+		function loadToolOptions(search) {
+			return apiFetch({
+				path: addQueryArgs('/wp/v2/tool', {
+					per_page: 20,
+					orderby: 'title',
+					order: 'asc',
+					status: 'publish',
+					search: search || undefined
+				})
+			}).then(function (results) {
+				return results.map(function (tool) {
+					return {
+						label: tool.title && tool.title.rendered ? tool.title.rendered : '(bez nazwy)',
+						value: String(tool.id)
+					};
+				});
 			});
-		}, []);
+		}
 
 		function updateMeta(key, value) {
 			setMeta(Object.assign({}, safeMeta, { [key]: value }));
@@ -31,16 +50,6 @@
 
 		if (postType !== 'post') {
 			return null;
-		}
-
-		const toolOptions = [{ label: '— bez przypisania —', value: '0' }];
-		if (tools) {
-			tools.forEach(function (tool) {
-				toolOptions.push({
-					label: tool.title && tool.title.rendered ? tool.title.rendered : '(bez nazwy)',
-					value: String(tool.id)
-				});
-			});
 		}
 
 		const prepItems = Array.isArray(safeMeta._calymyk_promotion_prep) ? safeMeta._calymyk_promotion_prep : ['', ''];
@@ -85,14 +94,23 @@
 				icon: 'tag',
 				initialOpen: true
 			},
-			createElement(SelectControl, {
-				label: 'Narzędzie',
-				value: String(safeMeta._calymyk_post_tool || 0),
-				options: toolOptions,
-				onChange: function (value) {
-					updateMeta('_calymyk_post_tool', parseInt(value, 10) || 0);
-				}
-			}),
+			createElement('div', { style: { marginBottom: '16px' } },
+				createElement('label', { style: { display: 'block', marginBottom: '8px' } }, 'Narzędzie'),
+				createElement(AsyncSelect, {
+					cacheOptions: true,
+					defaultOptions: true,
+					isClearable: true,
+					placeholder: 'Wyszukaj narzędzie…',
+					value: selectedTool ? {
+						label: selectedTool.title && selectedTool.title.rendered ? selectedTool.title.rendered : '(bez nazwy)',
+						value: String(selectedTool.id)
+					} : null,
+					loadOptions: loadToolOptions,
+					onChange: function (option) {
+						updateMeta('_calymyk_post_tool', option ? parseInt(option.value, 10) || 0 : 0);
+					}
+				})
+			),
 			createElement(TextControl, {
 				label: 'Promocja od',
 				type: 'date',
