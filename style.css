@@ -67,6 +67,10 @@ Text Domain: calymyk-new
 	--cm-breakpoint-lg: 1024px;
 	--cm-breakpoint-md: 768px;
 	--cm-breakpoint-sm: 480px;
+
+	/* Motion */
+	--cm-motion-fast: 160ms;
+	--cm-motion-standard: 200ms;
 }
 
 
@@ -360,7 +364,7 @@ Text Domain: calymyk-new
     letter-spacing: -0.025em;
     line-height: 1;
     text-decoration: none;
-    transition: color 160ms ease;
+    transition: color var(--cm-motion-fast) ease;
 }
 
 .cm-header__brand a:hover {
@@ -466,7 +470,7 @@ Text Domain: calymyk-new
 	line-height: 1;
 	text-decoration: none;
 	white-space: nowrap;
-	transition: color 160ms ease;
+	transition: color var(--cm-motion-fast) ease;
 }
 
 .cm-category-nav__link:hover,
@@ -491,7 +495,7 @@ Text Domain: calymyk-new
     font-size: var(--wp--preset--font-size--small);
     font-weight: 600;
     text-decoration: none;
-    transition: color 160ms ease;
+    transition: color var(--cm-motion-fast) ease;
 }
 
 .cm-header .wp-block-navigation-item__content:hover {
@@ -552,8 +556,8 @@ Text Domain: calymyk-new
     font-size: var(--cm-font-md);
     line-height: 1;
     transition:
-        color 160ms ease,
-        background-color 160ms ease;
+        color var(--cm-motion-fast) ease,
+        background-color var(--cm-motion-fast) ease;
 }
 
 .cm-theme-toggle:hover,
@@ -613,7 +617,7 @@ Text Domain: calymyk-new
 	font-size: var(--cm-font-sm);
 	font-weight: 600;
 	text-decoration: none;
-	transition: color 160ms ease;
+	transition: color var(--cm-motion-fast) ease;
 }
 
 .cm-tools-section .cm-tools-section__catalog-link a:hover,
@@ -852,7 +856,7 @@ html[data-theme="dark"] {
 	font-weight: 500;
 	line-height: 1.4;
 	text-decoration: none;
-	transition: color 160ms ease;
+	transition: color var(--cm-motion-fast) ease;
 }
 
 .cm-footer__nav .wp-block-navigation-item__content:hover,
@@ -2392,7 +2396,7 @@ html[data-theme="dark"] {
 .cm-breadcrumbs a {
 	color: var(--wp--preset--color--contrast-3);
 	text-decoration: none;
-	transition: color 160ms ease;
+	transition: color var(--cm-motion-fast) ease;
 }
 
 .cm-breadcrumbs a:hover,
@@ -3298,7 +3302,7 @@ html[data-theme="dark"] {
 	font-weight: 500;
 	line-height: 1.5;
 	cursor: pointer;
-	transition: color .2s ease;
+	transition: color var(--cm-motion-standard) ease;
 }
 
  .cm-tools-archive__filter:hover,
@@ -3901,7 +3905,7 @@ html[data-theme="dark"] {
 	color: var(--wp--preset--color--base);
 	font-weight: 800;
 	text-decoration: none;
-	transition: filter 160ms ease;
+	transition: filter var(--cm-motion-fast) ease;
 }
 .cm-promotion-referral-box:hover,
 .cm-promotion-referral-box:focus-visible {
@@ -4111,7 +4115,7 @@ html[data-theme="dark"] {
 	height: 12px;
 	margin-left: auto;
 	color: var(--wp--preset--color--contrast-2);
-	transition: transform 160ms ease;
+	transition: transform var(--cm-motion-fast) ease;
 }
 
 .cm-promotion-sidebar-faq details[open] .cm-promotion-sidebar-faq__chevron {
@@ -4168,7 +4172,7 @@ html[data-theme="dark"] {
 	width: 14px;
 	height: 14px;
 	color: var(--wp--preset--color--contrast-2);
-	transition: transform 160ms ease;
+	transition: transform var(--cm-motion-fast) ease;
 }
 
 .cm-icon--tools {
@@ -4470,7 +4474,7 @@ html[data-theme="dark"] {
 	stroke-linecap: round;
 	stroke-linejoin: round;
 	color: var(--wp--preset--color--contrast-2);
-	transition: transform 180ms ease, color 160ms ease;
+	transition: transform var(--cm-motion-fast) ease, color var(--cm-motion-fast) ease;
 }
 
 .cm-promotion-step__toggle:hover .cm-promotion-step__toggle-icon,
@@ -4670,9 +4674,9 @@ html[data-theme="dark"] {
 	text-align: center;
 	text-decoration: none;
 	transition:
-		border-color 160ms ease,
-		color 160ms ease,
-		transform 160ms ease;
+		border-color var(--cm-motion-fast) ease,
+		color var(--cm-motion-fast) ease,
+		transform var(--cm-motion-fast) ease;
 }
 
 .cm-category-section__item:hover,
