@@ -556,9 +556,15 @@ Text Domain: calymyk-new
         background-color 160ms ease;
 }
 
-.cm-theme-toggle:hover {
+.cm-theme-toggle:hover,
+.cm-theme-toggle:focus-visible {
     color: var(--wp--preset--color--accent);
     background: var(--wp--preset--color--base-2);
+}
+
+.cm-theme-toggle:focus-visible {
+    outline: 2px solid var(--wp--preset--color--accent);
+    outline-offset: 2px;
 }
 
 .cm-theme-toggle__icon {
@@ -3284,13 +3290,20 @@ html[data-theme="dark"] {
 	transition: color .2s ease;
 }
 
-.cm-tools-archive__filter:hover,
+ .cm-tools-archive__filter:hover,
+.cm-tools-archive__filter:focus-visible,
 .cm-tools-archive__filter.is-active {
 	color: var(--wp--preset--color--accent);
 }
 
 .cm-tools-archive__filter.is-active {
 	font-weight: 700;
+}
+
+.cm-tools-archive__filter:focus-visible {
+	outline: 2px solid var(--wp--preset--color--accent);
+	outline-offset: 4px;
+	border-radius: var(--cm-radius-xs);
 }
 
 .cm-tools-archive__filter.is-active::after {
