@@ -59,8 +59,13 @@ Text Domain: calymyk-new
    CALYMYK — PAGE SHELL
    ========================================================= */
 
+/*
+ * Main content container between header and footer.
+ * Sections inside it use width: 100%, so the shared 5% side margins
+ * are defined once here instead of being repeated on every section.
+ */
 .cm-page-shell {
-	width: 90dvw;
+	width: 90%;
 	max-width: none;
 	margin-inline: auto;
 	box-sizing: border-box;
