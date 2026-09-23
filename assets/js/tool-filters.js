@@ -47,6 +47,32 @@
 
 		tagCloud.replaceWith(filterBar);
 
+		function getFilterSlugFromUrl() {
+			return new URLSearchParams(window.location.search).get('kategoria') || '';
+		}
+
+		function updateFilterUrl(slug, replace) {
+			const url = new URL(window.location.href);
+
+			if (slug) {
+				url.searchParams.set('kategoria', slug);
+			} else {
+				url.searchParams.delete('kategoria');
+			}
+
+			if (replace) {
+				window.history.replaceState({ toolFilter: slug }, '', url);
+			} else {
+				window.history.pushState({ toolFilter: slug }, '', url);
+			}
+		}
+
+		function findButton(slug) {
+			return filterButtons.find(function (button) {
+				return button.dataset.slug === slug;
+			}) || allButton;
+		}
+
 		function filterItems(slug, activeButton) {
 			items.forEach(function (item) {
 				const matches = !slug || item.classList.contains('tool_category-' + slug);
@@ -60,13 +86,29 @@
 			});
 		}
 
+
 		filterButtons.forEach(function (button) {
 			button.addEventListener('click', function () {
-				filterItems(button.dataset.slug, button);
+				const slug = button.dataset.slug;
+				filterItems(slug, button);
+				updateFilterUrl(slug, false);
 			});
 		});
 
-		filterItems('', allButton);
+		window.addEventListener('popstate', function () {
+			const slug = getFilterSlugFromUrl();
+			filterItems(slug, findButton(slug));
+		});
+
+		const initialSlug = getFilterSlugFromUrl();
+		const initialButton = findButton(initialSlug);
+		const normalizedSlug = initialButton.dataset.slug;
+
+		filterItems(normalizedSlug, initialButton);
+
+		if (initialSlug !== normalizedSlug) {
+			updateFilterUrl(normalizedSlug, true);
+		}
 	}
 	
 	if (document.readyState === 'loading') {
