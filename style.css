@@ -994,7 +994,7 @@ html[data-theme="dark"] {
 	}
 
 	.cm-eyebrow {
-		font-size: 0.6875rem;
+		font-size: var(--cm-font-xs);
 	}
 
 	.cm-grid .wp-block-button {
@@ -1468,7 +1468,7 @@ html[data-theme="dark"] {
 }
 
 .cm-featured-post-card--compact .cm-featured-post-card__category {
-	font-size: 0.6875rem;
+	font-size: var(--cm-font-xs);
 }
 
 .cm-featured-post-card--compact .cm-featured-post-card__title {
