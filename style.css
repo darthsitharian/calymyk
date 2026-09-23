@@ -4498,3 +4498,73 @@ html[data-theme="dark"] {
 		width: max-content !important;
 	}
 }
+
+
+/* =========================================================
+   CALYMYK — CATEGORY SECTION
+   ========================================================= */
+
+.cm-category-section {
+	width: 100%;
+	margin: 0;
+}
+
+.cm-category-section__grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--cm-grid-gap);
+	width: 100%;
+	margin: 0;
+}
+
+.cm-category-section__item {
+	min-width: 0;
+	min-height: 180px;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	border: 1px solid color-mix(
+		in srgb,
+		var(--wp--preset--color--contrast) 10%,
+		transparent
+	);
+	border-radius: 12px;
+	background: var(--wp--preset--color--base-2);
+	color: var(--wp--preset--color--contrast);
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: clamp(1.25rem, 2vw, 1.75rem);
+	font-weight: 700;
+	line-height: 1.1;
+	letter-spacing: -0.025em;
+	text-align: center;
+	text-decoration: none;
+	transition:
+		border-color 160ms ease,
+		color 160ms ease,
+		transform 160ms ease;
+}
+
+.cm-category-section__item:hover,
+.cm-category-section__item:focus-visible {
+	border-color: color-mix(
+		in srgb,
+		var(--wp--preset--color--accent) 45%,
+		transparent
+	);
+	color: var(--wp--preset--color--accent);
+	transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+	.cm-category-section__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 480px) {
+	.cm-category-section__grid {
+		grid-template-columns: 1fr;
+	}
+}
