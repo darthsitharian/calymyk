@@ -16,12 +16,14 @@ Text Domain: calymyk-new
 
 :root {
 	/* Containers */
-	--cm-container-content: 900px;
-	--cm-container-wide: 1320px;
+	--cm-container-content: 58dvw;
+	--cm-container-wide: 90dvw;
 
 	/* Grid / layout */
 	--cm-grid-columns: 12;
-	--cm-grid-gap: var(--wp--preset--spacing--50);
+	--cm-grid-gap: 1.2dvw;
+	--cm-layout-gap: 2dvw;
+	--cm-page-width: 90dvw;
 
 	/* Page gutters */
 	--cm-page-padding: var(--wp--preset--spacing--50);
@@ -114,7 +116,7 @@ Text Domain: calymyk-new
  * are defined once here instead of being repeated on every section.
  */
 .cm-page-shell {
-	width: 90%;
+	width: var(--cm-page-width);
 	max-width: none;
 	margin-inline: auto;
 	box-sizing: border-box;
@@ -126,12 +128,12 @@ Text Domain: calymyk-new
    ========================================================= */
 
 .cm-site-layout {
-	width: 90%;
-	max-width: var(--cm-container-wide);
+	width: var(--cm-page-width);
+	max-width: none;
 	margin-inline: auto;
 	display: grid;
 	grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-	gap: var(--cm-grid-gap);
+	gap: var(--cm-layout-gap);
 	align-items: start;
 	box-sizing: border-box;
 }
@@ -249,7 +251,7 @@ Text Domain: calymyk-new
 
 @media (max-width: 768px) {
 	.cm-site-layout {
-		width: 90%;
+		width: var(--cm-page-width);
 		grid-template-columns: 1fr;
 	}
 
@@ -1071,59 +1073,6 @@ html[data-theme="dark"] {
 }
 
 /* =========================================================
-   CALYMYK — HOMEPAGE REDESIGN
-   ========================================================= */
-
-.cm-home-banner {
-	width: 100%;
-	min-height: 220px;
-	margin: 0;
-	border: 1px solid color-mix(in srgb, var(--wp--preset--color--accent) 22%, transparent);
-	border-radius: var(--cm-radius-lg);
-	background:
-		linear-gradient(
-			135deg,
-			color-mix(in srgb, var(--wp--preset--color--accent) 8%, var(--wp--preset--color--base-2)),
-			var(--wp--preset--color--base-2)
-		);
-	box-sizing: border-box;
-}
-
-.cm-home-section {
-	width: 100%;
-	margin: var(--cm-section-gap) 0 0;
-}
-
-.cm-home-section__title {
-	position: relative;
-	margin: 0 0 var(--cm-space-5);
-	padding-left: var(--cm-space-5);
-	font-size: var(--cm-font-lg);
-	line-height: 1.2;
-}
-
-.cm-home-section__title::before {
-	position: absolute;
-	left: 0;
-	top: 0;
-	bottom: 0;
-	width: 4px;
-	border-radius: var(--cm-radius-pill);
-	background: var(--wp--preset--color--accent);
-	content: "";
-}
-
-@media (max-width: 768px) {
-	.cm-home-banner {
-		min-height: 180px;
-	}
-
-	.cm-home-section {
-		margin-top: var(--cm-section-gap-mobile);
-	}
-}
-
-/* =========================================================
    CALYMYK — HERO
    ========================================================= */
 
@@ -1245,596 +1194,6 @@ html[data-theme="dark"] {
 .cm-section-header__aside p {
     margin: 0;
     color: var(--wp--preset--color--contrast-2);
-}
-
-
-/* =========================================================
-   CALYMYK — FEATURED POSTS / HERO
-   ========================================================= */
-
-.cm-featured-hero {
-	width: 100%;
-	height: calc(80dvh - var(--cm-header-height));
-	min-height: 0;
-	box-sizing: border-box;
-	overflow: hidden;
-}
-
-.cm-featured-hero__grid {
-	display: grid;
-	grid-template-columns: repeat(12, minmax(0, 1fr));
-	gap: var(--cm-grid-gap);
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-.cm-featured-hero__left,
-.cm-featured-hero__right {
-	min-width: 0;
-	min-height: 0;
-	margin: 0;
-}
-
-.cm-featured-hero__left {
-	grid-column: span 8;
-	height: 100%;
-}
-
-.cm-featured-hero__right {
-	grid-column: span 4;
-	height: 100%;
-}
-
-.cm-featured-hero__left-query,
-.cm-featured-hero__right-query {
-	width: 100%;
-	height: 100%;
-	min-height: 0;
-	margin: 0;
-}
-
-.cm-featured-hero__left-grid {
-	display: grid !important;
-	grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-	grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
-	gap: var(--cm-grid-gap) !important;
-	width: 100% !important;
-	height: 100% !important;
-	min-height: 0;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.cm-featured-hero__left-grid > li {
-	min-width: 0;
-	min-height: 0;
-	width: auto !important;
-	height: auto !important;
-	margin: 0 !important;
-	padding: 0 !important;
-	list-style: none;
-}
-
-.cm-featured-hero__left-grid > li:first-child {
-	grid-column: 1 / -1;
-	grid-row: 1;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) {
-	grid-column: 1;
-	grid-row: 2;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(3) {
-	grid-column: 2;
-	grid-row: 2;
-}
-
-.cm-featured-hero__right-grid {
-	display: grid !important;
-	grid-template-columns: 1fr !important;
-	grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
-	gap: var(--cm-grid-gap) !important;
-	width: 100% !important;
-	height: 100% !important;
-	min-height: 0;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.cm-featured-hero__right-grid > li {
-	min-width: 0;
-	min-height: 0;
-	width: auto !important;
-	height: auto !important;
-	margin: 0 !important;
-	padding: 0 !important;
-	list-style: none;
-}
-
-.cm-featured-post-card__link-wrapper {
-	display: block;
-	width: 100%;
-	height: 100%;
-	color: inherit;
-	text-decoration: none;
-}
-
-.cm-featured-post-card__link-wrapper:focus-visible {
-	outline: 2px solid var(--wp--preset--color--accent);
-	outline-offset: 3px;
-}
-
-.cm-featured-post-card__title-text {
-	color: inherit;
-}
-
-.cm-featured-post-card--compact .cm-featured-post-card__link-wrapper:hover .cm-featured-post-card__title-text {
-	color: var(--wp--preset--color--accent);
-}
-
-.cm-featured-post-card {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-	min-width: 0;
-	min-height: 0;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	background: var(--wp--preset--color--base-2);
-	border: 0;
-	border-radius: var(--cm-radius-lg);
-	overflow: hidden;
-}
-
-.cm-featured-post-card__image {
-	display: block;
-	width: 100%;
-	margin: 0;
-	overflow: hidden;
-}
-
-.cm-category-icon {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: auto;
-	z-index: 4;
-	display: block;
-	width: 100%;
-	height: 3px;
-	box-sizing: border-box;
-	padding: 0;
-	background: var(--cm-category-color, var(--wp--preset--color--accent));
-	pointer-events: none;
-	transform: scaleX(0);
-	transform-origin: left center;
-	transition: transform 520ms ease;
-}
-
-.cm-featured-post-card:hover .cm-category-icon,
-.cm-featured-post-card:focus-within .cm-category-icon {
-	transform: scaleX(1);
-}
-
-.cm-featured-post-card--compact .cm-category-icon {
-	left: 0;
-	right: auto;
-	width: min(34%, 180px);
-	height: 3px;
-}
-
-.cm-featured-post-card__image img {
-	display: block;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	margin: 0;
-	transition: none;
-}
-
-.cm-featured-post-card__body {
-	display: flex;
-	flex: 1;
-	flex-direction: column;
-	min-width: 0;
-	min-height: 0;
-	padding: 20px 24px 24px;
-	margin: 0;
-}
-
-.cm-featured-post-card__category {
-	margin: 0;
-	color: var(--wp--preset--color--accent);
-	font-family: var(--wp--preset--font-family--mono);
-	font-size: var(--wp--preset--font-size--xs);
-	font-weight: 600;
-	letter-spacing: 0.06em;
-	line-height: 1.4;
-	text-transform: uppercase;
-}
-
-.cm-featured-post-card__category a {
-	color: inherit;
-	text-decoration: none;
-}
-
-.cm-featured-post-card__title {
-	margin: 10px 0 0;
-	font-size: var(--wp--preset--font-size--large);
-	line-height: 1.15;
-}
-
-.cm-featured-post-card__title a {
-	position: relative;
-	z-index: 2;
-	display: inline-block;
-	color: var(--wp--preset--color--contrast);
-	text-decoration: none;
-}
-
-.cm-featured-post-card__title a::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	z-index: -1;
-}
-
-.cm-featured-post-card__image {
-	pointer-events: none;
-}
-
-.cm-featured-post-card__image img {
-	pointer-events: none;
-}
-
-.cm-category-icon {
-	pointer-events: none;
-}
-
-.cm-featured-post-card__excerpt {
-	margin: var(--cm-space-3) 0 0;
-	color: var(--wp--preset--color--contrast-2);
-	font-size: var(--wp--preset--font-size--small);
-	line-height: 1.55;
-}
-
-.cm-featured-post-card__link {
-	margin-top: auto;
-	padding-top: var(--cm-space-5);
-	color: var(--wp--preset--color--contrast);
-	font-size: var(--wp--preset--font-size--small);
-	font-weight: 600;
-	text-decoration: none;
-}
-
-.cm-featured-post-card__link:hover {
-	color: var(--wp--preset--color--accent);
-}
-
-/* Lead post: image fills the entire card and title sits over it. */
-.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__image {
-	position: absolute;
-	inset: 0;
-	z-index: 0;
-	height: 100%;
-}
-
-.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__image img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__body {
-	position: relative;
-	z-index: 1;
-	justify-content: flex-end;
-	margin-top: auto;
-	padding: var(--cm-space-7) 32px 32px;
-	background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.52) 48%, transparent);
-}
-
-.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__category,
-.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__excerpt,
-.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__link {
-	display: none;
-}
-
-.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__title {
-	margin: 0;
-	font-size: clamp(1.5rem, 2.2vw, 2.6rem);
-	line-height: 1.06;
-}
-
-.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__title-text {
-	color: #fff;
-	background: rgba(0, 0, 0, 0.68);
-	box-decoration-break: clone;
-	-webkit-box-decoration-break: clone;
-	padding: 3px 8px 5px;
-}
-
-/* Bottom-left pair: image above text, without card background or CTA. */
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card {
-	background: transparent;
-	border: 0;
-	border-radius: var(--cm-radius-lg);
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__link,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__link {
-	display: none;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__excerpt,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__excerpt {
-	display: none;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__body,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__body {
-	background: linear-gradient(to top, rgb(0 0 0 / 0.68), rgb(0 0 0 / 0.18) 65%, transparent);
-}
-
-/* Bottom-left pair: image fills the card and title sits over it. */
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card {
-	position: relative;
-	background: transparent;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__image,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__image {
-	position: absolute;
-	inset: 0;
-	z-index: 0;
-	width: 100%;
-	height: 100%;
-	aspect-ratio: auto;
-	border-radius: var(--cm-radius-lg);
-	overflow: hidden;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__image img,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__image img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__body,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__body {
-	position: relative;
-	z-index: 1;
-	justify-content: flex-end;
-	margin-top: auto;
-	padding: var(--cm-space-6) 24px 24px;
-	background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.5) 48%, transparent);
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__link,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__link {
-	display: none;
-}
-
-..cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__excerpt,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__excerpt {
-	margin: var(--cm-space-3) 0 0;
-	color: var(--wp--preset--color--contrast-2);
-	font-size: var(--wp--preset--font-size--small);
-	line-height: 1.45;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
-	overflow: hidden;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__excerpt,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__excerpt {
-	background: rgba(0, 0, 0, 0.68);
-	box-decoration-break: clone;
-	-webkit-box-decoration-break: clone;
-	padding: 2px 7px 4px;
-	width: fit-content;
-	max-width: 100%;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__title,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__title {
-	margin: 0;
-	font-size: clamp(1.15rem, 1.7vw, 1.5rem);
-	line-height: 1.12;
-}
-
-.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__title-text,
-.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__title-text {
-	color: #fff;
-	background: rgba(0, 0, 0, 0.68);
-	box-decoration-break: clone;
-	-webkit-box-decoration-break: clone;
-	padding: 2px 7px 4px;
-}
-
-/* Right column: four equal-height horizontal cards. */
-.cm-featured-post-card--compact {
-	flex-direction: row;
-	border: 0;
-	border-radius: var(--cm-radius-lg);
-	overflow: hidden;
-	background: transparent;
-}
-
-.cm-featured-post-card--compact .cm-featured-post-card__image {
-	flex: 0 0 min(34%, 180px);
-	width: min(34%, 180px);
-	max-width: 180px;
-	height: auto;
-	aspect-ratio: 1 / 1;
-	align-self: flex-start;
-	overflow: hidden;
-}
-
-.cm-featured-post-card--compact .cm-featured-post-card__body {
-	padding: 0 0 0 24px;
-	justify-content: center;
-	overflow: hidden;
-}
-
-.cm-featured-post-card--compact .cm-featured-post-card__category {
-	font-size: var(--cm-font-xs);
-}
-
-.cm-featured-post-card--compact .cm-featured-post-card__title {
-	margin-top: 0;
-	font-size: clamp(1rem, 1.45vw, 1.35rem);
-}
-
-.cm-featured-post-card--compact .cm-featured-post-card__excerpt {
-	margin-top: 10px;
-	font-size: var(--wp--preset--font-size--small);
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 3;
-	overflow: hidden;
-}
-
-@media (max-width: 1024px) {
-	.cm-featured-hero {
-		height: calc(100dvh - 72px);
-	}
-
-	.cm-featured-hero__left {
-		grid-column: span 7;
-	}
-
-	.cm-featured-hero__right {
-		grid-column: span 5;
-	}
-
-	.cm-featured-post-card--compact .cm-featured-post-card__image {
-		flex-basis: 32%;
-		width: min(32%, 150px);
-		max-width: 150px;
-		height: auto;
-		aspect-ratio: 1 / 1;
-	}
-
-	.cm-featured-post-card--compact .cm-category-icon {
-		width: min(32%, 150px);
-	}
-
-	.cm-featured-post-card--compact .cm-featured-post-card__body {
-		padding-left: var(--cm-space-4);
-	}
-
-	.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__title {
-		font-size: clamp(1.75rem, 3.4vw, 3rem);
-	}
-}
-
-@media (max-width: 768px) {
-	.cm-featured-hero {
-		height: auto;
-		min-height: 0;
-		overflow: visible;
-	}
-
-	.cm-featured-hero__grid {
-		grid-template-columns: 1fr;
-		height: auto;
-	}
-
-	.cm-featured-hero__left,
-	.cm-featured-hero__right {
-		grid-column: 1 / -1;
-		height: auto;
-	}
-
-	.cm-featured-hero__left-grid,
-	.cm-featured-hero__right-grid {
-		height: auto !important;
-		grid-template-columns: 1fr !important;
-		grid-template-rows: none !important;
-	}
-
-	.cm-featured-hero__left-grid > li,
-	.cm-featured-hero__left-grid > li:first-child,
-	.cm-featured-hero__left-grid > li:nth-child(2),
-	.cm-featured-hero__left-grid > li:nth-child(3),
-	.cm-featured-hero__right-grid > li {
-		grid-column: 1 / -1;
-		grid-row: auto;
-	}
-
-	.cm-featured-post-card,
-	.cm-featured-post-card--compact {
-		height: auto;
-		min-height: 0;
-		flex-direction: column;
-	}
-
-
-	.cm-featured-post-card__image,
-	.cm-featured-post-card--compact .cm-featured-post-card__image,
-	.cm-featured-hero__left-grid > li:nth-child(2) .cm-featured-post-card__image,
-	.cm-featured-hero__left-grid > li:nth-child(3) .cm-featured-post-card__image {
-		flex: none;
-		max-width: none;
-		height: auto;
-		aspect-ratio: 16 / 9;
-		border-radius: var(--cm-radius-md) var(--cm-radius-md) 0 0;
-	}
-
-	.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__image {
-		position: relative;
-		inset: auto;
-		height: auto;
-	}
-
-	.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__image img {
-		height: auto;
-		aspect-ratio: 16 / 9;
-	}
-
-	.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__body {
-		position: static;
-		margin: 0;
-		padding: 18px 20px 20px;
-		background: var(--wp--preset--color--base-2);
-	}
-
-	.cm-featured-hero__left-grid > li:first-child .cm-featured-post-card__title {
-		font-size: var(--wp--preset--font-size--x-large);
-	}
-
-	.cm-featured-post-card--compact .cm-featured-post-card__body {
-		padding: 18px 20px 20px;
-	}
-}
-
-@media (max-width: 480px) {
-	.cm-featured-hero__grid {
-		padding-inline: var(--cm-page-padding);
-	}
-
-	.cm-featured-hero__left-grid,
-	.cm-featured-hero__right-grid {
-		gap: var(--cm-space-4) !important;
-	}
-
-	.cm-featured-post-card__body {
-		padding-inline: 20px;
-	}
 }
 
 
@@ -2193,14 +1552,12 @@ html[data-theme="dark"] {
    CALYMYK — QUERY LOOP GRID OVERRIDES
    ========================================================= */
 
-.cm-featured-query > .cm-featured-posts-grid,
 .cm-archive-query > .cm-archive-grid {
 	grid-template-columns: repeat(12, minmax(0, 1fr));
 	gap: var(--cm-grid-gap);
 	width: 100%;
 }
 
-.cm-featured-query > .cm-featured-posts-grid > *,
 .cm-archive-query > .cm-archive-grid > * {
 	min-width: 0;
 	width: auto;
@@ -2208,7 +1565,6 @@ html[data-theme="dark"] {
 }
 
 @media (max-width: 768px) {
-	.cm-featured-query > .cm-featured-posts-grid,
 	.cm-archive-query > .cm-archive-grid {
 		grid-template-columns: 1fr;
 	}
@@ -2216,11 +1572,350 @@ html[data-theme="dark"] {
 
 
 /* Ensure WordPress Query Loop does not create a competing parent grid. */
-.cm-featured-query > .wp-block-post-template {
-	grid-column: auto !important;
-	grid-row: auto !important;
-	list-style: none;
+
+
+/* =========================================================
+   CALYMYK — TOOL CARD
+   ========================================================= */
+
+.cm-tool-card {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 182px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: var(--wp--preset--color--base-2);
+    border: 1px solid color-mix(
+        in srgb,
+        var(--wp--preset--color--contrast) 10%,
+        transparent
+    );
+    border-radius: var(--cm-radius-lg);
+    overflow: hidden;
 }
+
+.cm-tool-card__image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.cm-tool-card__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cm-tool-card__title {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    z-index: 2;
+    margin: 0;
+    font-size: var(--cm-font-md);
+    line-height: 1.12;
+}
+
+.cm-tool-card__title a {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.68);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    padding: 3px 7px 5px;
+    text-decoration: none;
+}
+
+.cm-tool-card__title a:hover {
+    color: #fff;
+}
+
+.cm-tools-query::before,
+.cm-tools-query::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+    width: 18%;
+    pointer-events: none;
+}
+
+.cm-tools-query::before {
+    left: 0;
+    background: linear-gradient(to right, var(--wp--preset--color--base) 0%, transparent 100%);
+}
+
+.cm-tools-query::after {
+    right: 0;
+    background: linear-gradient(to left, var(--wp--preset--color--base) 0%, transparent 100%);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .cm-section-header__aside {
+        grid-column: 1 / -1;
+        padding-top: var(--cm-space-2);
+    }
+
+     .cm-tools-grid .cm-tool-card {
+        grid-column: 1 / -1;
+    }
+
+    .cm-tool-card {
+        min-height: 154px;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .cm-section-header__aside {
+        grid-column: 1 / -1;
+        padding-top: var(--cm-space-2);
+    }
+
+    .cm-tools-query {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-mask-image: none;
+        mask-image: none;
+        scrollbar-width: none;
+    }
+
+    .cm-tools-query::-webkit-scrollbar {
+        display: none;
+    }
+
+    .cm-tools-grid {
+        gap: var(--cm-space-4) !important;
+        padding-inline: 20px;
+    }
+
+    .cm-tools-grid > li {
+        flex-basis: 154px;
+        width: 154px !important;
+        min-width: 154px;
+        max-width: 154px;
+    }
+
+    .cm-tool-card {
+        min-height: 154px;
+    }
+
+    .cm-tool-card__title {
+        right: 14px;
+        bottom: 14px;
+        left: 14px;
+        font-size: var(--cm-font-md);
+    }
+
+    .cm-tools-query::before,
+    .cm-tools-query::after {
+        display: none;
+    }
+}
+
+/* =========================================================
+   CALYMYK — POST ARCHIVE
+   ========================================================= */
+
+.cm-archive {
+	width: 100%;
+	max-width: none;
+	margin-inline: 0;
+	padding-inline: 0;
+	box-sizing: border-box;
+}
+
+.cm-archive__title {
+	margin: var(--cm-space-2) 0 0;
+}
+
+.cm-archive-query {
+	width: 100%;
+}
+
+.cm-archive-grid {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: var(--cm-grid-gap);
+	width: 100%;
+}
+
+.cm-archive-grid > .cm-post-card {
+	grid-column: span 3;
+	min-width: 0;
+}
+
+.cm-post-card {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	margin: 0;
+	padding: 0 0 24px;
+	background: var(--wp--preset--color--base-2);
+	border: 1px solid color-mix(
+		in srgb,
+		var(--wp--preset--color--contrast) 10%,
+		transparent
+	);
+	border-radius: var(--cm-radius-lg);
+	overflow: hidden;
+	transition: none;
+}
+
+.cm-post-card__image {
+	display: block;
+	width: 100%;
+	margin: 0;
+}
+
+.cm-post-card__image img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+}
+
+.cm-post-card__meta {
+	width: auto;
+	margin: 20px 24px 0;
+	gap: var(--cm-space-3);
+}
+
+.cm-post-card__category,
+.cm-post-card__date {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--xs);
+	line-height: 1.4;
+}
+
+.cm-post-card__category {
+	color: var(--wp--preset--color--accent);
+	font-family: var(--wp--preset--font-family--mono);
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+.cm-post-card__date {
+	color: var(--wp--preset--color--contrast-3);
+}
+
+.cm-post-card__title {
+	margin: var(--cm-space-3) 24px 0;
+	font-size: var(--wp--preset--font-size--large);
+	line-height: 1.2;
+}
+
+.cm-post-card__title a {
+	color: var(--wp--preset--color--contrast);
+	text-decoration: none;
+}
+
+.cm-post-card__title a:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+.cm-post-card__excerpt {
+	margin: var(--cm-space-3) 24px 0;
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.6;
+}
+
+.cm-post-card__link {
+	margin: auto 24px 0;
+	padding-top: var(--cm-space-5);
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.cm-post-card__link:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+.cm-pagination {
+	margin: 0;
+	padding-top: 0;
+}
+
+.cm-pagination a {
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.cm-pagination a:hover {
+	color: var(--wp--preset--color--accent);
+}
+
+@media (max-width: 768px) {
+
+	.cm-archive-grid > .cm-post-card {
+		grid-column: span 6;
+	}
+
+	.cm-pagination {
+		gap: var(--cm-space-4);
+	}
+
+}
+
+@media (max-width: 480px) {
+
+	.cm-archive-grid > .cm-post-card {
+		grid-column: 1 / -1;
+	}
+
+	.cm-post-card__meta,
+	.cm-post-card__title,
+	.cm-post-card__excerpt,
+	.cm-post-card__link {
+		margin-inline: 20px;
+	}
+
+}
+
+
+/* =========================================================
+   CALYMYK — QUERY LOOP GRID OVERRIDES
+   ========================================================= */
+
+.cm-archive-query > .cm-archive-grid {
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: var(--cm-grid-gap);
+	width: 100%;
+}
+
+.cm-archive-query > .cm-archive-grid > * {
+	min-width: 0;
+	width: auto;
+	max-width: none;
+}
+
+@media (max-width: 768px) {
+	.cm-archive-query > .cm-archive-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+
+/* Ensure WordPress Query Loop does not create a competing parent grid. */
 
 
 /* =========================================================
@@ -2323,7 +2018,6 @@ html[data-theme="dark"] {
 		padding-top: var(--cm-section-gap);
 	}
 }
-
 
 /* =========================================================
    CALYMYK — NEWSLETTER
@@ -2854,9 +2548,9 @@ html[data-theme="dark"] {
    ========================================================= */
 
 .cm-search {
-	width: 90dvw;
-	max-width: var(--cm-container-wide);
-	margin-inline: auto;
+	width: 100%;
+	max-width: none;
+	margin-inline: 0;
 	padding: 64px 0 96px;
 	box-sizing: border-box;
 }
@@ -4151,8 +3845,7 @@ html[data-theme="dark"] {
    CALYMYK — GLOBAL CONTENT WIDTH
    ========================================================= */
 
-/* Keep every main content surface aligned to the same 90vw page shell,
-   with a 1320px cap on large screens. */
+/* Main surfaces live inside the global 70/30 shell. */
 .cm-single,
 .cm-tool-single,
 .cm-tools-archive,
@@ -4160,12 +3853,11 @@ html[data-theme="dark"] {
 .cm-page-content,
 .cm-page-template,
 .wp-block-group.cm-page-shell {
-	width: 90dvw;
-	max-width: var(--cm-container-wide);
-	margin-inline: auto;
+	width: 100%;
+	max-width: none;
+	margin-inline: 0;
 	box-sizing: border-box;
 }
-
 
 /* =========================================================
    CALYMYK — PROMOTION SIDEBAR CARDS
@@ -4720,299 +4412,3 @@ html[data-theme="dark"] {
 }
 
 
-/* =========================================================
-   CALYMYK — TOOLS AUTO CAROUSEL
-   Accessible desktop marquee:
-   - JavaScript assigns the real item count and indexes.
-   - Hover and keyboard focus pause the movement.
-   - A visible pause/resume button gives explicit user control.
-   - Reduced-motion users get a static horizontal scroller.
-   ========================================================= */
-
-@media (min-width: 769px) {
-	.cm-tools-query.is-carousel {
-		position: relative;
-		width: 100%;
-		height: 182px;
-		overflow: hidden;
-		-webkit-mask-image: linear-gradient(to right, transparent, #000 8% 92%, transparent);
-		mask-image: linear-gradient(to right, transparent, #000 8% 92%, transparent);
-	}
-
-	.cm-tools-query.is-carousel .cm-tools-grid {
-		--cm-tool-width: 280px;
-		--cm-tool-gap: var(--cm-space-5);
-		--cm-tool-duration: 30s;
-		position: relative;
-		display: block !important;
-		width: 100% !important;
-		height: 182px;
-		margin: 0;
-		padding: 0;
-		overflow: visible !important;
-		list-style: none;
-	}
-
-	.cm-tools-query.is-carousel .cm-tools-grid > li {
-		position: absolute !important;
-		top: 0;
-		left: calc(100% + var(--cm-tool-gap));
-		display: block !important;
-		width: var(--cm-tool-width) !important;
-		min-width: var(--cm-tool-width) !important;
-		max-width: var(--cm-tool-width) !important;
-		height: 182px;
-		margin: 0 !important;
-		padding: 0 !important;
-		animation: cm-tools-marquee var(--cm-tool-duration) linear infinite;
-		animation-delay: calc(var(--cm-tool-duration) / var(--cm-tool-items) * var(--cm-tool-index) * -1);
-		will-change: transform;
-	}
-
-	.cm-tools-query.is-carousel:hover .cm-tools-grid > li,
-	.cm-tools-query.is-carousel:focus-within .cm-tools-grid > li,
-	.cm-tools-query.is-carousel.is-paused .cm-tools-grid > li {
-		animation-play-state: paused;
-	}
-
-	@keyframes cm-tools-marquee {
-		100% {
-			transform: translateX(
-				calc(
-					(var(--cm-tool-items) * (var(--cm-tool-width) + var(--cm-tool-gap))) * -1
-				)
-			);
-		}
-	}
-}
-
-@media (min-width: 769px) and (prefers-reduced-motion: reduce) {
-	.cm-tools-query.is-carousel {
-		height: 182px;
-		overflow-x: auto;
-		overflow-y: hidden;
-		-webkit-mask-image: none;
-		mask-image: none;
-		scrollbar-width: thin;
-	}
-
-	.cm-tools-query.is-carousel .cm-tools-grid {
-		display: flex !important;
-		align-items: stretch;
-		gap: var(--cm-tool-gap, 24px);
-		width: max-content !important;
-		height: 182px;
-		padding-inline: 20px;
-	}
-
-	.cm-tools-query.is-carousel .cm-tools-grid > li {
-		position: static !important;
-		flex: 0 0 var(--cm-tool-width, 280px) !important;
-		width: var(--cm-tool-width, 280px) !important;
-		min-width: var(--cm-tool-width, 280px) !important;
-		max-width: var(--cm-tool-width, 280px) !important;
-		height: 182px;
-		animation: none !important;
-		transform: none !important;
-		will-change: auto;
-	}
-}
-
-@media (max-width: 768px) {
-	.cm-tools-query__controls {
-		display: none;
-	}
-
-	.cm-tools-query {
-		overflow-x: auto;
-		overflow-y: hidden;
-		-webkit-mask-image: none;
-		mask-image: none;
-	}
-
-	.cm-tools-query .cm-tools-grid {
-		width: max-content !important;
-	}
-}
-
-/* =========================================================
-   CALYMYK — CATEGORY SECTION
-   ========================================================= */
-
-.cm-category-section {
-	width: 100%;
-	margin: 0;
-}
-
-.cm-category-section__grid {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: var(--cm-grid-gap);
-	width: 100%;
-	margin: 0;
-}
-
-.cm-category-section__item {
-	min-width: 0;
-	min-height: 180px;
-	box-sizing: border-box;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: var(--cm-space-5);
-	border: 1px solid color-mix(
-		in srgb,
-		var(--wp--preset--color--contrast) 10%,
-		transparent
-	);
-	border-radius: var(--cm-radius-lg);
-	background: var(--wp--preset--color--base-2);
-	color: var(--wp--preset--color--contrast);
-	font-family: var(--wp--preset--font-family--heading);
-	font-size: clamp(1.25rem, 2vw, 1.75rem);
-	font-weight: 700;
-	line-height: 1.1;
-	letter-spacing: -0.025em;
-	text-align: center;
-	text-decoration: none;
-	transition:
-		border-color var(--cm-motion-fast) ease,
-		color var(--cm-motion-fast) ease,
-		transform var(--cm-motion-fast) ease;
-}
-
-.cm-category-section__item:hover,
-.cm-category-section__item:focus-visible {
-	border-color: color-mix(
-		in srgb,
-		var(--wp--preset--color--accent) 45%,
-		transparent
-	);
-	color: var(--wp--preset--color--accent);
-	transform: translateY(-2px);
-}
-
-@media (max-width: 768px) {
-	.cm-category-section__grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-}
-
-@media (max-width: 480px) {
-	.cm-category-section__grid {
-		grid-template-columns: 1fr;
-	}
-}
-
-
-/* =========================================================
-   CALYMYK — POPULAR POSTS / PROMO
-   ========================================================= */
-
-.cm-popular-promo {
-	width: 100%;
-	margin: 0;
-}
-
-.cm-popular-promo__query {
-	width: 100%;
-}
-
-.cm-popular-promo__grid {
-	display: grid !important;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: var(--cm-grid-gap);
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.cm-popular-promo__grid > li {
-	min-width: 0;
-	margin: 0 !important;
-	padding: 0 !important;
-}
-
-.cm-popular-promo__card {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-	min-width: 0;
-	overflow: hidden;
-	border-radius: var(--cm-radius-lg);
-	background: var(--wp--preset--color--base-2);
-}
-
-.cm-popular-promo__grid > li:nth-child(-n + 2) .cm-popular-promo__card {
-	aspect-ratio: 1 / 1;
-}
-
-.cm-popular-promo__grid > li:nth-child(n + 3) .cm-popular-promo__card {
-	min-height: 190px;
-	aspect-ratio: 2 / 1;
-}
-
-.cm-popular-promo__image {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
-	margin: 0 !important;
-}
-
-.cm-popular-promo__image img {
-	display: block;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.cm-popular-promo__content {
-	position: relative;
-	z-index: 2;
-	display: flex;
-	align-items: flex-end;
-	min-height: 100%;
-	box-sizing: border-box;
-	margin: 0 !important;
-	padding: clamp(18px, 3vw, 30px);
-	background: linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,0) 65%);
-}
-
-.cm-popular-promo__title {
-	max-width: 760px;
-	margin: auto 0 0 !important;
-	color: #fff !important;
-	font-family: var(--wp--preset--font-family--heading);
-	font-size: clamp(1.15rem, 2vw, 1.8rem);
-	font-weight: 700;
-	line-height: 1.12;
-	letter-spacing: -0.025em;
-}
-
-.cm-popular-promo__title a {
-	color: inherit;
-	text-decoration: none;
-}
-
-.cm-popular-promo__card:hover .cm-popular-promo__title a,
-.cm-popular-promo__card:focus-within .cm-popular-promo__title a {
-	text-decoration: underline;
-	text-decoration-thickness: 1px;
-	text-underline-offset: 3px;
-}
-
-@media (max-width: 768px) {
-	.cm-popular-promo__grid {
-		grid-template-columns: 1fr;
-	}
-
-	.cm-popular-promo__grid > li:nth-child(-n + 2) .cm-popular-promo__card,
-	.cm-popular-promo__grid > li:nth-child(n + 3) .cm-popular-promo__card {
-		aspect-ratio: 16 / 9;
-		min-height: 0;
-	}
-}
