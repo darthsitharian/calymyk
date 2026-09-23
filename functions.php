@@ -795,7 +795,7 @@ function calymyk_new_register_promotion_blocks() {
 		array(
 			'api_version' => 3,
 			'editor_script' => 'calymyk-new-promotion-blocks',
-			render_callback' => 'calymyk_new_render_promotion_prep',
+			'render_callback' => 'calymyk_new_render_promotion_prep',
 		)
 	);
 
