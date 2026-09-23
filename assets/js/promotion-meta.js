@@ -3,8 +3,8 @@
 
 	const { registerPlugin } = wp.plugins;
 	const { PluginDocumentSettingPanel } = wp.editPost;
-	const { SelectControl, AsyncSelect, TextControl, TextareaControl, Button, ToggleControl } = wp.components;
-	const { createElement } = wp.element;
+	const { ComboboxControl, TextControl, TextareaControl, Button, ToggleControl } = wp.components;
+	const { createElement, useEffect, useState } = wp.element;
 	const { useSelect } = wp.data;
 	const { useEntityProp } = wp.coreData;
 	const apiFetch = wp.apiFetch;
@@ -12,6 +12,8 @@
 
 	function PromotionMetaPanel() {
 		const [meta, setMeta] = useEntityProp('postType', 'post', 'meta');
+		const [toolOptions, setToolOptions] = useState([]);
+		const [isLoadingTools, setIsLoadingTools] = useState(false);
 		const safeMeta = meta || {};
 
 		const postType = useSelect(function (select) {
@@ -25,7 +27,9 @@
 				: null;
 		}, [selectedToolId]);
 
-		function loadToolOptions(search) {
+		function fetchToolOptions(search) {
+			setIsLoadingTools(true);
+
 			return apiFetch({
 				path: addQueryArgs('/wp/v2/tool', {
 					per_page: 20,
@@ -35,14 +39,23 @@
 					search: search || undefined
 				})
 			}).then(function (results) {
-				return results.map(function (tool) {
+				const options = results.map(function (tool) {
 					return {
 						label: tool.title && tool.title.rendered ? tool.title.rendered : '(bez nazwy)',
 						value: String(tool.id)
 					};
 				});
+
+				setToolOptions(options);
+				return options;
+			}).finally(function () {
+				setIsLoadingTools(false);
 			});
 		}
+
+		useEffect(function () {
+			fetchToolOptions('');
+		}, []);
 
 		function updateMeta(key, value) {
 			setMeta(Object.assign({}, safeMeta, { [key]: value }));
@@ -96,18 +109,23 @@
 			},
 			createElement('div', { style: { marginBottom: '16px' } },
 				createElement('label', { style: { display: 'block', marginBottom: '8px' } }, 'Narzędzie'),
-				createElement(AsyncSelect, {
-					cacheOptions: true,
-					defaultOptions: true,
-					isClearable: true,
+				createElement(ComboboxControl, {
+					label: 'Narzędzie',
 					placeholder: 'Wyszukaj narzędzie…',
-					value: selectedTool ? {
-						label: selectedTool.title && selectedTool.title.rendered ? selectedTool.title.rendered : '(bez nazwy)',
-						value: String(selectedTool.id)
-					} : null,
-					loadOptions: loadToolOptions,
-					onChange: function (option) {
-						updateMeta('_calymyk_post_tool', option ? parseInt(option.value, 10) || 0 : 0);
+					value: selectedToolId ? String(selectedToolId) : '',
+					options: selectedTool
+						? [{
+							label: selectedTool.title && selectedTool.title.rendered ? selectedTool.title.rendered : '(bez nazwy)',
+							value: String(selectedTool.id)
+						}, ...toolOptions.filter(function (option) { return option.value !== String(selectedTool.id); })]
+						: toolOptions,
+					isLoading: isLoadingTools,
+					expandOnFocus: true,
+					onFilterValueChange: function (value) {
+						fetchToolOptions(value || '');
+					},
+					onChange: function (value) {
+						updateMeta('_calymyk_post_tool', value ? parseInt(value, 10) || 0 : 0);
 					}
 				})
 			),
