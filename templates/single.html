@@ -1,7 +1,10 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","className":"cm-single","layout":{"type":"default"}} -->
-<main class="wp-block-group cm-single">
+<!-- wp:group {"className":"cm-site-layout","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-site-layout">
+
+<!-- wp:group {"tagName":"main","className":"cm-single cm-site-main","layout":{"type":"default"}} -->
+<main class="wp-block-group cm-single cm-site-main">
 
 	<!-- wp:group {"className":"cm-single__grid cm-grid","layout":{"type":"default"}} -->
 	<div class="wp-block-group cm-single__grid cm-grid">
@@ -33,23 +36,6 @@
 		</div>
 		<!-- /wp:group -->
 
-		<!-- wp:group {"className":"cm-span-4 cm-single__sidebar","layout":{"type":"default"}} -->
-		<aside class="wp-block-group cm-span-4 cm-single__sidebar" aria-label="Informacje o wpisie">
-
-			<!-- wp:shortcode -->[calymyk_post_tool]<!-- /wp:shortcode -->
-
-			<!-- wp:shortcode -->[calymyk_promotion_prep]<!-- /wp:shortcode -->
-
-			
-
-			<!-- wp:shortcode -->[calymyk_promotion_faq]<!-- /wp:shortcode -->
-
-			<!-- wp:shortcode -->[calymyk_promotion_terms]<!-- /wp:shortcode -->
-
-
-
-		</aside>
-		<!-- /wp:group -->
 
 	</div>
 	<!-- /wp:group -->
@@ -57,6 +43,13 @@
 	<!-- wp:shortcode -->[calymyk_related_posts]<!-- /wp:shortcode -->
 
 </main>
+<!-- /wp:group -->
+
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"sidebar"} /-->
+
+</div>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer"} /-->
