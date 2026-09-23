@@ -40,13 +40,6 @@ function calymyk_new_enqueue_assets() {
 		true
 	);
 
-	wp_enqueue_script(
-		'calymyk-new-tools-carousel',
-		get_template_directory_uri() . '/assets/js/tools-carousel.js',
-		array(),
-		wp_get_theme()->get( 'Version' ),
-		true
-	);
 
 	if ( is_post_type_archive( 'tool' ) ) {
 		wp_enqueue_script(
@@ -61,88 +54,6 @@ function calymyk_new_enqueue_assets() {
 }
 
 add_action( 'wp_enqueue_scripts', 'calymyk_new_enqueue_assets' );
-
-/**
- * Register the homepage category pattern explicitly.
- */
-function calymyk_new_register_category_section_pattern() {
-	$pattern_name = 'calymyk-new/category-section';
-
-	if ( WP_Block_Patterns_Registry::get_instance()->is_registered( $pattern_name ) ) {
-		return;
-	}
-
-	$pattern_file = get_theme_file_path( 'patterns/category-section.php' );
-
-	if ( ! file_exists( $pattern_file ) ) {
-		return;
-	}
-
-	$pattern_content = file_get_contents( $pattern_file );
-
-	if ( false === $pattern_content ) {
-		return;
-	}
-
-	$pattern_content = preg_replace( '/^\s*<\?php.*?\?>\s*/s', '', $pattern_content );
-
-	register_block_pattern(
-		$pattern_name,
-		array(
-			'title'    => 'Category Section',
-			'inserter' => false,
-			'content'  => trim( $pattern_content ),
-		)
-	);
-}
-add_action( 'init', 'calymyk_new_register_category_section_pattern', 20 );
-
-/**
- * Make each featured hero card a real, full-card link.
- *
- * Query Loop renders the card group inside the post-template <li>.
- * We wrap the complete card server-side so the entire card is one
- * semantic link, rather than relying on click-handling JavaScript.
- */
-function calymyk_new_make_hero_cards_links( $block_content, $block, $instance ) {
-
-	if ( is_admin() || empty( $block_content ) || 'core/group' !== $block['blockName'] ) {
-		return $block_content;
-	}
-
-	$class_name = isset( $block['attrs']['className'] ) ? (string) $block['attrs']['className'] : '';
-
-	if ( false === strpos( ' ' . $class_name . ' ', ' cm-featured-post-card ' ) ) {
-		return $block_content;
-	}
-
-	$post_id = isset( $instance->context['postId'] ) ? (int) $instance->context['postId'] : get_the_ID();
-
-	if ( ! $post_id ) {
-		return $block_content;
-	}
-
-	$url = get_permalink( $post_id );
-
-	if ( ! $url ) {
-		return $block_content;
-	}
-
-	// Remove the nested title link because the whole card becomes the link.
-	$block_content = preg_replace_callback(
-		'/(<h3\\b[^>]*cm-featured-post-card__title[^>]*>)(.*?)(<\\/h3>)/s',
-		function ( $matches ) {
-			$inner = preg_replace( '#<a\\b[^>]*>(.*?)</a>#s', '$1', $matches[2] );
-			return $matches[1] . '<span class="cm-featured-post-card__title-text">' . $inner . '</span>' . $matches[3];
-		},
-		$block_content
-	);
-
-	return '<a class="cm-featured-post-card__link-wrapper" href="' . esc_url( $url ) . '">' . $block_content . '</a>';
-}
-
-add_filter( 'render_block', 'calymyk_new_make_hero_cards_links', 20, 3 );
-
 
 /**
  * Count unique browser views for posts.
@@ -1856,11 +1767,10 @@ function calymyk_new_hide_legacy_summary_box( $block_content, $block ) {
 add_filter( 'render_block', 'calymyk_new_hide_legacy_summary_box', 10, 2 );
 
 /**
- * Swap the global sidebar template part for singular content variants.
+ * Resolve the sidebar template part from the current page context.
  *
- * The templates always reference the neutral "sidebar" slug. On singular
- * promotions and tools we replace it with the matching contextual variant,
- * keeping the page shell reusable across the site.
+ * Each context gets its own template part so sidebar modules can be edited
+ * independently without duplicating the page template itself.
  */
 function calymyk_new_render_contextual_sidebar( $parsed_block ) {
 	if (
@@ -1870,11 +1780,31 @@ function calymyk_new_render_contextual_sidebar( $parsed_block ) {
 		return $parsed_block;
 	}
 
-	if ( is_singular( 'tool' ) ) {
-		$parsed_block['attrs']['slug'] = 'sidebar-tool';
+	$slug = 'sidebar';
+
+	if ( is_front_page() ) {
+		$slug = 'sidebar-home';
+	} elseif ( is_singular( 'tool' ) ) {
+		$slug = 'sidebar-tool';
 	} elseif ( is_singular( 'post' ) ) {
-		$parsed_block['attrs']['slug'] = 'sidebar-post';
+		$slug = 'sidebar-post';
+	} elseif ( is_post_type_archive( 'tool' ) ) {
+		$slug = 'sidebar-tools-archive';
+	} elseif ( is_tax( 'tool_category' ) ) {
+		$slug = 'sidebar-tool-category';
+	} elseif ( is_category() ) {
+		$slug = 'sidebar-category';
+	} elseif ( is_search() ) {
+		$slug = 'sidebar-search';
+	} elseif ( is_404() ) {
+		$slug = 'sidebar-404';
+	} elseif ( is_page() ) {
+		$slug = 'sidebar-page';
+	} elseif ( is_archive() ) {
+		$slug = 'sidebar-archive';
 	}
+
+	$parsed_block['attrs']['slug'] = $slug;
 
 	return $parsed_block;
 }
