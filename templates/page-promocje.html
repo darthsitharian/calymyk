@@ -1,7 +1,10 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
+<!-- wp:group {"className":"cm-site-layout","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-site-layout">
+
 <!-- wp:main {"layout":{"type":"default"}} -->
-<main class="wp-block-group cm-page-shell">
+<main class="wp-block-group cm-site-main cm-page-shell">
 	<div class="wp-block-group cm-container-wide cm-archive">
 		<!-- wp:spacer {"height":"64px"} -->
 		<div style="height:64px" aria-hidden="true" class="wp-block-spacer"></div>
@@ -75,5 +78,10 @@
 	</div>
 </main>
 <!-- /wp:main -->
+
+<!-- wp:template-part {"slug":"sidebar"} /-->
+
+</div>
+<!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer"} /-->
