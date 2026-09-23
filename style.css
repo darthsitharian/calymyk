@@ -4549,6 +4549,10 @@ html[data-theme="dark"] {
 }
 
 @media (max-width: 768px) {
+	.cm-tools-query__controls {
+		display: none;
+	}
+
 	.cm-tools-query {
 		overflow-x: auto;
 		overflow-y: hidden;
