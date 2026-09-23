@@ -34,8 +34,16 @@ Text Domain: calymyk-new
 
 
 /* =========================================================
-   CALYMYK — CONTAINERS
+   CALYMYK — CONTAINERS / LAYOUT CONTRACT
    ========================================================= */
+
+/*
+ * Homepage and global section contract:
+ * - .cm-page-shell defines the shared page width (90% viewport).
+ * - Homepage sections fill that shell: width: 100%.
+ * - Narrower content is an explicit inner variant, not a section-specific
+ *   max-width (for example .cm-section-header).
+ */
 
 .cm-container {
 	width: 100%;
@@ -957,10 +965,10 @@ html[data-theme="dark"] {
 	display: grid;
 	grid-template-columns: repeat(12, minmax(0, 1fr));
 	gap: var(--cm-grid-gap);
-	width: min(100%, var(--cm-container-wide));
+	width: 100%;
 	height: 100%;
-	margin-inline: auto;
-	padding-inline: var(--cm-page-padding);
+	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
 }
 
@@ -4608,8 +4616,8 @@ html[data-theme="dark"] {
 	display: grid !important;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: var(--cm-grid-gap);
-	width: min(100%, 1040px);
-	margin: 0 auto;
+	width: 100%;
+	margin: 0;
 	padding: 0;
 	list-style: none;
 }
