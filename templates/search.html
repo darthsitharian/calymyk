@@ -1,7 +1,10 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:main {"tagName":"main","className":"cm-search","layout":{"type":"default"}} -->
-<main class="wp-block-group cm-search">
+<!-- wp:group {"className":"cm-site-layout","layout":{"type":"default"}} -->
+<div class="wp-block-group cm-site-layout">
+
+<!-- wp:main {"tagName":"main","className":"cm-search cm-site-main","layout":{"type":"default"}} -->
+<main class="wp-block-group cm-search cm-site-main">
 
 	<!-- wp:group {"className":"cm-search__header cm-container-wide","layout":{"type":"default"}} -->
 	<div class="wp-block-group cm-search__header cm-container-wide">
@@ -59,5 +62,10 @@
 
 </main>
 <!-- /wp:main -->
+
+<!-- wp:template-part {"slug":"sidebar"} /-->
+
+</div>
+<!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer"} /-->
