@@ -134,7 +134,9 @@
         "%",
         "em",
         "vh",
-        "vw"
+        "vw",
+        "dvh",
+        "dvw"
       ]
     },
     "border": {
@@ -325,6 +327,56 @@
       "area": "footer",
       "name": "footer",
       "title": "Footer"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-home",
+      "title": "Sidebar — Homepage"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-post",
+      "title": "Sidebar — Promocja"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-tool",
+      "title": "Sidebar — Narzędzie"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-tools-archive",
+      "title": "Sidebar — Archiwum narzędzi"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-tool-category",
+      "title": "Sidebar — Kategoria narzędzi"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-category",
+      "title": "Sidebar — Kategoria"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-search",
+      "title": "Sidebar — Wyszukiwanie"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-404",
+      "title": "Sidebar — 404"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-page",
+      "title": "Sidebar — Strona"
+    },
+    {
+      "area": "uncategorized",
+      "name": "sidebar-archive",
+      "title": "Sidebar — Archiwum"
     }
   ]
 }
