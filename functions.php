@@ -161,25 +161,6 @@ function calymyk_new_track_unique_post_view() {
 		return;
 	}
 
-	$cookie_name = 'cm_visitor_id';
-	$visitor_id  = isset( $_COOKIE[ $cookie_name ] )
-		? sanitize_text_field( wp_unslash( $_COOKIE[ $cookie_name ] ) )
-		: '';
-
-	if ( ! $visitor_id || ! preg_match( '/^[a-f0-9-]{36}$/', $visitor_id ) ) {
-		$visitor_id = wp_generate_uuid4();
-		setcookie(
-			$cookie_name,
-			$visitor_id,
-			time() + YEAR_IN_SECONDS,
-			COOKIEPATH,
-			COOKIE_DOMAIN,
-			is_ssl(),
-			true
-		);
-		$_COOKIE[ $cookie_name ] = $visitor_id;
-	}
-
 	$viewed_cookie = 'cm_viewed_posts';
 	$viewed_posts  = array();
 
@@ -337,12 +318,8 @@ add_action( 'init', 'calymyk_new_register_tools' );
  * The values are stored as term meta so the frontend can render the
  * category consistently in cards and other promotion surfaces.
  */
-function calymyk_new_category_default_color( $term_or_slug ) {
-	$slug = is_object( $term_or_slug ) && isset( $term_or_slug->slug )
-		? $term_or_slug->slug
-		: sanitize_title( (string) $term_or_slug );
-
-	$colors = array(
+function calymyk_new_category_colors() {
+	return array(
 		'ai'        => '#A855F7',
 		'tech'      => '#3B82F6',
 		'marketing' => '#F97316',
@@ -350,6 +327,13 @@ function calymyk_new_category_default_color( $term_or_slug ) {
 		'finanse'   => '#10B981',
 		'biznes'    => '#F59E0B',
 	);
+}
+
+function calymyk_new_category_default_color( $term_or_slug ) {
+	$slug   = is_object( $term_or_slug ) && isset( $term_or_slug->slug )
+		? $term_or_slug->slug
+		: sanitize_title( (string) $term_or_slug );
+	$colors = calymyk_new_category_colors();
 
 	return isset( $colors[ $slug ] ) ? $colors[ $slug ] : '#00B85C';
 }
@@ -359,16 +343,7 @@ function calymyk_new_apply_category_colors_once() {
 		return;
 	}
 
-	$colors = array(
-		'ai'        => '#A855F7',
-		'tech'      => '#3B82F6',
-		'marketing' => '#F97316',
-		'handel'    => '#EF4444',
-		'finanse'   => '#10B981',
-		'biznes'    => '#F59E0B',
-	);
-
-	foreach ( $colors as $slug => $color ) {
+	foreach ( calymyk_new_category_colors() as $slug => $color ) {
 		$term = get_category_by_slug( $slug );
 		if ( $term ) {
 			update_term_meta( $term->term_id, '_calymyk_category_color', $color );
@@ -381,30 +356,20 @@ add_action( 'init', 'calymyk_new_apply_category_colors_once', 25 );
 
 function calymyk_new_category_icon_options() {
 	return array(
-		'database'      => 'Baza danych',
-		'document'      => 'Dokument',
-		'chart'         => 'Wykres',
-		'education'     => 'Edukacja',
-		'shopping-cart' => 'Zakupy',
-		'wallet'        => 'Portfel',
-		'gift'          => 'Prezent',
-		'trophy'        => 'Nagroda',
+		'database'      => array( 'label' => 'Baza danych', 'file' => 'database.svg' ),
+		'document'      => array( 'label' => 'Dokument', 'file' => 'document.svg' ),
+		'chart'         => array( 'label' => 'Wykres', 'file' => 'chart.svg' ),
+		'education'     => array( 'label' => 'Edukacja', 'file' => 'education.svg' ),
+		'shopping-cart' => array( 'label' => 'Zakupy', 'file' => 'shopping-cart.svg' ),
+		'wallet'        => array( 'label' => 'Portfel', 'file' => 'wallet.svg' ),
+		'gift'          => array( 'label' => 'Prezent', 'file' => 'gift.svg' ),
+		'trophy'        => array( 'label' => 'Nagroda', 'file' => 'trophy.svg' ),
 	);
 }
 
 function calymyk_new_category_icon_svg( $icon ) {
-	$icon_files = array(
-		'database'      => 'database.svg',
-		'document'      => 'document.svg',
-		'chart'         => 'chart.svg',
-		'education'     => 'education.svg',
-		'shopping-cart' => 'shopping-cart.svg',
-		'wallet'        => 'wallet.svg',
-		'gift'          => 'gift.svg',
-		'trophy'        => 'trophy.svg',
-	);
-
-	$file_name = isset( $icon_files[ $icon ] ) ? $icon_files[ $icon ] : 'document.svg';
+	$options   = calymyk_new_category_icon_options();
+	$file_name = isset( $options[ $icon ]['file'] ) ? $options[ $icon ]['file'] : 'document.svg';
 	$file_path = get_template_directory() . '/assets/icons/categories/' . $file_name;
 
 	if ( ! file_exists( $file_path ) ) {
@@ -453,9 +418,10 @@ add_action( 'init', 'calymyk_new_register_category_meta', 20 );
 function calymyk_new_category_icon_picker( $selected ) {
 	$options = calymyk_new_category_icon_options();
 	?>
-	<div class="cm-category-icon-picker" role="radiogroup" aria-label="Wybór ikony kategorii">
+	<div class="cm-category-icon-picker" role="group" aria-label="Wybór ikony kategorii">
 		<input type="hidden" id="calymyk_category_icon" name="calymyk_category_icon" value="<?php echo esc_attr( $selected ); ?>">
-		<?php foreach ( $options as $value => $label ) : ?>
+		<?php foreach ( $options as $value => $option ) : ?>
+			<?php $label = $option['label']; ?>
 			<button
 				type="button"
 				class="cm-category-icon-option<?php echo $value === $selected ? ' is-selected' : ''; ?>"
@@ -1019,6 +985,13 @@ function calymyk_new_migrate_promotion_blocks_to_meta( $post_id ) {
 add_action( 'save_post_post', 'calymyk_new_migrate_promotion_blocks_to_meta', 30 );
 
 /**
+ * Restrict promotion meta REST writes to users who can edit the specific post.
+ */
+function calymyk_new_can_edit_promotion_meta( $allowed, $meta_key, $object_id ) {
+	return current_user_can( 'edit_post', (int) $object_id );
+}
+
+/**
  * Register promotion metadata for the block editor.
  */
 function calymyk_new_register_promotion_meta() {
@@ -1030,9 +1003,7 @@ function calymyk_new_register_promotion_meta() {
 			'single'            => true,
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'absint',
-			'auth_callback'     => function () {
-				return current_user_can( 'edit_posts' );
-			},
+			'auth_callback'     => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 
@@ -1094,7 +1065,7 @@ function calymyk_new_register_promotion_meta() {
 					);
 			}, $value ) );
 			},
-			'auth_callback' => function () { return current_user_can( 'edit_posts' ); },
+			'auth_callback' => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 
@@ -1447,6 +1418,37 @@ function calymyk_new_breadcrumbs_schema() {
 add_action( 'wp_head', 'calymyk_new_breadcrumbs_schema' );
 
 /**
+ * Format the promotion duration consistently wherever it is displayed.
+ */
+function calymyk_new_get_promotion_duration_label( $start, $end, $unlimited ) {
+	if ( ! $start && ! $end && ! $unlimited ) {
+		return '';
+	}
+
+	$format_date = static function ( $date ) {
+		$timestamp = strtotime( $date );
+		return $timestamp ? wp_date( 'j.m.Y', $timestamp ) : '';
+	};
+
+	$start_label = $format_date( $start );
+	$end_label   = $format_date( $end );
+
+	if ( $unlimited && $start_label ) {
+		return 'od ' . $start_label . ' · do odwołania';
+	}
+	if ( $unlimited ) {
+		return 'do odwołania';
+	}
+	if ( $start_label && $end_label ) {
+		return $start_label . ' – ' . $end_label;
+	}
+	if ( $start_label ) {
+		return 'od ' . $start_label;
+	}
+	return $end_label ? 'do ' . $end_label : '';
+}
+
+/**
  * Render compact promotion meta boxes below the featured image.
  */
 function calymyk_new_promotion_meta_row_shortcode() {
@@ -1457,22 +1459,9 @@ function calymyk_new_promotion_meta_row_shortcode() {
 
 	if ( ! $start && ! $end && ! $unlimited && ! $referral ) return '';
 
-	$format_date = static function ( $date ) {
-		$timestamp = strtotime( $date );
-		return $timestamp ? wp_date( 'j.m.Y', $timestamp ) : '';
-	};
-	$start_label = $format_date( $start );
-	$end_label = $format_date( $end );
-	if ( $unlimited && $start_label ) {
-		$duration = 'od ' . $start_label . ' · do odwołania';
-	} elseif ( $unlimited ) {
-		$duration = 'do odwołania';
-	} elseif ( $start_label && $end_label ) {
-		$duration = $start_label . ' – ' . $end_label;
-	} elseif ( $start_label ) {
-		$duration = 'od ' . $start_label;
-	} else {
-		$duration = 'do ' . $end_label;
+	$duration = calymyk_new_get_promotion_duration_label( $start, $end, $unlimited );
+	if ( ! $duration ) {
+		return '';
 	}
 
 	$output = '<div class="cm-promotion-meta-row">';
@@ -1640,24 +1629,9 @@ function calymyk_new_promotion_duration_shortcode() {
 		return '';
 	}
 
-	$format_date = static function ( $date ) {
-		$timestamp = strtotime( $date );
-		return $timestamp ? wp_date( 'j.m.Y', $timestamp ) : '';
-	};
-
-	$start_label = $format_date( $start );
-	$end_label   = $format_date( $end );
-
-	if ( $unlimited && $start_label ) {
-		$label = 'od ' . $start_label . ' · do odwołania';
-	} elseif ( $unlimited ) {
-		$label = 'do odwołania';
-	} elseif ( $start_label && $end_label ) {
-		$label = $start_label . ' – ' . $end_label;
-	} elseif ( $start_label ) {
-		$label = 'od ' . $start_label;
-	} else {
-		$label = 'do ' . $end_label;
+	$label = calymyk_new_get_promotion_duration_label( $start, $end, $unlimited );
+	if ( ! $label ) {
+		return '';
 	}
 
 	return '<section class="cm-promotion-duration"><p class="cm-eyebrow">CZAS TRWANIA PROMOCJI</p><p class="cm-promotion-duration__value">' . esc_html( $label ) . '</p></section>';
@@ -1874,7 +1848,6 @@ function calymyk_new_tool_archive_cta_shortcode() {
 	return '<p class="cm-tool-archive-card__cta"><a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">Odwiedź narzędzie →</a></p>';
 }
 add_shortcode( 'calymyk_tool_archive_cta', 'calymyk_new_tool_archive_cta_shortcode' );
-add_shortcode( 'calymyk_tool_url', 'calymyk_new_tool_url_shortcode' );
 /**
  * Hide the legacy "W SKRÓCIE" sidebar box on all single posts.
  * This also protects against a previously saved Site Editor template overriding the theme file.
