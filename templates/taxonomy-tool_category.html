@@ -1,0 +1,57 @@
+<!-- wp:template-part {"slug":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"cm-tools-archive","layout":{"type":"default"}} -->
+<main class="wp-block-group cm-tools-archive">
+
+	<!-- wp:group {"className":"cm-tools-archive__header cm-grid","layout":{"type":"default"}} -->
+	<div class="wp-block-group cm-tools-archive__header cm-grid">
+		<!-- wp:group {"className":"cm-span-8","layout":{"type":"default"}} -->
+		<div class="wp-block-group cm-span-8">
+			<!-- wp:query-title {"type":"archive","className":"cm-tools-archive__title"} /-->
+			<!-- wp:term-description {"className":"cm-tools-archive__description"} /-->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:group {"className":"cm-tools-archive__controls","layout":{"type":"default"}} -->
+	<div class="wp-block-group cm-tools-archive__controls">
+		<!-- wp:paragraph {"className":"cm-tools-archive__categories-label"} -->
+		<p class="cm-tools-archive__categories-label">Kategorie narzędzi</p>
+		<!-- /wp:paragraph -->
+		<!-- wp:tag-cloud {"taxonomy":"tool_category","showCounts":true,"smallestFontSize":0.8,"largestFontSize":0.8} /-->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:query {"query":{"perPage":12,"postType":"tool","inherit":true},"className":"cm-tools-archive-query"} -->
+	<div class="wp-block-query cm-tools-archive-query">
+		<!-- wp:post-template {"className":"cm-tools-archive-grid"} -->
+			<!-- wp:group {"className":"cm-tool-archive-card","layout":{"type":"default"}} -->
+			<article class="wp-block-group cm-tool-archive-card">
+				<!-- wp:post-featured-image {"isLink":true,"className":"cm-tool-archive-card__image"} /-->
+				<!-- wp:post-terms {"term":"tool_category","className":"cm-tool-archive-card__category"} /-->
+				<!-- wp:post-title {"isLink":true,"className":"cm-tool-archive-card__title"} /-->
+				<!-- wp:post-excerpt {"className":"cm-tool-archive-card__excerpt"} /-->
+				<!-- wp:shortcode -->[calymyk_tool_archive_cta]<!-- /wp:shortcode -->
+			</article>
+			<!-- /wp:group -->
+		<!-- /wp:post-template -->
+
+		<!-- wp:query-no-results -->
+			<!-- wp:paragraph -->
+			<p>Nie ma jeszcze narzędzi w tej kategorii.</p>
+			<!-- /wp:paragraph -->
+		<!-- /wp:query-no-results -->
+
+		<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
+			<!-- wp:query-pagination-previous /-->
+			<!-- wp:query-pagination-numbers /-->
+			<!-- wp:query-pagination-next /-->
+		<!-- /wp:query-pagination -->
+	</div>
+	<!-- /wp:query -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer"} /-->
