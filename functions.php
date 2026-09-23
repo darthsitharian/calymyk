@@ -393,6 +393,16 @@ function calymyk_new_category_icon_options() {
 }
 
 function calymyk_new_category_icon_svg( $icon ) {
+	$icon_files = array(
+		'database'      => 'database.svg',
+		'document'      => 'document.svg',
+		'chart'         => 'chart.svg',
+		'education'     => 'education.svg',
+		'shopping-cart' => 'shopping-cart.svg',
+		'wallet'        => 'wallet.svg',
+		'gift'          => 'gift.svg',
+		'trophy'        => 'trophy.svg',
+	);
 
 	$file_name = isset( $icon_files[ $icon ] ) ? $icon_files[ $icon ] : 'document.svg';
 	$file_path = get_template_directory() . '/assets/icons/categories/' . $file_name;
