@@ -55,6 +55,41 @@ function calymyk_new_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'calymyk_new_enqueue_assets' );
 
 /**
+ * Register the homepage category pattern explicitly.
+ */
+function calymyk_new_register_category_section_pattern() {
+	$pattern_name = 'calymyk-new/category-section';
+
+	if ( WP_Block_Patterns_Registry::get_instance()->is_registered( $pattern_name ) ) {
+		return;
+	}
+
+	$pattern_file = get_theme_file_path( 'patterns/category-section.php' );
+
+	if ( ! file_exists( $pattern_file ) ) {
+		return;
+	}
+
+	$pattern_content = file_get_contents( $pattern_file );
+
+	if ( false === $pattern_content ) {
+		return;
+	}
+
+	$pattern_content = preg_replace( '/^\s*<\?php.*?\?>\s*/s', '', $pattern_content );
+
+	register_block_pattern(
+		$pattern_name,
+		array(
+			'title'    => 'Category Section',
+			'inserter' => false,
+			'content'  => trim( $pattern_content ),
+		)
+	);
+}
+add_action( 'init', 'calymyk_new_register_category_section_pattern', 20 );
+
+/**
  * Make each featured hero card a real, full-card link.
  *
  * Query Loop renders the card group inside the post-template <li>.
