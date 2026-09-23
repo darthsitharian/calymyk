@@ -804,7 +804,7 @@ function calymyk_new_register_promotion_blocks() {
 		array(
 			'api_version' => 3,
 			'editor_script' => 'calymyk-new-promotion-blocks',
-			render_callback' => 'calymyk_new_render_promotion_faq',
+			'render_callback' => 'calymyk_new_render_promotion_faq',
 		)
 	);
 
@@ -813,7 +813,7 @@ function calymyk_new_register_promotion_blocks() {
 		array(
 			'api_version' => 3,
 			'editor_script' => 'calymyk-new-promotion-blocks',
-			render_callback' => 'calymyk_new_render_promotion_terms',
+			'render_callback' => 'calymyk_new_render_promotion_terms',
 		)
 	);
 }
