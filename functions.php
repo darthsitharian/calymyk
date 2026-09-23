@@ -211,6 +211,9 @@ add_action( 'template_redirect', 'calymyk_new_track_unique_post_view' );
 
 /**
  * Sort the homepage popular-posts Query Loop by unique browser views.
+ *
+ * A LEFT JOIN is used instead of meta_key so posts without any views yet
+ * are still included and treated as having 0 views.
  */
 function calymyk_new_popular_posts_query( $query, $block, $page ) {
 	if (
@@ -220,13 +223,34 @@ function calymyk_new_popular_posts_query( $query, $block, $page ) {
 		return $query;
 	}
 
-	$query['meta_key'] = '_calymyk_unique_views';
-	$query['orderby']  = 'meta_value_num';
-	$query['order']    = 'DESC';
+	$query['calymyk_popular_views'] = true;
+	$query['orderby'] = 'date';
+	$query['order']   = 'DESC';
 
 	return $query;
 }
 add_filter( 'query_loop_block_query_vars', 'calymyk_new_popular_posts_query', 10, 3 );
+
+/**
+ * Apply the unique-view ordering to the homepage popular-posts query.
+ */
+function calymyk_new_popular_posts_clauses( $clauses, $wp_query ) {
+	if ( ! $wp_query->get( 'calymyk_popular_views' ) ) {
+		return $clauses;
+	}
+
+	global $wpdb;
+
+	$clauses['join'] .= $wpdb->prepare(
+		" LEFT JOIN {$wpdb->postmeta} AS cm_unique_views ON {$wpdb->posts}.ID = cm_unique_views.post_id AND cm_unique_views.meta_key = %s",
+		'_calymyk_unique_views'
+	);
+
+	$clauses['orderby'] = "CAST(COALESCE(cm_unique_views.meta_value, 0) AS UNSIGNED) DESC, {$wpdb->posts}.post_date DESC";
+
+	return $clauses;
+}
+add_filter( 'posts_clauses', 'calymyk_new_popular_posts_clauses', 10, 2 );
 
 
 /**
