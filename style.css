@@ -2458,9 +2458,9 @@ html[data-theme="dark"] {
 	letter-spacing: -0.02em;
 }
 
-.cm-single__content p,
+ .cm-single__content p,
 .cm-single__content li {
-	font-size: 1.05rem;
+	font-size: var(--cm-font-md);
 	line-height: 1.8;
 }
 
@@ -3063,9 +3063,9 @@ html[data-theme="dark"] {
 	font-size: clamp(1.25rem, 2.5vw, 1.6rem);
 }
 
-.cm-tool-single__content p,
+ .cm-tool-single__content p,
 .cm-tool-single__content li {
-	font-size: 1.05rem;
+	font-size: var(--cm-font-md);
 	line-height: 1.8;
 }
 
