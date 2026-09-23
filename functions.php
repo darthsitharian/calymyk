@@ -1015,9 +1015,7 @@ function calymyk_new_register_promotion_meta() {
 			'single'            => true,
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'sanitize_text_field',
-			'auth_callback'     => function () {
-				return current_user_can( 'edit_posts' );
-			},
+			'auth_callback' => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 
@@ -1084,9 +1082,7 @@ function calymyk_new_register_promotion_meta() {
 			'sanitize_callback' => function ( $value ) {
 				return is_array( $value ) ? array_map( 'sanitize_text_field', $value ) : array();
 			},
-			'auth_callback'     => function () {
-				return current_user_can( 'edit_posts' );
-			},
+			'auth_callback' => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 
@@ -1122,9 +1118,7 @@ function calymyk_new_register_promotion_meta() {
 					$value
 				);
 			},
-			'auth_callback'     => function () {
-				return current_user_can( 'edit_posts' );
-			},
+			'auth_callback' => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 
@@ -1136,9 +1130,7 @@ function calymyk_new_register_promotion_meta() {
 			'single'            => true,
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'esc_url_raw',
-			'auth_callback'     => function () {
-				return current_user_can( 'edit_posts' );
-			},
+			'auth_callback' => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 
@@ -1181,9 +1173,7 @@ function calymyk_new_register_promotion_meta() {
 					)
 				);
 			},
-			'auth_callback' => function () {
-				return current_user_can( 'edit_posts' );
-			},
+			'auth_callback' => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 
@@ -1195,7 +1185,7 @@ function calymyk_new_register_promotion_meta() {
 			'single'            => true,
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'rest_sanitize_boolean',
-			'auth_callback'     => function () { return current_user_can( 'edit_posts' ); },
+			'auth_callback' => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 
@@ -1207,7 +1197,7 @@ function calymyk_new_register_promotion_meta() {
 			'single'            => true,
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'esc_url_raw',
-			'auth_callback'     => function () { return current_user_can( 'edit_posts' ); },
+			'auth_callback' => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 
@@ -1219,9 +1209,7 @@ function calymyk_new_register_promotion_meta() {
 			'single'            => true,
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'sanitize_text_field',
-			'auth_callback'     => function () {
-				return current_user_can( 'edit_posts' );
-			},
+			'auth_callback' => 'calymyk_new_can_edit_promotion_meta',
 		)
 	);
 }
