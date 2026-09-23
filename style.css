@@ -570,10 +570,18 @@ Text Domain: calymyk-new
 }
 
 .cm-tools-section .cm-section-header {
-	display: block;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cm-space-6);
 	max-width: 900px;
 	margin-inline: auto;
-	text-align: center;
+	text-align: left;
+}
+
+.cm-tools-section .cm-tools-section__intro {
+	min-width: 0;
+	flex: 1 1 auto;
 }
 
 .cm-tools-section .cm-section-header h2 {
@@ -582,10 +590,41 @@ Text Domain: calymyk-new
 
 .cm-tools-section .cm-section-header p {
 	max-width: 720px;
-	margin: var(--cm-space-4) auto 0;
+	margin: var(--cm-space-4) 0 0;
 	color: var(--wp--preset--color--contrast-2);
 	font-size: var(--wp--preset--font-size--medium);
 	line-height: 1.55;
+}
+
+.cm-tools-section .cm-tools-section__catalog-link {
+	flex: 0 0 auto;
+	margin: 0;
+	white-space: nowrap;
+}
+
+.cm-tools-section .cm-tools-section__catalog-link a {
+	color: var(--wp--preset--color--contrast-2);
+	font-size: var(--cm-font-sm);
+	font-weight: 600;
+	text-decoration: none;
+	transition: color 160ms ease;
+}
+
+.cm-tools-section .cm-tools-section__catalog-link a:hover,
+.cm-tools-section .cm-tools-section__catalog-link a:focus-visible {
+	color: var(--wp--preset--color--accent);
+}
+
+@media (max-width: 768px) {
+	.cm-tools-section .cm-section-header {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: var(--cm-space-4);
+	}
+
+	.cm-tools-section .cm-tools-section__catalog-link {
+		margin-top: 0;
+	}
 }
 
 /* ---------------------------------------------------------
