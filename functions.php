@@ -137,6 +137,99 @@ add_filter( 'render_block', 'calymyk_new_make_hero_cards_links', 20, 3 );
 
 
 /**
+ * Count unique browser views for posts.
+ *
+ * A long-lived random visitor cookie is used so refreshing the same post
+ * does not increment the counter again for the same browser.
+ */
+function calymyk_new_track_unique_post_view() {
+	if ( is_admin() || ! is_singular( 'post' ) || is_preview() || is_feed() ) {
+		return;
+	}
+
+	$post_id = get_queried_object_id();
+
+	if ( ! $post_id || 'post' !== get_post_type( $post_id ) ) {
+		return;
+	}
+
+	$cookie_name = 'cm_visitor_id';
+	$visitor_id  = isset( $_COOKIE[ $cookie_name ] )
+		? sanitize_text_field( wp_unslash( $_COOKIE[ $cookie_name ] ) )
+		: '';
+
+	if ( ! $visitor_id || ! preg_match( '/^[a-f0-9-]{36}$/', $visitor_id ) ) {
+		$visitor_id = wp_generate_uuid4();
+		setcookie(
+			$cookie_name,
+			$visitor_id,
+			time() + YEAR_IN_SECONDS,
+			COOKIEPATH,
+			COOKIE_DOMAIN,
+			is_ssl(),
+			true
+		);
+		$_COOKIE[ $cookie_name ] = $visitor_id;
+	}
+
+	$viewed_cookie = 'cm_viewed_posts';
+	$viewed_posts  = array();
+
+	if ( isset( $_COOKIE[ $viewed_cookie ] ) ) {
+		$decoded = json_decode( wp_unslash( $_COOKIE[ $viewed_cookie ] ), true );
+		if ( is_array( $decoded ) ) {
+			$viewed_posts = array_map( 'absint', $decoded );
+		}
+	}
+
+	$viewed_posts = array_values( array_unique( array_filter( $viewed_posts ) ) );
+
+	if ( in_array( $post_id, $viewed_posts, true ) ) {
+		return;
+	}
+
+	$views = (int) get_post_meta( $post_id, '_calymyk_unique_views', true );
+	update_post_meta( $post_id, '_calymyk_unique_views', $views + 1 );
+
+	$viewed_posts[] = $post_id;
+
+	// Keep the cookie bounded so it stays comfortably below browser limits.
+	$viewed_posts = array_slice( $viewed_posts, -200 );
+
+	setcookie(
+		$viewed_cookie,
+		wp_json_encode( $viewed_posts ),
+		time() + YEAR_IN_SECONDS,
+		COOKIEPATH,
+		COOKIE_DOMAIN,
+		is_ssl(),
+		true
+	);
+	$_COOKIE[ $viewed_cookie ] = wp_json_encode( $viewed_posts );
+}
+add_action( 'template_redirect', 'calymyk_new_track_unique_post_view' );
+
+/**
+ * Sort the homepage popular-posts Query Loop by unique browser views.
+ */
+function calymyk_new_popular_posts_query( $query, $block, $page ) {
+	if (
+		! isset( $block->context['queryId'] )
+		|| 30 !== (int) $block->context['queryId']
+	) {
+		return $query;
+	}
+
+	$query['meta_key'] = '_calymyk_unique_views';
+	$query['orderby']  = 'meta_value_num';
+	$query['order']    = 'DESC';
+
+	return $query;
+}
+add_filter( 'query_loop_block_query_vars', 'calymyk_new_popular_posts_query', 10, 3 );
+
+
+/**
  * Limit the Zyskomat recommendation Query Loop to posts
  * assigned to the standard "Polecamy" category.
  *
