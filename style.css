@@ -3962,8 +3962,8 @@ html[data-theme="dark"] {
 	border-radius: var(--cm-radius-xs);
 	background: var(--wp--preset--color--base);
 	color: var(--wp--preset--color--contrast-2);
-	font-size: var(--cm-font-xs);
-	line-height: 1.35;
+	font-size: var(--cm-font-sm);
+	line-height: 1.45;
 }
 
 .cm-promotion-sidebar-list__icon {
@@ -4013,9 +4013,9 @@ html[data-theme="dark"] {
 	border-radius: 0;
 	background: transparent;
 	color: var(--wp--preset--color--contrast-2);
-	font-size: var(--cm-font-xs);
+	font-size: var(--cm-font-sm);
 	font-weight: 500;
-	line-height: 1.35;
+	line-height: 1.45;
 	list-style: none;
 }
 
@@ -4061,8 +4061,8 @@ html[data-theme="dark"] {
 	border-radius: var(--cm-radius-xs);
 	background: var(--wp--preset--color--base);
 	color: var(--wp--preset--color--contrast-2);
-	font-size: var(--cm-font-xs);
-	line-height: 1.5;
+	font-size: var(--cm-font-sm);
+	line-height: 1.55;
 }
 
 @media (max-width: 900px) {
