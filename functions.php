@@ -1854,3 +1854,27 @@ function calymyk_new_hide_legacy_summary_box( $block_content, $block ) {
 	return $block_content;
 }
 add_filter( 'render_block', 'calymyk_new_hide_legacy_summary_box', 10, 2 );
+
+/**
+ * Swap the global sidebar template part for singular content variants.
+ *
+ * The templates always reference the neutral "sidebar" slug. On singular
+ * promotions and tools we replace it with the matching contextual variant,
+ * keeping the page shell reusable across the site.
+ */
+function calymyk_new_render_contextual_sidebar( $parsed_block ) {
+	if (
+		( $parsed_block['blockName'] ?? '' ) !== 'core/template-part'
+		|| ( $parsed_block['attrs']['slug'] ?? '' ) !== 'sidebar'
+	) {
+		return $parsed_block;
+	}
+
+	if ( is_singular( 'tool' ) ) {
+		$parsed_block['attrs']['slug'] = 'sidebar-tool';
+	} elseif ( is_singular( 'post' ) ) {
+		$parsed_block['attrs']['slug'] = 'sidebar-post';
+	}
+
+	return $parsed_block;
+}
