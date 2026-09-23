@@ -1655,18 +1655,107 @@ function calymyk_new_promotion_duration_shortcode() {
 add_shortcode( 'calymyk_promotion_duration', 'calymyk_new_promotion_duration_shortcode' );
 
 /**
- * Render three random posts below each promotion.
+ * Find related content in semantic order:
+ * 1. Same primary taxonomy term.
+ * 2. Shared tags.
+ * 3. Random fallback to fill the remaining slots.
+ */
+function calymyk_new_get_related_ids( $current_id, $post_type, $primary_taxonomy ) {
+	$related_ids = array();
+	$exclude_ids = array( $current_id );
+
+	$primary_terms = get_the_terms( $current_id, $primary_taxonomy );
+	if ( $primary_terms && ! is_wp_error( $primary_terms ) ) {
+		$primary_ids = wp_list_pluck( $primary_terms, 'term_id' );
+		$query = new WP_Query(
+			array(
+				'post_type'      => $post_type,
+				'post_status'    => 'publish',
+				'posts_per_page' => 3,
+				'post__not_in'   => $exclude_ids,
+				'tax_query'      => array(
+					array(
+						'taxonomy' => $primary_taxonomy,
+						'field'    => 'term_id',
+						'terms'    => $primary_ids,
+					),
+				),
+				'orderby'        => 'rand',
+				'no_found_rows'  => true,
+			)
+		);
+
+		$related_ids = wp_list_pluck( $query->posts, 'ID' );
+		wp_reset_postdata();
+		$exclude_ids = array_merge( $exclude_ids, $related_ids );
+	}
+
+	if ( count( $related_ids ) < 3 ) {
+		$tag_terms = get_the_terms( $current_id, 'post_tag' );
+		if ( $tag_terms && ! is_wp_error( $tag_terms ) ) {
+			$tag_ids = wp_list_pluck( $tag_terms, 'term_id' );
+			$query = new WP_Query(
+				array(
+					'post_type'      => $post_type,
+					'post_status'    => 'publish',
+					'posts_per_page' => 3 - count( $related_ids ),
+					'post__not_in'   => $exclude_ids,
+					'tax_query'      => array(
+						array(
+							'taxonomy' => 'post_tag',
+							'field'    => 'term_id',
+							'terms'    => $tag_ids,
+						),
+					),
+					'orderby'        => 'rand',
+					'no_found_rows'  => true,
+				)
+			);
+
+			$tag_related_ids = wp_list_pluck( $query->posts, 'ID' );
+			$related_ids = array_merge( $related_ids, $tag_related_ids );
+			wp_reset_postdata();
+			$exclude_ids = array_merge( $exclude_ids, $tag_related_ids );
+		}
+	}
+
+	if ( count( $related_ids ) < 3 ) {
+		$query = new WP_Query(
+			array(
+				'post_type'      => $post_type,
+				'post_status'    => 'publish',
+				'posts_per_page' => 3 - count( $related_ids ),
+				'post__not_in'   => $exclude_ids,
+				'orderby'        => 'rand',
+				'no_found_rows'  => true,
+			)
+		);
+
+		$related_ids = array_merge( $related_ids, wp_list_pluck( $query->posts, 'ID' ) );
+		wp_reset_postdata();
+	}
+
+	return array_slice( array_values( array_unique( $related_ids ) ), 0, 3 );
+}
+
+/**
+ * Render three related posts below each promotion.
  */
 function calymyk_new_related_posts_shortcode() {
-	$current_id = get_the_ID();
+	$current_id  = get_the_ID();
+	$related_ids = calymyk_new_get_related_ids( $current_id, 'post', 'category' );
+
+	if ( empty( $related_ids ) ) {
+		return '';
+	}
 
 	$query = new WP_Query(
 		array(
 			'post_type'      => 'post',
 			'post_status'    => 'publish',
+			'post__in'       => $related_ids,
+			'orderby'        => 'post__in',
 			'posts_per_page' => 3,
-			'post__not_in'   => array( $current_id ),
-			'orderby'        => 'rand',
 			'no_found_rows'  => true,
 		)
 	);
@@ -1703,18 +1792,23 @@ function calymyk_new_related_posts_shortcode() {
 add_shortcode( 'calymyk_related_posts', 'calymyk_new_related_posts_shortcode' );
 
 /**
- * Render three random tools below each tool page.
+ * Render three related tools below each tool page.
  */
 function calymyk_new_related_tools_shortcode() {
-	$current_id = get_the_ID();
+	$current_id  = get_the_ID();
+	$related_ids = calymyk_new_get_related_ids( $current_id, 'tool', 'tool_category' );
+
+	if ( empty( $related_ids ) ) {
+		return '';
+	}
 
 	$query = new WP_Query(
 		array(
 			'post_type'      => 'tool',
 			'post_status'    => 'publish',
+			'post__in'       => $related_ids,
+			'orderby'        => 'post__in',
 			'posts_per_page' => 3,
-			'post__not_in'   => array( $current_id ),
-			'orderby'        => 'rand',
 			'no_found_rows'  => true,
 		)
 	);
